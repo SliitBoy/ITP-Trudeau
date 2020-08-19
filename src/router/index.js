@@ -1,10 +1,52 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import Video from "../views/Video.vue";
+import Notes from "../views/Notes.vue";
+import Course from "../views/Course.vue";
+import FileManager from "../views/FileManager.vue";
+import Forum from "../views/Forum.vue";
+import Analytics from "../views/Analytics.vue";
+import Account from "../views/Account.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
+  {
+    path: "/video",
+    name: "Video",
+    component: Video
+  },
+  {
+    path: "/notes",
+    name: "Notes",
+    component: Notes
+  },
+  {
+    path: "/course",
+    name: "Course",
+    component: Course
+  },
+  {
+    path: "/filemanager",
+    name: "FileManager",
+    component: FileManager
+  },
+  {
+    path: "/forum",
+    name: "Forum",
+    component: Forum
+  },
+  {
+    path: "/analytics",
+    name: "Analytics",
+    component: Analytics
+  },
+  {
+    path: "/account",
+    name: "Account",
+    component: Account
+  },
   {
     path: "/",
     name: "Home",
