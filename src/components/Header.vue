@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
     <router-link class="navbar-brand" to="/">Trudeau</router-link>
     <button
       class="navbar-toggler"
