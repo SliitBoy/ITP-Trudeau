@@ -10,8 +10,10 @@
       visible="true"
       bg-variant="dark"
       text-variant="light"
+      width="200px"
+      z-index="-1"
     >
-      <div class="px-3 py-2 vh-100 w-100">
+      <div class="px-3 py-2">
         <div style="height: 200px">
           Notifications Here
         </div>

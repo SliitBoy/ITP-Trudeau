@@ -35,7 +35,11 @@
         >
       </ul>
       <ul class="navbar-nav nav-right">
-        <li class="nav-item dropdown">
+        <b-dropdown right variant="dark" text="Account" style="outline:0">
+          <b-dropdown-item>Settings</b-dropdown-item>
+          <b-dropdown-item>Logout</b-dropdown-item>
+        </b-dropdown>
+        <!-- <li class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"
             href="/account"
@@ -50,7 +54,7 @@
             <a class="dropdown-item" href="#">Settings</a>
             <a class="dropdown-item" href="#">Logout</a>
           </div>
-        </li>
+        </li> -->
       </ul>
     </div>
   </nav>

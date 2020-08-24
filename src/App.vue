@@ -1,12 +1,12 @@
 <template>
   <div>
     <app-header></app-header>
-    <div class="container-fluid">
+    <div class="container-fluid h-100">
       <div class="row">
         <div class="col-md-10">
           <router-view></router-view>
         </div>
-        <div class="col-md-2" style="padding:0">
+        <div class="col-md-2 h-25">
           <app-sidebar></app-sidebar>
         </div>
       </div>
