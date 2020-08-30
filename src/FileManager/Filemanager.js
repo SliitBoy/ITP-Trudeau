@@ -1,14 +1,18 @@
 const fs = require('fs');
 const p = require('path');
 const fsExtra = require('fs-extra')
-    //const rimraf = require("rimraf");
-    //const test = require("test.js");
-const rootDIR = p.join(__dirname, '/root');
-createDirectory(rootDIR, "test");
-createRootDirectory(rootDIR);
+const rimraf = require("rimraf");
+const { hashElement } = require('folder-hash');
+//const test = require("test.js");
+const rootDIR = p.join('./', '/root');
+
+//createDirectory(rootDIR, "test 2");
+//createRootDirectory(rootDIR);
+
 //deleteDirectory(rootDIR);
-console.log(fileCreatedDate(rootDIR));
-//emptyDirectory(rootDIR);
+//console.log(fileCreatedDate(rootDIR));
+emptyDirectory(rootDIR);
+rootDirectoryChildren();
 
 function createDirectory(path, name) {
     let dir = p.join(path, "/" + name);
@@ -23,7 +27,7 @@ function createDirectory(path, name) {
 }
 
 function createRootDirectory() {
-    let dir = p.join(__dirname, '/root');
+    let dir = p.join(rootDIR);
 
     console.log("creating file " + dir); //set to save in database
     let date_ob = new Date(); //get current time to work
@@ -38,9 +42,11 @@ function createRootDirectory() {
 }
 
 function emptyDirectory(path) {
+    rimraf(path + '/*', function() { console.log('done'); });
+}
 
-    fsExtra.emptyDirSync(path)
-
+function deleteDirectory(path) {
+    rimraf(path, function() { console.log('done'); });
 }
 
 function rename(file, rename) {
@@ -57,4 +63,21 @@ function createfile() {
 function fileCreatedDate(file) {
     const { birthtime } = fs.statSync(file)
     return birthtime
+}
+
+function rootDirectoryChildren() {
+    const options = {
+        folders: { exclude: ['.*', 'node_modules', 'test_coverage', 'dist'] },
+        //files: { include: ['*.js', '*.json'] }
+        ignoreRootName: true
+    };
+
+    console.log('Creating a hash over the current folder:');
+    hashElement(rootDIR, options)
+        .then(hash => {
+            console.log(hash.toString());
+        })
+        .catch(error => {
+            return console.error('hashing failed:', error);
+        });
 }
