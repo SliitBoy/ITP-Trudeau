@@ -2,12 +2,12 @@
   <div>
     <b-sidebar
       id="sidebar-right"
-      no-close-on-route-change="true"
-      no-slide="true"
-      no-header="true"
+      no-close-on-route-change
+      no-slide
+      no-header
       right
       shadow
-      visible="true"
+      visible
       bg-variant="dark"
       text-variant="light"
       width="200px"
