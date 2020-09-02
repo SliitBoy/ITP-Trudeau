@@ -1,7 +1,16 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <div class="col 8"></div>
+      <div class="col 8">
+        <div>
+          <b-card v-bind:title="items.name" v-bind:sub-title="item.code">
+            <b-card-text>
+              Some quick example text to build on the <em>card title</em> and
+              make up the bulk of the card's content.
+            </b-card-text>
+          </b-card>
+        </div>
+      </div>
       <div class="col-2">
         <b-dropdown
           id="dropdown-form"
@@ -50,7 +59,8 @@ export default {
   data() {
     return {
       playListName: "",
-      playListDescription: ""
+      playListDescription: "",
+      items: [{ name: "Probability & Statistics", code: "IT2050" }]
     };
   },
 
