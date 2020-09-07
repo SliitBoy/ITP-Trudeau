@@ -9,6 +9,16 @@ import Forum from "../views/Forum.vue";
 import Analytics from "../views/Analytics.vue";
 import Account from "../views/Account.vue";
 
+import settings from "../components/accounts/settings.vue";
+import login from "../components/accounts/login.vue";
+import profile from "../components/accounts/studentProfile.vue";
+import staffProfile from "../components/accounts/staffProfile.vue";
+import adminProfile from "../components/accounts/administratorProfile.vue";
+import createStudent from "../components/accounts/createStudent.vue";
+import createStaff from "../components/accounts/createStaff.vue";
+import listStudents from "../components/accounts/listStudents.vue";
+
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -60,6 +70,46 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue")
+  },
+  {
+    path: "/settings",
+    name: "settings",
+    component: settings
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: login
+  },
+  {
+    path: "/profile",
+    name: "profile",
+    component: profile
+  },
+  {
+    path: "/staffProfile",
+    name: "staffProfile",
+    component: staffProfile
+  },
+  {
+    path: "/adminProfile",
+    name: "adminProfile",
+    component: adminProfile
+  },
+  {
+    path: "/createStudent",
+    name: "createStudent",
+    component: createStudent
+  },
+  {
+    path: "/createStaff",
+    name: "createStaff",
+    component: createStaff
+  },
+  {
+    path: "/listStudents",
+    name: "listStudents",
+    component: listStudents
   }
 ];
 
