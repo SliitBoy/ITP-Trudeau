@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid" style="background-color: #2C2F33;">
     <div class="row">
       <div class="col 8" style="margin-top: 20px;">
         <!-- Search Input field-->
@@ -22,9 +22,14 @@
               <b-card-text>
                 Text Here
               </b-card-text>
-              <router-link to="/videoplayer"
+              <!-- Send Course code to player componenet  -->
+              <router-link
+                :to="{
+                  name: 'ViewPlaylist',
+                  params: { id: playlist.playlistCode }
+                }"
                 ><b-button variant="primary" size="sm"
-                  >Go somewhere</b-button
+                  >View playlist</b-button
                 ></router-link
               >
               <template v-slot:footer>
@@ -71,6 +76,7 @@
 
 <script>
 import axios from "axios";
+
 export default {
   data() {
     return {
