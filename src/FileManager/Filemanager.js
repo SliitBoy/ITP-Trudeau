@@ -5,7 +5,7 @@ const rimraf = require("rimraf");
 const { hashElement } = require('folder-hash');
 //const test = require("test.js");
 const rootDIR = p.join('./', '/root');
-
+let fileStruct;
 //createDirectory(rootDIR, "test 2");
 //createRootDirectory(rootDIR);
 
@@ -13,6 +13,7 @@ const rootDIR = p.join('./', '/root');
 //console.log(fileCreatedDate(rootDIR));
 emptyDirectory(rootDIR);
 rootDirectoryChildren();
+
 
 function createDirectory(path, name) {
     let dir = p.join(path, "/" + name);
@@ -75,9 +76,18 @@ function rootDirectoryChildren() {
     console.log('Creating a hash over the current folder:');
     hashElement(rootDIR, options)
         .then(hash => {
+            fileStruct = hash;
             console.log(hash.toString());
+            return hash;
         })
         .catch(error => {
             return console.error('hashing failed:', error);
         });
+}
+
+class Directory {
+
+    constructor(path) {
+        this.path = path;
+    }
 }

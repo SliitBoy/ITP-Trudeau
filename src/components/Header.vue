@@ -33,6 +33,12 @@
         <router-link to="/analytics" tag="li" class="nav-item" activeClass="active"
           ><a class="nav-link">Analytics</a></router-link
         >
+        <router-link to="/accounts" tag="li" class="nav-item" activeClass="active"
+          ><a class="nav-link">Accounts</a></router-link
+        >
+        <router-link to="/quiz" tag="li" class="nav-item" activeClass="active"
+          ><a class="nav-link">Quiz</a></router-link
+        >
       </ul>
       <ul class="navbar-nav nav-right">
         <li class="nav-item dropdown">
