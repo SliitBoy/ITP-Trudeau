@@ -1,17 +1,14 @@
 <template>
   <div>
     <H1>This is viewplaylist {{ id }} </H1>
-    <div class="container-fluid h-100">
-      <div class="row">
-        <div class="col-8">
-          <videoplayer></videoplayer>
-        </div>
-        <div class="col-2">
-          <div class="vjs-playlist"></div>
-        </div>
-      </div>
-      <!-- <videoplayer :playerOptions="playerdata"></videoplayer> -->
-    </div>
+    <b-container fluid="sm">
+      <b-row class="justify-content-md-center">
+        <b-col></b-col>
+        <b-col><videoplayer></videoplayer></b-col>
+        <b-col><div class="vjs-playlist"></div></b-col>
+      </b-row>
+    </b-container>
+    <!-- <videoplayer :playerOptions="playerdata"></videoplayer> -->
   </div>
 </template>
 

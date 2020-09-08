@@ -1,6 +1,6 @@
 <template>
   <div
-    class="container-fluid d-flex min-vh-100"
+    class="container-fluid min-vh-100"
     style="background-color: #2C2F33;"
   >
     <div class="row">
@@ -12,13 +12,14 @@
           v-model="playlistSearch"
           placeholder="Search"
         />
-        <b-card-group deck style="margin-top: 10px;">
+        <b-card-group columns style="margin-top: 10px;">
           <!-- Create cards for playlists in array-->
           <b-card
             v-for="playlist in playlistFilter"
             :key="playlist.name"
             :title="playlist.playlistName"
             :sub-title="playlist.playlistCode"
+            aria-setsize="100"
           >
             <b-card-text> </b-card-text>
             <!-- Send Course code to player componenet  -->
