@@ -7,6 +7,8 @@ import BootstrapVue from "bootstrap-vue";
 import "./assets/app.scss";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
+import "video.js";
+import "video.js/dist/video-js.css";
 
 Vue.use(BootstrapVue);
 Vue.config.productionTip = false;
