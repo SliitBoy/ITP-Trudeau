@@ -17,6 +17,7 @@ import adminProfile from "../components/accounts/administratorProfile.vue";
 import createStudent from "../components/accounts/createStudent.vue";
 import createStaff from "../components/accounts/createStaff.vue";
 import listStudents from "../components/accounts/listStudents.vue";
+import forgotPassword from "../components/accounts/forgotPassword.vue";
 
 
 Vue.use(VueRouter);
@@ -110,6 +111,11 @@ const routes = [
     path: "/listStudents",
     name: "listStudents",
     component: listStudents
+  },
+  {
+    path: "/forgotPassword",
+    name: "forgotPassword",
+    component: forgotPassword
   }
 ];
 

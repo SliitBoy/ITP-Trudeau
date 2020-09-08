@@ -26,12 +26,14 @@
                             <input type = "password" id = "password">
 
                             <!--forgot password link-->
-                            <a href = "#" class = "forgot">Forgot Password?</a>
+                               <router-link to ="/forgotPassword">
+                                   <a href = "#" class = "forgot">Forgot Password?</a>
+                               </router-link>
                         </div>
                         <br>
                         <br>
                         <div class = "login">
-                            <button type ="submit" class = "loginBtn" href = "#">Log In</button>
+                              <button type ="submit" class = "loginBtn">Log In</button>
                         </div>
 
                     </div>

@@ -11,7 +11,7 @@
                 <th>E-mail</th>
                 <th>Contact Number</th>
                 <th></th>
-                <!--<th>Password</th>-->
+                <!--<th>Password</th>--> <!--make nic default password, password can be changed later-->
             </tr>
 
             <tr>
