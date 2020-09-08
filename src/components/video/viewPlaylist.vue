@@ -1,9 +1,16 @@
 <template>
   <div>
     <H1>This is viewplaylist {{ id }} </H1>
-    <div>
+    <div class="container-fluid h-100">
+      <div class="row">
+        <div class="col-8">
+          <videoplayer></videoplayer>
+        </div>
+        <div class="col-2">
+          <div class="vjs-playlist"></div>
+        </div>
+      </div>
       <!-- <videoplayer :playerOptions="playerdata"></videoplayer> -->
-      <videoplayer></videoplayer>
     </div>
   </div>
 </template>

@@ -2,7 +2,7 @@
   <div>
     <video-player
       ref="videoPlayer"
-      class="video-player-box"
+      class="video-js  vjs-big-play-centered"
       :playsinline="true"
       :options="playerOptions"
       @ready="playerReadied"
@@ -14,12 +14,17 @@
 import { videojs, videoPlayer } from "vue-video-player";
 import "videojs-playlist";
 import playlistMaker from "videojs-playlist/src/playlist-maker";
+import "videojs-playlist-ui/dist/videojs-playlist-ui.vertical.css";
+import playlistUI from "videojs-playlist-ui/dist/videojs-playlist-ui";
 
 const plugin = function(list, item) {
   playlistMaker(this, list, item);
 };
 
+const plugin2 = playlistUI;
+
 videojs.registerPlugin("playlist", plugin);
+videojs.registerPlugin("playlistUI", plugin2);
 
 var samplePlaylist = [
   {
@@ -87,6 +92,7 @@ export default {
       //player.playlist(this.playerdata.playlist);
       player.playlist(samplePlaylist);
       player.playlist.autoadvance(5);
+      player.playlistUI();
     }
   }
 };

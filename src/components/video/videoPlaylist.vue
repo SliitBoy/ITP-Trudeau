@@ -1,7 +1,10 @@
 <template>
-  <div class="container-fluid" style="background-color: #2C2F33;">
+  <div
+    class="container-fluid d-flex min-vh-100"
+    style="background-color: #2C2F33;"
+  >
     <div class="row">
-      <div class="col 8" style="margin-top: 20px;">
+      <div class="col-10" style="margin-top: 20px;">
         <!-- Search Input field-->
         <input
           type="text"
@@ -9,38 +12,101 @@
           v-model="playlistSearch"
           placeholder="Search"
         />
-        <div>
-          <b-card-group columns style="margin-top: 10px;">
-            <!-- Create cards for playlists in array-->
-            <b-card
-              v-for="playlist in playlistFilter"
-              :key="playlist.name"
-              :title="playlist.playlistName"
-              :sub-title="playlist.playlistCode"
-              class="h-100"
+        <b-card-group deck style="margin-top: 10px;">
+          <!-- Create cards for playlists in array-->
+          <b-card
+            v-for="playlist in playlistFilter"
+            :key="playlist.name"
+            :title="playlist.playlistName"
+            :sub-title="playlist.playlistCode"
+          >
+            <b-card-text> </b-card-text>
+            <!-- Send Course code to player componenet  -->
+            <router-link
+              :to="{
+                name: 'ViewPlaylist',
+                params: { id: playlist.playlistCode }
+              }"
+              ><b-button variant="primary" size="sm"
+                >View playlist</b-button
+              ></router-link
             >
-              <b-card-text>
-                Text Here
-              </b-card-text>
-              <!-- Send Course code to player componenet  -->
-              <router-link
-                :to="{
-                  name: 'ViewPlaylist',
-                  params: { id: playlist.playlistCode }
-                }"
-                ><b-button variant="primary" size="sm"
-                  >View playlist</b-button
-                ></router-link
-              >
-              <template v-slot:footer>
-                <small class="text-muted">Last updated 3 mins ago</small>
-              </template>
-            </b-card>
-          </b-card-group>
-        </div>
+            <template v-slot:footer>
+              <b-dropdown size="sm" style="float: right;">
+                <b-dropdown-item v-b-modal.edit-playlist @click="modalData(playlist)">edit</b-dropdown-item>
+                <b-dropdown-item @click="deletePlaylist(playlist.id)"
+                  >delete</b-dropdown-item
+                >
+              </b-dropdown>
+            </template>
+          </b-card>
+        </b-card-group>
       </div>
-      <div class="col-2" style="margin-top: 12px;">
-        <b-dropdown
+      <div class="col-2" style="margin-top: 20px;">
+        <button
+          v-b-modal.new-playlist
+          class="btn btn-primary"
+          style="float: right;"
+        >
+          New Playlist
+        </button>
+
+        <b-modal
+          id="new-playlist"
+          centered
+          title="New Playlist"
+          @ok="createNewPlaylist()"
+        >
+          <b-form-group id="formName" label="Playlist Name">
+            <b-form-input
+              id="name-input"
+              type="text"
+              placeholder="Enter name"
+              v-model="playlistName"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group id="formCode" label="Playlist Code">
+            <b-form-input
+              id="code-input"
+              label="Code"
+              type="text"
+              placeholder="Enter code"
+              v-model="playlistCode"
+              required
+            ></b-form-input>
+          </b-form-group>
+        </b-modal>
+
+        <b-modal
+          id="edit-playlist"
+          centered
+          title="New Playlist"
+          @ok="patchPlaylist(item.id)"
+        >
+          <b-form-group id="formName" label="Playlist Name">
+            <b-form-input
+              id="name-input"
+              type="text"
+              :placeholder= item.playlistName
+              v-model="playlistName"
+              required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group id="formCode" label="Playlist Code">
+            <b-form-input
+              id="code-input"
+              label="Code"
+              type="text"
+              :placeholder= item.playlistCode
+              v-model="playlistCode"
+              required
+            ></b-form-input>
+          </b-form-group>
+        </b-modal>
+        <!-- <b-dropdown
           id="dropdown-form"
           text="New Playlist"
           ref="dropdown"
@@ -68,7 +134,7 @@
               >Add</b-button
             >
           </b-dropdown-form>
-        </b-dropdown>
+        </b-dropdown> -->
       </div>
     </div>
   </div>
@@ -91,7 +157,8 @@ export default {
       getItems: [],
       playlistSearch: "",
       getName: "",
-      getCode: ""
+      getCode: "",
+      item: {}
     };
   },
 
@@ -110,8 +177,8 @@ export default {
         }
         console.log(array);
         console.log(this.getItems);
-        this.getName = array[0].playlistName;
-        this.getCode = array[0].playlistCode;
+        //this.getName = array[0].playlistName;
+        //this.getCode = array[0].playlistCode;
       })
       .catch(error => console.log(error));
   },
@@ -140,8 +207,48 @@ export default {
           "https://trudeau-cda16.firebaseio.com/playlists.json",
           playlistFormData
         )
-        .then(resp => console.log(resp))
+        .then(resp => {
+          this.$bvToast.toast(`Added playlist ${this.playlistName}`, {
+            title: "Added playlist",
+            autoHideDelay: 2000
+          });
+          console.log(resp);
+        })
         .catch(error => console.error(error));
+    },
+    deletePlaylist(id) {
+      axios
+        .delete(
+          "https://trudeau-cda16.firebaseio.com/playlists/" + id + ".json"
+        )
+        .then(resp => {
+          this.$bvToast.toast(`Deleted playlist`, {
+            title: "delete playlist",
+            autoHideDelay: 2000
+          });
+          console.log(resp);
+        });
+    },
+    patchPlaylist(id) {
+      const playlistFormData2 = {
+        playlistName: this.playlistName,
+        playlistCode: this.playlistCode
+      };
+      axios
+        .patch(
+          "https://trudeau-cda16.firebaseio.com/playlists/" + id + ".json",
+          playlistFormData2
+        )
+        .then(resp => {
+          this.$bvToast.toast(`updated playlist`, {
+            title: "update playlist",
+            autoHideDelay: 2000
+          });
+          console.log(resp);
+        });
+    },
+    modalData(playlist) {
+      this.item = playlist;
     }
   }
 };
