@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark z4">
     <router-link class="navbar-brand" to="/">Trudeau</router-link>
     <button
       class="navbar-toggler"
@@ -42,6 +42,7 @@
           ><a class="nav-link">Analytics</a></router-link
         >
       </ul>
+      <button class="btn btn-group-toggle bg-light" v-b-toggle.sidebar-right>SB</button>
       <ul class="navbar-nav nav-right">
         <b-dropdown right variant="dark" text="Account" style="outline:0">
           <b-dropdown-item><router-link to = "/profile">Student Profile</router-link></b-dropdown-item>
