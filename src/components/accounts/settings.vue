@@ -90,6 +90,8 @@
                     </router-link>
                 </div>
 
+                <br><br>
+
             </div>
             </div>
 </template>
@@ -99,7 +101,7 @@
     min-height: 50vh;
     margin-left: -20px;
     padding-left: 100px;
-    margin-right: -80px;
+    margin-right: 0px;
     display:grid;
     grid-template-areas: 
         'topLeft topRight'
@@ -223,6 +225,7 @@ input[type=email] {
     border-right:none;
     border-left:none;
     color:white;
+    transform: translate(-10%, 60%);
 }
 
 input[type=tel] {

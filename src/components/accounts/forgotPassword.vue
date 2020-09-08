@@ -12,7 +12,7 @@
 
             <div class = "field">
                 <label for = "email">E-mail</label>
-                <input type = "text" id = "email" placeholder = "justin@trippingonquack.com">
+                <input type = "text" id = "emailForgot" placeholder = "justin@trippingonquack.com">
                 <button type ="submit" class = "submitEmail">Submit</button>
             </div>
 
@@ -24,7 +24,8 @@
 .mainContainer{
     color: white;
     background-color:#2c2f33;
-    margin-right: -73px;
+    margin-right: 0px;
+    padding-left: 160px;
 }
 .container{
     color: white;
@@ -32,7 +33,7 @@
     margin-left:-25px;
     padding-left: 50px;
     padding-top: 25px;
-    padding-bottom: 395px;
+    padding-bottom: 250px;
 }
 
 .field{
@@ -53,7 +54,7 @@ input[type=text] {
      color: white;
 } 
 
-#email:focus{
+#emailForgot:focus{
      outline:none;
      box-shadow: none;
      border-bottom-color: whitesmoke;

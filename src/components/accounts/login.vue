@@ -53,11 +53,11 @@ export default {
 <style scoped>
 
 .mainContainer{
-     margin-right: -270px;
+     margin-right: 0px;
 }
 .container{
      padding-left: 100px;
-     margin-left: -25px;
+     margin-left: -5px;
      min-height: 100%;
      min-width:100%;
      display:grid;

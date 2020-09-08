@@ -54,7 +54,7 @@
 
 <style scoped>
 .mainContainer{
-    margin-right: -72px;
+    margin-right: 200px;
     background-color: #2c2f33;
     margin-left: -50px;
     padding-left:75px;

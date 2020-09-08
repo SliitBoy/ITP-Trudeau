@@ -141,10 +141,10 @@
 }
 
 .innerContainer1{
-    margin-left: -100px;
+    margin-left: -205px;
     padding-left: 150px;
     background-color:#2c2f33;
-    margin-right: -131px;
+    margin-right: -5px;
     padding-right:131px;   
     margin-top: -80px;
     padding-top: 80px;
@@ -155,10 +155,10 @@
     grid-gap:10px;
     background-color:#2c2f33;
     color: white;
-    margin-left: -80px;
+    margin-left: -210px;
     padding-left: 80px;
-    margin-right: -131px;
-    padding-right: 150px;
+    margin-right: -10px;
+    padding-right: 100px;
 }
 
 .courseContainers{
@@ -167,6 +167,7 @@
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     background-color:#2c2f33;
     color: white;
+    padding-left: 20px;
 }
 
 .sectionTitle{
