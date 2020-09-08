@@ -9,6 +9,8 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import "video.js";
 import "video.js/dist/video-js.css";
+import "videojs-playlist-ui/dist/videojs-playlist-ui.vertical.css";
+import "videojs-playlist-ui/dist/videojs-playlist-ui.css";
 
 Vue.use(BootstrapVue);
 Vue.config.productionTip = false;

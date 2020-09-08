@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="container-fluid min-vh-100"
-    style="background-color: #2C2F33;"
-  >
+  <div class="container-fluid min-vh-100" style="background-color: #2C2F33;">
     <div class="row">
       <div class="col-10" style="margin-top: 20px;">
         <!-- Search Input field-->
@@ -19,15 +16,14 @@
             :key="playlist.name"
             :title="playlist.playlistName"
             :sub-title="playlist.playlistCode"
-            aria-setsize="100"
-            class="h-100"
+            style="max-width: 250px;"
           >
             <b-card-text> </b-card-text>
             <!-- Send Course code to player componenet  -->
             <router-link
               :to="{
                 name: 'ViewPlaylist',
-                params: { id: playlist.playlistCode }
+                params: { id: playlist.playlistCode, playlistObj: playlist }
               }"
               ><b-button variant="primary" size="sm"
                 >View playlist</b-button
@@ -35,7 +31,11 @@
             >
             <template v-slot:footer>
               <b-dropdown size="sm" style="float: right;">
-                <b-dropdown-item v-b-modal.edit-playlist @click="modalData(playlist)">edit</b-dropdown-item>
+                <b-dropdown-item
+                  v-b-modal.edit-playlist
+                  @click="modalData(playlist)"
+                  >edit</b-dropdown-item
+                >
                 <b-dropdown-item @click="deletePlaylist(playlist.id)"
                   >delete</b-dropdown-item
                 >
@@ -57,6 +57,7 @@
           id="new-playlist"
           centered
           title="New Playlist"
+          @show="resetModal"
           @ok="createNewPlaylist()"
         >
           <b-form-group id="formName" label="Playlist Name">
@@ -84,26 +85,27 @@
         <b-modal
           id="edit-playlist"
           centered
-          title="New Playlist"
+          title="Edit Playlist"
+          @show="resetModal"
           @ok="patchPlaylist(item.id)"
         >
-          <b-form-group id="formName" label="Playlist Name">
+          <b-form-group id="formEditName" label="Playlist Name">
             <b-form-input
-              id="name-input"
+              id="editName-input"
               type="text"
               :placeholder="item.playlistName"
-              v-model="playlistName"
+              v-model="getName"
               required
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group id="formCode" label="Playlist Code">
+          <b-form-group id="formEditCode" label="Playlist Code">
             <b-form-input
-              id="code-input"
+              id="editCode-input"
               label="Code"
               type="text"
               :placeholder="item.playlistCode"
-              v-model="playlistCode"
+              v-model="getCode"
               required
             ></b-form-input>
           </b-form-group>
@@ -144,7 +146,6 @@
 
 <script>
 import axios from "axios";
-
 export default {
   data() {
     return {
@@ -170,14 +171,14 @@ export default {
       .then(res => {
         console.log(res);
         const data = res.data;
-        const array = [];
+        //const array = [];
         for (let key in data) {
           const item = data[key];
           item.id = key;
-          array.push(item);
+          //array.push(item);
           this.getItems.push(item);
         }
-        console.log(array);
+        //console.log(array);
         console.log(this.getItems);
         //this.getName = array[0].playlistName;
         //this.getCode = array[0].playlistCode;
@@ -204,19 +205,27 @@ export default {
         playlistCode: this.playlistCode
         //playlistDescription: this.playListDescription
       };
-      axios
-        .post(
-          "https://trudeau-cda16.firebaseio.com/playlists.json",
-          playlistFormData
-        )
-        .then(resp => {
-          this.$bvToast.toast(`Added playlist ${this.playlistName}`, {
-            title: "Added playlist",
-            autoHideDelay: 2000
-          });
-          console.log(resp);
-        })
-        .catch(error => console.error(error));
+      if (
+        playlistFormData.playlistName == "" ||
+        playlistFormData.playlistCode == ""
+      ) {
+        alert("Field must not be empty.");
+        return false;
+      } else {
+        axios
+          .post(
+            "https://trudeau-cda16.firebaseio.com/playlists.json",
+            playlistFormData
+          )
+          .then(resp => {
+            this.$bvToast.toast(`Added playlist ${this.playlistName}`, {
+              title: "Added playlist",
+              autoHideDelay: 2000
+            });
+            console.log(resp);
+          })
+          .catch(error => console.error(error));
+      }
     },
     deletePlaylist(id) {
       axios
@@ -233,8 +242,8 @@ export default {
     },
     patchPlaylist(id) {
       const playlistFormData2 = {
-        playlistName: this.playlistName,
-        playlistCode: this.playlistCode
+        playlistName: this.getName,
+        playlistCode: this.getCode
       };
       axios
         .patch(
@@ -251,6 +260,10 @@ export default {
     },
     modalData(playlist) {
       this.item = playlist;
+    },
+    resetModal() {
+      this.getName = "";
+      this.getCode = "";
     }
   }
 };
