@@ -21,7 +21,11 @@
         <router-link to="/video" tag="li" class="nav-item" activeClass="active"
           ><a class="nav-link">Video</a></router-link
         >
-        <router-link to="/filemanager" tag="li" class="nav-item" activeClass="active"
+        <router-link
+          to="/filemanager"
+          tag="li"
+          class="nav-item"
+          activeClass="active"
           ><a class="nav-link">File Manager</a></router-link
         >
         <router-link to="/notes" tag="li" class="nav-item" activeClass="active"
@@ -30,15 +34,22 @@
         <router-link to="/forum" tag="li" class="nav-item" activeClass="active"
           ><a class="nav-link">Forum</a></router-link
         >
-        <router-link to="/analytics" tag="li" class="nav-item" activeClass="active"
+        <router-link
+          to="/analytics"
+          tag="li"
+          class="nav-item"
+          activeClass="active"
           ><a class="nav-link">Analytics</a></router-link
         >
       </ul>
       <button class="btn btn-group-toggle bg-light" v-b-toggle.sidebar-right>SB</button>
       <ul class="navbar-nav nav-right">
         <b-dropdown right variant="dark" text="Account" style="outline:0">
-          <b-dropdown-item>Settings</b-dropdown-item>
-          <b-dropdown-item>Logout</b-dropdown-item>
+          <b-dropdown-item><router-link to = "/profile">Student Profile</router-link></b-dropdown-item>
+          <b-dropdown-item><router-link to = "/staffProfile">Staff Profile</router-link></b-dropdown-item>
+          <b-dropdown-item><router-link to = "/adminProfile">Administrator</router-link></b-dropdown-item>
+          <b-dropdown-item><router-link to = "/settings">Settings</router-link></b-dropdown-item>
+          <b-dropdown-item><router-link to = "/login">Logout</router-link></b-dropdown-item>
         </b-dropdown>
         <!-- <li class="nav-item dropdown">
           <a
