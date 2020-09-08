@@ -42,7 +42,7 @@
           ><a class="nav-link">Analytics</a></router-link
         >
       </ul>
-      <button class="btn btn-group-toggle bg-light" v-b-toggle.sidebar-right>SB</button>
+      <button class="bi bi-layout-sidebar-reverse" v-b-toggle.sidebar-right></button>
       <ul class="navbar-nav nav-right">
         <b-dropdown right variant="dark" text="Account" style="outline:0">
           <b-dropdown-item><router-link to = "/profile">Student Profile</router-link></b-dropdown-item>
@@ -71,3 +71,6 @@
     </div>
   </nav>
 </template>
+
+<script>
+</script>
