@@ -11,8 +11,10 @@ import "video.js";
 import "video.js/dist/video-js.css";
 import "videojs-playlist-ui/dist/videojs-playlist-ui.vertical.css";
 import "videojs-playlist-ui/dist/videojs-playlist-ui.css";
+import { BootstrapVueIcons } from "bootstrap-vue";
 
 Vue.use(BootstrapVue);
+Vue.use(BootstrapVueIcons);
 Vue.config.productionTip = false;
 
 new Vue({

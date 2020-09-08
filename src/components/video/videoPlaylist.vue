@@ -30,14 +30,24 @@
               ></router-link
             >
             <template v-slot:footer>
-              <b-dropdown size="sm" style="float: right;">
+              <b-dropdown
+                size="sm"
+                style="float: right;"
+                variant="link"
+                no-caret
+              >
+                <template v-slot:button-content >
+                  <b-icon icon="three-dots"></b-icon>
+                </template>
                 <b-dropdown-item
                   v-b-modal.edit-playlist
                   @click="modalData(playlist)"
-                  >edit</b-dropdown-item
+                  ><b-icon icon="pencil" aria-hidden="true"></b-icon>Edit</b-dropdown-item
                 >
-                <b-dropdown-item @click="deletePlaylist(playlist.id)"
-                  >delete</b-dropdown-item
+                <b-dropdown-divider></b-dropdown-divider>
+                <b-dropdown-item variant="danger" @click="deletePlaylist(playlist.id)"
+                  ><b-icon icon="trash-fill" aria-hidden="true"></b-icon>
+        Delete</b-dropdown-item
                 >
               </b-dropdown>
             </template>
@@ -45,18 +55,17 @@
         </b-card-group>
       </div>
       <div class="col-2" style="margin-top: 20px;">
-        <button
-          v-b-modal.new-playlist
-          class="btn btn-primary"
-          style="float: right;"
-        >
+        <b-button v-b-modal.new-playlist variant="warning"
+        ><b-icon icon="plus-circle-fill" aria-hidden="true"></b-icon>
           New Playlist
-        </button>
+        </b-button>
 
         <b-modal
           id="new-playlist"
           centered
           title="New Playlist"
+          header-bg-variant="warning"
+          header-text-variant="light"
           @show="resetModal"
           @ok="createNewPlaylist()"
         >
@@ -86,6 +95,8 @@
           id="edit-playlist"
           centered
           title="Edit Playlist"
+          header-bg-variant="warning"
+          header-text-variant="light"
           @show="resetModal"
           @ok="patchPlaylist(item.id)"
         >
