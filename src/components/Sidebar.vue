@@ -3,11 +3,9 @@
     <b-sidebar
       id="sidebar-right"
       no-close-on-route-change
-      no-slide
       no-header
       right
       shadow
-      visible
       bg-variant="dark"
       text-variant="light"
       width="200px"
