@@ -16,11 +16,11 @@ import login from "../components/accounts/login.vue";
 import profile from "../components/accounts/studentProfile.vue";
 import staffProfile from "../components/accounts/staffProfile.vue";
 import adminProfile from "../components/accounts/administratorProfile.vue";
-import createStudent from "../components/accounts/createStudent.vue";
+import createStudent from "../components/accounts/createStudents.vue";
 import createStaff from "../components/accounts/createStaff.vue";
-import listStudents from "../components/accounts/listStudents.vue";
+import listStudents from "../components/accounts/listingStudents.vue";
 import forgotPassword from "../components/accounts/forgotPassword.vue";
-
+import emailSubmitted from "../components/accounts/emailSubmitted.vue";
 
 Vue.use(VueRouter);
 
@@ -129,6 +129,11 @@ const routes = [
     path: "/forgotPassword",
     name: "forgotPassword",
     component: forgotPassword
+  },
+  {
+    path: "/emailSubmitted",
+    name: "emailSubmitted",
+    component: emailSubmitted
   }
 ];
 

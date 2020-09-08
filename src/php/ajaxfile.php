@@ -1,4 +1,4 @@
-<?php
+/*<?php
 include "config.php";
 
 $data = json_decode(file_get_contents("php://input"));
@@ -7,7 +7,7 @@ $request = $data->request;
 
 //show all entries
 if ($request == 1){
-    $userData = mysqli_query($con, "SELECT accounts.* student.registrationID  FROM accounts INNER JOIN students ON accounts.nic = student.accounts_nic ORDER BY students.registrationID DESC");
+    $userData = mysqli_query($con, "SELECT accounts student.registrationID  FROM accounts INNER JOIN students ON accounts.nic = student.accounts_nic ORDER BY students.registrationID DESC");
 
     $response = array();
     while($row = mysqli_fetch_assoc($userData)){
@@ -61,4 +61,4 @@ if ($request == 4){
     mysqli_query($con, "DELETE FROM accounts WHERE nic =" .$nic);
     echo "Account Successfully Deleted";
     exit;
-}
+}*/

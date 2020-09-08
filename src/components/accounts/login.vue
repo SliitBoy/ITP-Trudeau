@@ -54,6 +54,7 @@ export default {
 
 .mainContainer{
      margin-right: 0px;
+     background-color:#2c2f33;
 }
 .container{
      padding-left: 100px;

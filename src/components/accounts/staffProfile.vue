@@ -72,6 +72,19 @@
                         <h6>Course 10</h6>
                     </div>
                 </button>
+                <button href = "#" class = "courseBtn">
+                    <div class = "course">
+                        <img src = "@/images/banner1.png" width = 147.4 height = 59.8px>
+                        <h6>Course 9</h6>
+                    </div>
+                </button>
+
+                <button href = "#" class = "courseBtn">
+                    <div class = "course">
+                        <img src = "@/images/banner3.png" width = 147.4 height = 59.8px>
+                        <h6>Course 10</h6>
+                    </div>
+                </button>
             </section>
             <br><br>
 
@@ -145,7 +158,6 @@
     .container{
         background-color: #2c2f33;
         color: white;
-        padding-right:5px;
         padding-left:5px;
     }
     .courseContainers{
@@ -167,7 +179,7 @@
     padding: 0px;
     margin: 1px 0;
     border: none;
-    height: 40%;
+    height: 55%;
     width: 70%;
     border-radius: 5px;
     cursor: pointer;
