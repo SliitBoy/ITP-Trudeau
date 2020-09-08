@@ -12,7 +12,7 @@
           v-model="playlistSearch"
           placeholder="Search"
         />
-        <b-card-group columns style="margin-top: 10px;">
+        <b-card-group deck style="margin-top: 10px;">
           <!-- Create cards for playlists in array-->
           <b-card
             v-for="playlist in playlistFilter"
@@ -20,6 +20,7 @@
             :title="playlist.playlistName"
             :sub-title="playlist.playlistCode"
             aria-setsize="100"
+            class="h-100"
           >
             <b-card-text> </b-card-text>
             <!-- Send Course code to player componenet  -->
@@ -90,7 +91,7 @@
             <b-form-input
               id="name-input"
               type="text"
-              :placeholder= item.playlistName
+              :placeholder="item.playlistName"
               v-model="playlistName"
               required
             ></b-form-input>
@@ -101,7 +102,7 @@
               id="code-input"
               label="Code"
               type="text"
-              :placeholder= item.playlistCode
+              :placeholder="item.playlistCode"
               v-model="playlistCode"
               required
             ></b-form-input>
