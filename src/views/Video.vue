@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="vh-100">
     <app-video-playlists></app-video-playlists>
   </div>
   <!-- <video
