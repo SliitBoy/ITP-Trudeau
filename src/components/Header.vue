@@ -34,7 +34,6 @@
           ><a class="nav-link">Analytics</a></router-link
         >
       </ul>
-      <button class="bi bi-layout-sidebar-reverse" v-b-toggle.sidebar-right></button>
       <ul class="navbar-nav nav-right">
         <b-dropdown right variant="dark" text="Account" style="outline:0">
           <b-dropdown-item>Settings</b-dropdown-item>
@@ -57,9 +56,10 @@
           </div>
         </li> -->
       </ul>
+      <b-button size="sm" variant="primary" class="mb-2"  v-b-toggle.sidebar-right>
+        <b-icon icon="layout-sidebar-reverse" aria-label="Help"></b-icon>
+      </b-button>
     </div>
   </nav>
 </template>
 
-<script>
-</script>
