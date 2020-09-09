@@ -1,10 +1,22 @@
 <template>
   <b-jumbotron>
+    <b-button>Create Quiz</b-button>
+    <b-form-input placeholder="Quiz Description "></b-form-input>
+    <b-form-input placeholder="Course "></b-form-input>
+    <b-checkbox
+    value="1"
+      unchecked-value="0"
+      v-model="isTimed"
+      > is timed</b-checkbox>
+      <b-form-input  type="number" :disabled="isTimed == 0" placeholder="Time in minutes "></b-form-input>
+      <b-form-input type="date" placeholder="Course "></b-form-input>
+      <br>
     <b-form-input
       v-model="Questions[currentQ].question"
       placeholder="Enter question here"
     ></b-form-input>
     <!--<div :key="answer" v-for="answer in Questions[currentQ].Answers">-->
+    <b-radio-group>
     <span :key="answer" v-for="answer in Questions[currentQ].Answers">
       <b-radio /><b-form-input
         v-model="answer.answer"
@@ -12,17 +24,19 @@
       ></b-form-input>
       <b-button @click="removeAns(answer)">Remove</b-button>
     </span>
+    </b-radio-group>
     <!--</div>-->
     <b-button @click="addAns">Add Answer</b-button>
 
     <b-button @click="addQuestion">Add Question</b-button>
     <br /><br />
-    <div :key="question" v-for="question in Questions">
+    <div :key="question.id" v-for="question in Questions">
+      <b-button @click="removeBtn(question)">Remove</b-button>
       <b>Question:</b>{{ question.question }}
       <div :key="answer" v-for="answer in question.Answers">
        <b>Acnswer:</b> {{ answer.answer }}
       </div>
-      <b-button @click="removeBtn(question)">Remove</b-button>
+      
     </div>
   </b-jumbotron>
 </template>
@@ -32,7 +46,7 @@ export default {
     return {
       question: "",
       currentQ: 0,
-
+      isTimed:0,
       currentAns: 1,
 
       Questions: [
@@ -79,8 +93,22 @@ export default {
       console.log(this.Questions);
     },
     removeBtn: function(que) {
-      this.Questions.splice(this.Questions.indexOf(que), 1);
-      console.log(this.Questions);
+
+      console.log(que.id)
+      if(this.Questions.indexOf(que)>=1){
+        this.Questions.splice(this.Questions.indexOf(que), 1);
+      }else if (this.Questions.indexOf(que)==0){
+        this.Questions[
+        {
+          id: null,
+          question: null,
+          Answers: [] //{ id: '', answer: '', isSelected: '' }
+        }
+      ]
+      }
+      console.log(this.Questions.indexOf(que));
+      
+      
     }
   }
 };
