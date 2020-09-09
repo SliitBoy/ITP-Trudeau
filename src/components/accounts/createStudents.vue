@@ -8,6 +8,7 @@
                 <th>NIC</th>
                 <th>Username</th>
                 <th>Name</th>
+                <th>Registration Number</th>
                 <th>E-mail</th>
                 <th>Contact Number</th>
                 <th></th>
@@ -18,10 +19,15 @@
                 <td><input id = "nic" type = "text" v-model = "nic"></td>
                 <td><input id = "username" type = "text" v-model = "username"></td>
                 <td><input id = "name" type = "text" v-model = "name"></td>
+                <td><input id = "regID" type = "text" v-model = "regID"></td>
                 <td><input id = "email" type = "text" v-model = "email"></td>
                 <td><input id = "contactNumber" type = "tel" v-model = "contactNumber"></td>
                 <!--<td><input type = "text" v-model = "password"></td>-->
                 <td><button  class = "createBtn" type = "submit" @click = "onCreate">Create</button></td>
+            </tr>
+
+            <tr>
+                <td>{{ regID }}</td>
             </tr>
             </div>
         </div>
@@ -36,6 +42,7 @@ export default {
         nic: '',
         username: '',
         name: '',
+        regID: '',
         email: '',
         contactNumber: null
         }
@@ -46,6 +53,7 @@ export default {
                 nic: this.nic,
                 username: this.username,
                 name: this.name,
+                regID: this.regID,
                 email: this.email,
                 contactNumber: this.contactNumber
             }
