@@ -2,19 +2,20 @@
     <div class = mainContainer>
         <div class = "container">
             <br><br>
+            <br><br>
+            <br><br>
             <div class = "title">
-                <h1>Reset Password</h1>
+                <h1>An E-mail has been sent.</h1>
             </div>
             <br><br>
             <br><br>
             <br><br>
-            <br><br>
-
+        
             <div class = "field">
-                <label for = "email">E-mail</label>
-                <input type = "text" id = "emailForgot" placeholder = "justin@trippingonquack.com">
-                <router-link to = "/emailSubmitted"> 
-                    <button type ="submit" class = "submitEmail">Submit</button>
+                <h6>Contact your administrator if you cannot recover your account.</h6>
+                <br>
+                <router-link to = "/login">
+                    <button type ="submit" class = "loginReturn">Try Logging in with Password</button>
                 </router-link>
             </div>
 
@@ -35,7 +36,7 @@
     margin-left:-25px;
     padding-left: 50px;
     padding-top: 25px;
-    padding-bottom: 250px;
+    padding-bottom: 252px;
 }
 
 .field{
@@ -56,24 +57,27 @@ input[type=text] {
      color: white;
 } 
 
-#emailForgot:focus{
-     outline:none;
-     box-shadow: none;
-     border-bottom-color: whitesmoke;
+.loginReturn:hover{
+     background-color: #e05757;
 }
 
-.submitEmail {
+.loginReturn:focus{
+     outline:none;
+     box-shadow: none;
+}
+
+.loginReturn {
      background-color: #de4242;
      color: white;
      padding: 5px;
      margin: 14px 0;
      border: none;
-     width: 30%;
+     width: 50%;
      border-radius: 3px;
      cursor: pointer;
      font-family: 'Poppins', sans-serif;
      font-size: 17px;
-     transform: translate(350%, -200%);
+     transform: translate(150%, -270%);
 }
 .title{
     transform: translate(11%,290%)

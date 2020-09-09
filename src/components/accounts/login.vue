@@ -57,21 +57,7 @@ export default {};
 <style scoped>
 .mainContainer {
   margin-right: 0px;
-}
-.container {
-  padding-left: 100px;
-  margin-left: -5px;
-  min-height: 100%;
-  min-width: 100%;
-  display: grid;
-  padding-top: 40px;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  /*grid-template-areas: 'left right';*/
   background-color: #2c2f33;
-  color: white;
-  font-family: "Poppins", sans-serif;
-  padding-bottom: 85px;
-  margin-bottom: -85px;
 }
 
 .left {

@@ -1,14 +1,14 @@
 <template>
     <div class = "mainContainer">
         <div class = "container">
-            <h1>Create Staff Accounts</h1>
+            <h1>Create Student Accounts</h1>
             
             <div class ="table">
                 <tr>
                 <th>NIC</th>
                 <th>Username</th>
                 <th>Name</th>
-                <th>Employee ID</th>
+                <th>Registration Number</th>
                 <th>E-mail</th>
                 <th>Contact Number</th>
                 <th></th>
@@ -19,12 +19,14 @@
                 <td><input id = "nic" type = "text" v-model = "nic"></td>
                 <td><input id = "username" type = "text" v-model = "username"></td>
                 <td><input id = "name" type = "text" v-model = "name"></td>
-                 <td><input id = "empID" type = "text" v-model = "empID"></td>
+                <td><input id = "regID" type = "text" v-model = "regID"></td>
                 <td><input id = "email" type = "text" v-model = "email"></td>
                 <td><input id = "contactNumber" type = "tel" v-model = "contactNumber"></td>
                 <!--<td><input type = "text" v-model = "password"></td>-->
                 <td><button  class = "createBtn" type = "submit" @click = "onCreate">Create</button></td>
             </tr>
+
+           
             </div>
         </div>
     </div>
@@ -38,7 +40,7 @@ export default {
         nic: '',
         username: '',
         name: '',
-        empID: '',
+        regID: '',
         email: '',
         contactNumber: null
         }
@@ -49,12 +51,12 @@ export default {
                 nic: this.nic,
                 username: this.username,
                 name: this.name,
-                empID: this.empID,
+                regID: this.regID,
                 email: this.email,
                 contactNumber: this.contactNumber
             }
             console.log(formData)
-            axios.post('https://trudeau-accounts.firebaseio.com/staff.json', formData)
+            axios.post('https://trudeau-accounts.firebaseio.com/students.json', formData)
             .then(res =>console.log(res))
             .catch(error => console.log(error))
         }
