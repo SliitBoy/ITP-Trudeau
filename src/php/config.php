@@ -1,4 +1,4 @@
-<?php
+/*<?php
 
 $host = "localhost";
 $user = "root";
@@ -9,4 +9,4 @@ $connection = mysqli-connect($host, $user, $password, $dbname);
 
 if (!connection){
     die("Connection Failed: ". mysqli_connect_error());
-}
+}*/

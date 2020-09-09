@@ -51,21 +51,21 @@
 </template>
 
 
-
 <style scoped>
 .mainContainer{
-    margin-right: 200px;
+    margin-right: 0px;
     background-color: #2c2f33;
     margin-left: -50px;
     padding-left:75px;
     color: white;
-    padding-top:25px;
+    padding-left: 120px;
+    padding-top:30px;
 }
 .container{
     margin-left: -50px;
     padding-left: 50px;
     padding-top: 70px;
-    padding-bottom: 142px;
+    padding-bottom: 138px;
     background-color:#2c2f33;
 }
 

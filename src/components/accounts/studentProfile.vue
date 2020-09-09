@@ -129,6 +129,18 @@
                         <h6>Course 10</h6>
                     </div>
                 </button>
+                 <button href = "#" class = "courseBtn">
+                    <div class = "course">
+                        <img src="@/images/banner3.png" width = 147.4px height = 59.8px>
+                        <h6>Course 11</h6>
+                     </div>
+                </button>
+                <button href = "#" class = "courseBtn">
+                    <div class = "course">
+                        <img src="@/images/banner1.png" width = 147.2.9px height = 59.5px>
+                        <h6>Course 12</h6>
+                    </div>
+                </button>
             </section>
         </div>
     </div>
@@ -144,7 +156,7 @@
     margin-left: -205px;
     padding-left: 150px;
     background-color:#2c2f33;
-    margin-right: -5px;
+    margin-right: -204px;
     padding-right:131px;   
     margin-top: -80px;
     padding-top: 80px;
@@ -157,7 +169,7 @@
     color: white;
     margin-left: -210px;
     padding-left: 80px;
-    margin-right: -10px;
+    margin-right: -204px;
     padding-right: 100px;
 }
 
