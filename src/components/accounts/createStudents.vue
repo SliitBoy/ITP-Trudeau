@@ -26,9 +26,7 @@
                 <td><button  class = "createBtn" type = "submit" @click = "onCreate">Create</button></td>
             </tr>
 
-            <tr>
-                <td>{{ regID }}</td>
-            </tr>
+           
             </div>
         </div>
     </div>
