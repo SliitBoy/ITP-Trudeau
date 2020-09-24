@@ -1,6 +1,6 @@
 import Vue from "vue";
-import Vuelidate from 'vuelidate';
-import VueResource from 'vue-resource';
+import Vuelidate from "vuelidate";
+import VueResource from "vue-resource";
 
 import App from "./App.vue";
 import router from "./router";
