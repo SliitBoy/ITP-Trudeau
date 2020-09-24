@@ -24,19 +24,32 @@
 
             </div>
             <div class = "topRight">
-                <div class = "innerTopRight">
+                <div class = "innerTopRight" :class="{invalid:$v.currentPassword.$error}">
                     <label for="password">Current Password</label>
-                    <input type="password" id="currentPassword">
+                    <input 
+                        type="password" 
+                        id="currentPassword"
+                        @blur ="$v.currenPassword.$touch()"
+                        v-model = "currentPassword"
+                    >
                 </div>
 
-                <div class = "innerTopRight">
+                <div class = "innerTopRight" :class="{invalild:$v.newPassword.$error}">
                     <label for="password">New Password</label>
-                    <input type="password" id="newPassword">
+                    <input 
+                        type="password" 
+                        id="newPassword"
+                        @blur="$v.newPassword.$touch()"
+                        v-model = "newPassword">
                 </div>
-
-                <div class = "innerTopRight">
+ 
+                <div class = "innerTopRight" :class="{invalid:$v.confirmPassword.$error}">
                     <label for="password">Confirm New Password</label>
-                    <input type="password" id="confirmPassword">
+                    <input 
+                        type="password" 
+                        id="confirmPassword"
+                        @blur="$v.confirmPassword.$touch()"
+                        v-model = "confirmPassword">
                 </div>
 
                 <div class = "innerTopRight" id = "changePassword">
@@ -53,7 +66,7 @@
                 </div>
 
                 <div class = "innerBottomLeft">
-                    <label for="email">E-mail</label> 
+                    <label for="email">E-mail</label> <br>
                     <input type="email" id="email" placeholder="justin@trippinonquack.com">
                 </div>
 
@@ -95,6 +108,34 @@
             </div>
             </div>
 </template>
+
+<script>
+import {required, minLength} from 'vuelidate/lib/validators'
+export default {
+    data(){
+        return{
+            newPassword: '',
+            currentPassword: '',
+            confirmPassword:''
+
+        }
+    },
+    validations:{
+        newPassword:{
+            required,
+            minLength: minLength(1)
+        },
+        confirmPassword:{
+            required,
+            minLength: minLength(1)
+        },
+        currentPassword:{
+            required,
+            minLength: minLength(1)
+        }
+    }
+}
+</script>
 
 <style scoped>
 .settingsWrapper{
@@ -225,7 +266,6 @@ input[type=email] {
     border-right:none;
     border-left:none;
     color:white;
-    transform: translate(-10%, 60%);
 }
 
 input[type=tel] {
@@ -292,6 +332,7 @@ input[type=tel] {
     border-bottom-color: whitesmoke;
 }
 
+
 #contactno:focus{
     outline: none;
     box-shadow: none;
@@ -319,6 +360,10 @@ input[type=tel] {
 
 #removeBtn{
     transform:translate(0px, -5px)
+}
+
+.innerTopRight.invalid input{
+    border-bottom-color: #de4242;
 }
 
 </style>

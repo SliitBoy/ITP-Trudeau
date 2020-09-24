@@ -103,11 +103,6 @@
 }
 
 
-
-
-
-
-
 /*ADJUST TO FILL ENTIRE COLORED AREA*/
 .adminField {
     padding-top: 25px;

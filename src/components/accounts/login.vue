@@ -1,10 +1,10 @@
 <template>
-    <div class = mainContainer>
+    <div class = "mainContainer">
          <div class = "container">
             <div class = "left">
-                <div class = "justin">
+               <div class = "justin">
                     <img src = "@/images/Trudeau logo (1).png" width = 600px height = 600px/>
-                </div>
+               </div>    
             </div>
 
             <hr class = "border">
@@ -19,11 +19,25 @@
                                 <br>
                             </div>
 
-                            <label for = "username">Username</label>
-                            <input type = "text" id = "username" placeholder = "justin@trippingonquack.com">
-                       
-                            <label for ="password">Password</label>
-                            <input type = "password" id = "password">
+                              <div class = "validateInput" :class ="{invalid:$v.username.$error}"> <!--highlighted if email is invalid or field is empty-->
+                                   <label for = "username">Username</label>
+                                   <input 
+                                        type = "email" 
+                                        id = "username" 
+                                        @blur="$v.username.$touch()"
+                                        v-model = "username"
+                                        placeholder = "justin@trippingonquack.com">                       
+                              </div>
+                            
+                              <div class = "validateInput" :class ="{invalid:$v.password.$error}">  <!--highlighted if field is empty-->
+                                   <label for ="password">Password</label>
+                                   <input 
+                                        type = "password" 
+                                        id = "password"
+                                        @blur="$v.password.$touch()"
+                                        v-model= "password">
+                              </div>
+                            
 
                             <!--forgot password link-->
                                <router-link to ="/forgotPassword">
@@ -33,9 +47,8 @@
                         <br>
                         <br>
                         <div class = "login">
-                              <button type ="submit" class = "loginBtn">Log In</button>
+                              <button @click = "login()" class = "loginBtn">Log In</button>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -45,8 +58,52 @@
 </template>
 
 <script>
+import {required, email} from 'vuelidate/lib/validators'
+import axios from 'axios'
 export default {
-     
+     data(){
+          return{
+               username: '',
+               password: ''
+          }
+     },
+     validations:{
+          username:{
+               required,
+               email
+          },
+          password:{
+               required,
+               //add code connecting to firebase for validation
+          }
+     },
+     methods:{
+          //login(){
+               //this.$store.dispatch('login',{
+                    //username: this.username,
+                    //password:this.password
+               //})
+          //}
+          login({commit}, authData){
+               axios.post('https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyBppMONz0sx74W3SV8IQqD6eCEjfdbZLE4',{
+                    username: authData.username,
+                    password: authData.password,
+                    returnSecureToken: true
+               })
+               .then(res => {
+                    console.log(res)
+                    localStorage.setItem('token', res.data.idToken)
+                    localStorage.setItem('userId', res.data.localId)
+                    localStorage.setItem('email', res.data.email)
+                    commit('authUser', {
+                         token: res.data.idToken,
+                         userId: res.data.localId
+                    })
+                    //router.push('/studentProfile')
+               })
+               .catch(error => console.log(error.message))
+          }
+     }
 }
 </script>
 
@@ -92,6 +149,9 @@ export default {
   
 .justin{
      padding-top: 10px;
+     margin-right: -450px;
+     padding-left: 25px;
+     margin-left: -25px;
      padding-right: 0px;
 }
 
@@ -107,6 +167,23 @@ input[type=text] {
      font-family: 'Poppins', sans-serif;
      color: white;
 } 
+
+input[type=email] {
+     width: 100%;
+     margin-bottom: 20px;
+     padding: 12px;
+     border-top: none;
+     border-left: none;
+     border-right:none;
+     background-color: #2c2f33;
+     border-radius: 5px;
+     font-family: 'Poppins', sans-serif;
+     color: white;
+} 
+
+.validateInput.invalid input{
+     border-bottom-color: #de4242;
+}
 
 #username:focus{
      outline:none;
@@ -181,4 +258,5 @@ input[type=password] {
      outline:none;
      box-shadow: none;
 }
+
 </style>
