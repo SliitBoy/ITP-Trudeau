@@ -42,7 +42,7 @@
           ><a class="nav-link">Analytics</a></router-link
         >
       </ul>
-      <ul class="navbar-nav nav-right">
+      <ul class="navbar-nav nav-right m-1">
         <b-dropdown right variant="dark" text="Account" style="outline:0">
           <b-dropdown-item><router-link to = "/profile">Student Profile</router-link></b-dropdown-item>
           <b-dropdown-item><router-link to = "/staffProfile">Staff Profile</router-link></b-dropdown-item>
@@ -67,7 +67,7 @@
           </div>
         </li> -->
       </ul>
-      <b-button size="sm" variant="primary" class="mb-2"  v-b-toggle.sidebar-right>
+      <b-button size="sm" variant="primary" v-b-toggle.sidebar-right>
         <b-icon icon="layout-sidebar-reverse" aria-label="Help"></b-icon>
       </b-button>
     </div>
