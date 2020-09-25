@@ -1,15 +1,19 @@
 <template>
-    <div class = "mainContainer">
+    <!-- <div class = "mainContainer">
          <div class = "container">
-            <div class = "left">
+            <div class = "left"> -->
+
+
+    <div class = "container loginGrid">
+        <div class = "row justify-content-around loginRow">
+            <div class = "col-5 loginColLeft">
                <div class = "justin">
                     <img src = "@/images/Trudeau logo (1).png" width = 600px height = 600px/>
                </div>    
             </div>
 
-            <hr class = "border">
-
-            <div class = "right">
+            <!-- <div class = "right"> -->
+            <div class ="col loginColRight">    
                 <div class = "loginBox">
                     <div class ="container2">
                         <div class = "innerLoginBox">
@@ -20,7 +24,7 @@
                             </div>
 
                               <div class = "validateInput" :class ="{invalid:$v.username.$error}"> <!--highlighted if email is invalid or field is empty-->
-                                   <label for = "username">Username</label>
+                                   <label for = "username" class = "labels">Username</label>
                                    <input 
                                         type = "email" 
                                         id = "username" 
@@ -30,7 +34,7 @@
                               </div>
                             
                               <div class = "validateInput" :class ="{invalid:$v.password.$error}">  <!--highlighted if field is empty-->
-                                   <label for ="password">Password</label>
+                                   <label for ="password" class ="labels">Password</label>
                                    <input 
                                         type = "password" 
                                         id = "password"
@@ -52,11 +56,9 @@
                     </div>
                 </div>
             </div>
-          </div>
+
         </div>
-      </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -132,7 +134,7 @@ export default {
 }
 
 .left{
-     width: 50%;
+     width:100%;
      padding-right:60px;
      background-color: #2c2f33;
      background-color:#2c2f33;
@@ -151,8 +153,8 @@ export default {
   
 .justin{
      padding-top: 10px;
-     margin-right: -450px;
-     padding-left: 25px;
+     margin-right: -40px;
+     padding-left: -25px;
      margin-left: -25px;
      padding-right: 0px;
 }
@@ -244,13 +246,7 @@ input[type=password] {
 }
   
 /*vertical line in centre*/
-.border{
-     border-right: 2px solid white;
-     height: 75%;
-     margin-top:80px;
-     margin-right: 300px;
 
-}
 
 .loginBtn:hover{
      background-color: #e05757;
@@ -259,6 +255,29 @@ input[type=password] {
 .loginBtn:focus{
      outline:none;
      box-shadow: none;
+}
+
+.loginColRight{
+     padding-top:90px;
+     padding-left:150px;
+     width: 50%;
+}
+
+.loginColLeft{
+    padding-left: 75px;
+}
+
+.loginGrid{
+    margin-right: -50px;
+}
+
+.loginBox{
+    padding-right: 150px;
+    padding-left: 10px;
+}
+
+.labels{
+    color: white;
 }
 
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class = "container">
+    <div class = "containerCreate">
         <div class = "name"> <!--positions page title-->
             <h1>Create Student Accounts</h1>
         </div>
@@ -7,7 +7,7 @@
         <form @submit.prevent>
             <div class = "left"> <!-- allows split positioning-->
                 <!--NIC number input field-->
-                <label for = "nic">NIC</label><br>
+                <label for = "nic" class = "labels">NIC</label><br>
                 <div class = "validateFields" :class ="{validate:$v.nic.$error}">
                     <!--<h6 v-if = "!$v.nic.unique">An account already exists</h6>-->
                     <input 
@@ -20,7 +20,7 @@
                 </div>
 
                 <!--username-->
-                <label for = "username">Username</label>
+                <label for = "username" class = "labels">Username</label>
                 <div class = "validateFields" :class="{validate:$v.username.$error}">
                     <input
                         class ="field"
@@ -32,7 +32,7 @@
                 </div>
 
                 <!--last name-->
-                <label for ="lastName">Last Name</label>
+                <label for ="lastName" class = "labels">Last Name</label>
                 <div class = "validateFields" :class ="{validate: $v.lastName.$error}">
                     <input 
                         class = "field"
@@ -44,7 +44,7 @@
                 </div>
 
                 <!--other names-->
-                <label for = "otherNames">Other Names</label>
+                <label for = "otherNames" class = "labels">Other Names</label>
                 <div class = "validateFields" :class ="{validate:$v.otherNames.$error}">
                     <input
                         class ="field"
@@ -58,7 +58,7 @@
                     
                 <div class = "right"><!--split view right container-->
                     <!--registration number-->
-                    <label for = "registrationNumber">Registration Number</label>
+                    <label for = "registrationNumber" class = "labels">Registration Number</label>
                     <div class ="validateFields" :class ="{validate:$v.registrationNumber.$error}">
                         <input
                             class ="field"
@@ -70,7 +70,7 @@
                     </div>
 
                     <!--email-->
-                    <label for ="email">E-mail</label><br>
+                    <label for ="email" class = "labels">E-mail</label><br>
                     <div class ="validateFields" :class="{validate:$v.email.$error}">
                         <input
                             class = "field"
@@ -81,7 +81,7 @@
                     </div>
 
                     <!--contact number-->
-                    <label for = "contactNumber">Contact Number</label>
+                    <label for = "contactNumber" class = "labels">Contact Number</label>
                     <input
                         class = "field"
                         type = "number"
@@ -90,7 +90,7 @@
                         v-model = "contactNumber"> <!--validation not required, non compulsory field-->
             
                     <!--password-->
-                    <label for ="password">Password</label>
+                    <label for ="password" class = "labels">Password</label>
                     <div class = "validateFields" :class ="{validate:$v.password.$error}">
                         <input
                             class ="field"
@@ -261,14 +261,14 @@ export default {
 
 
 <style scoped>
-.container{
-    min-width: 1539.5px;
+.containerCreate{
     margin-left: -20px;
     padding-left: 100px;
     padding-top: 25px;
     margin-right: 0px;
     display:grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    /* grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); */
+    grid-template-areas: 'left right';
     background-color:#2c2f33;
     color: white;
     font-family: 'Poppins', sans-serif;   
@@ -276,25 +276,26 @@ export default {
 
 .left{
     margin-top: 60px;
-    margin-left: -430px;
-    margin-right:300px;
-    /*background-color: peru;*/
-    margin-bottom: 400px;
+    margin-left: -1100px;
+    margin-right: 500px;
+    /* background-color: peru; */
     padding-left:25px;
 
 }
 
 .right{
-    margin-top:-808px;
-    /*background-color:blueviolet;*/
-    margin-bottom: 400px;
-    margin-right: -400px;
-    margin-left: 200px;
-    padding-left: 25px;
+    margin-top: -522px;
+    /* background-color:blueviolet; */
+    margin-right: 420px;
+    /* margin-left: -20px; */
+}
+
+form{
+    width: 0%;
 }
 
 .name{
-    margin-right: -500px;
+    margin-right: -50px;
     margin-bottom: 660px;
     /*background-color:#e05757;*/
 }
@@ -387,14 +388,16 @@ input[type=password] {
     margin-left: -100px;
     /*margin-bottom: 180px;*/
     background-color:#2c2f33;
-    transform: translate(-17%, -675%);
+    transform: translate(-160%, 70%);
 }
 
 .entries{
-    /*background-color:#e05757;*/
-    margin-top: 560px;
-    margin-right: 40px;
-    margin-left:-950px;
+    /* background-color:orange; */
+    margin-top: 0px;
+    margin-right: -10px;
+    margin-left: 70px;
+    margin-bottom: 60px;
+    transform:translate(4%);
 }
 
 .displayList{
@@ -403,6 +406,7 @@ input[type=password] {
     margin-left: 230px;
     margin-bottom: 180px;
     /*background-color:aqua;*/
+    transform:translate(4%);
 }
 
 .list-group{
@@ -532,4 +536,25 @@ input[type= number]{
      outline:none;
      box-shadow: none;
 }
+
+#registrationNumber{
+    width: 180%;
+}
+
+#email{
+    width: 180%;
+}
+
+#password{
+    width: 180%;
+}
+
+#contactNumber{
+    width: 180%
+}
+
+.labels{
+    color: white;
+}
+
 </style>  
