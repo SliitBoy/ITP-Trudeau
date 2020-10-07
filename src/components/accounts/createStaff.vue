@@ -223,8 +223,8 @@ export default {
                     resultArray.push(staff[key]);
                 }
                 this.staff = resultArray.reverse();
-            });
-            //.catch(error => console.log(error))
+            })
+            .catch(error => console.log(error))
         },
         createAccount({commit, dispatch}, authData){
             axios.post('https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyBppMONz0sx74W3SV8IQqD6eCEjfdbZLE4',{
@@ -271,6 +271,7 @@ export default {
     background-color:#2c2f33;
     color: white;
     font-family: 'Poppins', sans-serif;   
+    padding-bottom: 20px;
 }
 
 .left{
@@ -465,7 +466,7 @@ input[type= number]{
 }
 
 #employeeIDCell{
-    width:10%;
+    width:12%;
     color: #525252;
     /*background-color: turquoise;*/
 }
@@ -477,7 +478,7 @@ input[type= number]{
 }
 
 #contactNumberCell{
-    width:11%;
+    width:12%;
     color: #525252;
     /*background-color: green*/
 }

@@ -1,4 +1,6 @@
 <template>
+
+<!--remove this file-->
     <div class = "mainContainer">
         <div class = "container">
             <h1>Student List</h1>

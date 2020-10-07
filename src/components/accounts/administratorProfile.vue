@@ -44,15 +44,17 @@
         </div>
 
         <div class="bottomRight">
-          <button href="#" class="adminFieldBtn">
-            <div class="adminField">
-              <img
-                src="@/images/maintainStaff.png"
-                width="451.8px"
-                height="265.95px"
-              />
-            </div>
-          </button>
+          <router-link to="/listStaff">
+            <button href="#" class="adminFieldBtn">
+              <div class="adminField">
+                <img
+                  src="@/images/maintainStaff.png"
+                  width="451.8px"
+                  height="265.95px"
+                />
+              </div>
+            </button>
+          </router-link>
         </div>
       </div>
     </div>

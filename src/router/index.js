@@ -19,6 +19,7 @@ import adminProfile from "../components/accounts/administratorProfile.vue";
 import createStudent from "../components/accounts/createStudents.vue";
 import createStaff from "../components/accounts/createStaff.vue";
 import listStudents from "../components/accounts/listingStudents.vue";
+import listStaff from "../components/accounts/listingStaff.vue";
 import forgotPassword from "../components/accounts/forgotPassword.vue";
 import emailSubmitted from "../components/accounts/emailSubmitted.vue";
 
@@ -136,6 +137,11 @@ const routes = [
     path: "/listStudents",
     name: "listStudents",
     component: listStudents
+  },
+  {
+    path: "/listStaff",
+    name: "listStaff",
+    component: listStaff
   },
   {
     path: "/forgotPassword",

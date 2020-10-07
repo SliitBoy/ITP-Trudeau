@@ -266,6 +266,7 @@ export default {
     padding-left: 100px;
     padding-top: 25px;
     margin-right: 0px;
+    padding-bottom: 20px;
     display:grid;
     /* grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); */
     grid-template-areas: 'left right';
@@ -473,7 +474,7 @@ input[type= number]{
 }
 
 #registrationNumberCell{
-    width:12%;
+    width:15%;
     color: #525252;
     /*background-color: turquoise;*/
 }
@@ -485,7 +486,7 @@ input[type= number]{
 }
 
 #contactNumberCell{
-    width:11%;
+    width:12%;
     color: #525252;
     /*background-color: green*/
 }
