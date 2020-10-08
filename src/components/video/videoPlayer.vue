@@ -15,7 +15,6 @@ import { videojs, videoPlayer } from "vue-video-player";
 import "videojs-playlist";
 import playlistMaker from "videojs-playlist/src/playlist-maker";
 import playlistUI from "videojs-playlist-ui/dist/videojs-playlist-ui";
-
 const plugin = function(list, item) {
   playlistMaker(this, list, item);
 };
@@ -26,7 +25,7 @@ videojs.registerPlugin("playlist", plugin);
 videojs.registerPlugin("playlistUI", plugin2);
 
 // var samplePlaylist3 = [
-//   {
+//   {~
 //     sources: [
 //       {
 //         src: "http://media.w3.org/2010/05/sintel/trailer.mp4",

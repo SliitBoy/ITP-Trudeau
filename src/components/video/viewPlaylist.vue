@@ -1,12 +1,21 @@
 <template>
   <div style="background-color: #2C2F33;">
     <b-container fluid class="min-vh-100" style="background-color: #2C2F33;">
-      <H1 style="color:#ffff;">{{ playlistObj.playlistCode }} - {{ playlistObj.playlistName }} </H1>
+      <H1 style="color:#ffff;"
+        >{{ playlistObj.playlistCode }} - {{ playlistObj.playlistName }}
+      </H1>
       <b-row>
         <b-col cols="8">
           <videoplayer :playerdata="playerdata"></videoplayer>
         </b-col>
         <b-col cols="3">
+          <router-link
+            :to="{
+              name: 'EditPlaylist',
+              params: { id: playlistObj.playlistCode, playlistObj: playlistObj }
+            }"
+            ><b-button>Edit Playlist</b-button></router-link
+          >
           <div class="vjs-playlist vjs-playlist-vertical"></div>
         </b-col>
       </b-row>
