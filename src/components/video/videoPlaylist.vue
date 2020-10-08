@@ -177,6 +177,7 @@ export default {
   },
 
   created() {
+    //get playlists from firebase
     axios
       .get("https://trudeau-cda16.firebaseio.com/playlists.json")
       .then(res => {
@@ -210,6 +211,7 @@ export default {
   },
 
   methods: {
+    //method to create new playlist
     createNewPlaylist() {
       const playlistFormData = {
         playlistName: this.playlistName,
@@ -238,6 +240,7 @@ export default {
           .catch(error => console.error(error));
       }
     },
+    //delete specific playlist
     deletePlaylist(id) {
       axios
         .delete(
@@ -251,6 +254,7 @@ export default {
           console.log(resp);
         });
     },
+    //patch specific playlist
     patchPlaylist(id) {
       const playlistFormData2 = {
         playlistName: this.getName,
