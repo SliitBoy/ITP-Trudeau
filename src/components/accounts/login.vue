@@ -82,30 +82,19 @@ export default {
           }
      },
      methods:{
-          //login(){
-               //this.$store.dispatch('login',{
-                    //username: this.username,
-                    //password:this.password
-               //})
-          //}
-          login({commit}, authData){
-               axios.post('https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyBppMONz0sx74W3SV8IQqD6eCEjfdbZLE4',{
-                    username: authData.username,
-                    password: authData.password,
+          login(){
+               const formData = {
+                    email: this.username,
+                    password: this.password,
+               }
+               console.log(formData)
+               axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBppMONz0sx74W3SV8IQqD6eCEjfdbZLE4', {
+                    email: formData.email,
+                    password: formData.password,
                     returnSecureToken: true
                })
-               .then(res => {
-                    console.log(res)
-                    localStorage.setItem('token', res.data.idToken)
-                    localStorage.setItem('userId', res.data.localId)
-                    localStorage.setItem('email', res.data.email)
-                    commit('authUser', {
-                         token: res.data.idToken,
-                         userId: res.data.localId
-                    })
-                    //router.push('/studentProfile')
-               })
-               .catch(error => console.log(error.message))
+               .then(res => console.log(res))
+               .catch(error => console.log(error))
           }
      }
 }

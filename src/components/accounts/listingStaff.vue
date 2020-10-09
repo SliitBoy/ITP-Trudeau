@@ -74,12 +74,12 @@ export default {
         },
 
         //remove(){
-       //     axios.get('https://trudeau-accounts.firebaseio.com/staff')
+       //     axios.get('https://trudeau-cda16.firebaseio.com/staff')
             
             
        // },
        deleteAccount(deleteThis){
-            axios.delete('https://trudeau-accounts.firebaseio.com/staff/' + deleteThis + '.json')
+            axios.delete('https://trudeau-cda16.firebaseio.com/staff/' + deleteThis + '.json')
             .then(res => console.log(res))
             .catch(error => console.log(error))
         }

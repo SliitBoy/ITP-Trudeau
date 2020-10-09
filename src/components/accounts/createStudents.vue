@@ -1,112 +1,114 @@
 <template>
-    <div class = "containerCreate">
-        <div class = "name"> <!--positions page title-->
-            <h1>Create Student Accounts</h1>
-        </div>
+    <div class = "container">
+        <div class = "containerCreate">
+            <div class = "name"> <!--positions page title-->
+                <h1>Create Student Accounts</h1>
+            </div>
 
-        <form @submit.prevent>
-            <div class = "left"> <!-- allows split positioning-->
-                <!--NIC number input field-->
-                <label for = "nic" class = "labels">NIC</label><br>
-                <div class = "validateFields" :class ="{validate:$v.nic.$error}">
-                    <!--<h6 v-if = "!$v.nic.unique">An account already exists</h6>-->
-                    <input 
-                        class = "field"
-                        type ="text"
-                        id ="nic"
-                        @blur ="$v.nic.$touch()"
-                        v-model ="nic"
-                        required>
-                </div>
-
-                <!--username-->
-                <label for = "username" class = "labels">Username</label>
-                <div class = "validateFields" :class="{validate:$v.username.$error}">
-                    <input
-                        class ="field"
-                        type ="email"
-                        id = "username"
-                        @blur ="$v.username.$touch()"
-                        v-model ="username"
-                        required>
-                </div>
-
-                <!--last name-->
-                <label for ="lastName" class = "labels">Last Name</label>
-                <div class = "validateFields" :class ="{validate: $v.lastName.$error}">
-                    <input 
-                        class = "field"
-                        type = "text"
-                        id = "lastName"
-                        @blur ="$v.lastName.$touch()"
-                        v-model = "lastName"
-                        required>
-                </div>
-
-                <!--other names-->
-                <label for = "otherNames" class = "labels">Other Names</label>
-                <div class = "validateFields" :class ="{validate:$v.otherNames.$error}">
-                    <input
-                        class ="field"
-                        type = "text"
-                        id = "otherNames"
-                        @blur ="$v.otherNames.$touch()"
-                        v-model = "otherNames"
-                        required>
-                </div>
-            </div> <!-- left container ended-->    
-                    
-                <div class = "right"><!--split view right container-->
-                    <!--registration number-->
-                    <label for = "registrationNumber" class = "labels">Registration Number</label>
-                    <div class ="validateFields" :class ="{validate:$v.registrationNumber.$error}">
-                        <input
-                            class ="field"
-                            type="text"
-                            id= "registrationNumber"
-                            @blur ="$v.registrationNumber.$touch()"
-                            v-model= "registrationNumber"
+            <form @submit.prevent>
+                <div class = "left"> <!-- allows split positioning-->
+                    <!--NIC number input field-->
+                    <label for = "nic" class = "labels">NIC</label><br>
+                    <div class = "validateFields" :class ="{validate:$v.nic.$error}">
+                        <!--<h6 v-if = "!$v.nic.unique">An account already exists</h6>-->
+                        <input 
+                            class = "field"
+                            type ="text"
+                            id ="nic"
+                            @blur ="$v.nic.$touch()"
+                            v-model ="nic"
                             required>
                     </div>
 
-                    <!--email-->
-                    <label for ="email" class = "labels">E-mail</label><br>
-                    <div class ="validateFields" :class="{validate:$v.email.$error}">
+                    <!--username-->
+                    <label for = "username" class = "labels">Username</label>
+                    <div class = "validateFields" :class="{validate:$v.username.$error}">
                         <input
-                            class = "field"
+                            class ="field"
                             type ="email"
-                            id = "email"
-                            @blur ="$v.email.$touch()"
-                            v-model ="email"><!--non compulsory field, validation not required-->
+                            id = "username"
+                            @blur ="$v.username.$touch()"
+                            v-model ="username"
+                            required>
                     </div>
 
-                    <!--contact number-->
-                    <label for = "contactNumber" class = "labels">Contact Number</label>
-                    <input
-                        class = "field"
-                        type = "number"
-                        id = "contactNumber"
-                        pattern= "[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                        v-model = "contactNumber"> <!--validation not required, non compulsory field-->
-            
-                    <!--password-->
-                    <label for ="password" class = "labels">Password</label>
-                    <div class = "validateFields" :class ="{validate:$v.password.$error}">
+                    <!--last name-->
+                    <label for ="lastName" class = "labels">Last Name</label>
+                    <div class = "validateFields" :class ="{validate: $v.lastName.$error}">
+                        <input 
+                            class = "field"
+                            type = "text"
+                            id = "lastName"
+                            @blur ="$v.lastName.$touch()"
+                            v-model = "lastName"
+                            required>
+                    </div>
+
+                    <!--other names-->
+                    <label for = "otherNames" class = "labels">Other Names</label>
+                    <div class = "validateFields" :class ="{validate:$v.otherNames.$error}">
                         <input
                             class ="field"
                             type = "text"
-                            id = "password"
-                            @blur ="$v.password.$touch()"
-                            v-model = "password"
+                            id = "otherNames"
+                            @blur ="$v.otherNames.$touch()"
+                            v-model = "otherNames"
                             required>
                     </div>
-                </div><!--end of right container-->
+                </div> <!-- left container ended-->    
+                    
+                    <div class = "right"><!--split view right container-->
+                        <!--registration number-->
+                        <label for = "registrationNumber" class = "labels">Registration Number</label>
+                        <div class ="validateFields" :class ="{validate:$v.registrationNumber.$error}">
+                            <input
+                                class ="field"
+                                type="text"
+                                id= "registrationNumber"
+                                @blur ="$v.registrationNumber.$touch()"
+                                v-model= "registrationNumber"
+                                required>
+                        </div>
 
-            <!--submit data-->
-            <div class = "createStudent">
-                <button class = "createBtn" type ="submit" :disabled ="$v.$invalid" @click ="onCreate()">Create</button>
-            </div>
-        </form> <!--end of form-->
+                        <!--email-->
+                        <label for ="email" class = "labels">E-mail</label><br>
+                        <div class ="validateFields" :class="{validate:$v.email.$error}">
+                            <input
+                                class = "field"
+                                type ="email"
+                                id = "email"
+                                @blur ="$v.email.$touch()"
+                                v-model ="email"><!--non compulsory field, validation not required-->
+                        </div>
+
+                        <!--contact number-->
+                        <label for = "contactNumber" class = "labels">Contact Number</label>
+                        <input
+                            class = "field"
+                            type = "number"
+                            id = "contactNumber"
+                            pattern= "[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                            v-model = "contactNumber"> <!--validation not required, non compulsory field-->
+                
+                        <!--password-->
+                        <label for ="password" class = "labels">Password</label>
+                        <div class = "validateFields" :class ="{validate:$v.password.$error}">
+                            <input
+                                class ="field"
+                                type = "text"
+                                id = "password"
+                                @blur ="$v.password.$touch()"
+                                v-model = "password"
+                                required>
+                        </div>
+                    </div><!--end of right container-->
+
+                <!--submit data-->
+                <div class = "createStudent">
+                    <button class = "createBtn" type ="submit" :disabled ="$v.$invalid" @click ="onCreate()">Create</button>
+                </div>
+            </form> <!--end of form-->
+        </div>
 
 
         <div class ="entries">
@@ -166,7 +168,7 @@ export default {
             required,
             //unique: value =>{
                 //if (value === '') return true
-                //return axios.get('https://trudeau-accounts.firebaseio.com/student.json?orderBy="nic"&equalTo="' + value +'"')
+                //return axios.get('https://trudeau-cda16.firebaseio.com/student.json?orderBy="nic"&equalTo="' + value +'"')
                 //.then(res => {
                     //return Object.keys(res.data).length ===0
                 //})
@@ -206,11 +208,26 @@ export default {
                 email: this.email,
                 contactNumber: this.contactNumber,
                 password: this.password //default password is nic number
-             }
-             console.log(formData)
+             };
+             if (
+                 formData.nic == "" ||
+                 formData.username == "" ||
+                 formData.lastName == "" ||
+                 formData.otherNames == "" ||
+                 formData.registrationNumber == "" ||
+                 formData.email == "" ||
+                 formData.contactNumber == "" ||
+                 formData.password == ""
+             ){
+                 alert("Empty fields identified.");
+                 return false;
+             }else{
+                  console.log(formData)
              axios.post('https://trudeau-accounts.firebaseio.com/students.json', formData)
              .then(res => console.log(res))
-             .catch(error => console.log(error))
+             .catch(error => console.error(error))
+             }
+            
         },
 
         fetchData(){
@@ -227,7 +244,7 @@ export default {
             });
             //.catch(error => console.log(error))
         },
-        createAccount({commit, dispatch}, authData){
+        /*createAccount({commit, dispatch}, authData){
             axios.post('https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyBppMONz0sx74W3SV8IQqD6eCEjfdbZLE4',{
                 username: authData.username,
                 password: authData.password,
@@ -245,7 +262,7 @@ export default {
                 dispatch('storeUser', authData)
             })
             .catch(error => console.log(error))
-        },
+        },*/
         //adds a query to the database using a token
         //storeUser({state}, userData){
           //  if (!state.idToken){
@@ -261,24 +278,25 @@ export default {
 
 
 <style scoped>
+.container{
+    background-color: #2c2f33;
+    padding-bottom: 50px;
+}
 .containerCreate{
-    margin-left: -20px;
-    padding-left: 100px;
-    padding-top: 25px;
-    margin-right: 0px;
-    padding-bottom: 20px;
-    display:grid;
-    /* grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); */
-    grid-template-areas: 'left right';
-    background-color:#2c2f33;
-    color: white;
-    font-family: 'Poppins', sans-serif;   
+   padding-left: 100px;
+   padding-top: 25px;
+   margin-right: 0px;
+   display:grid;
+   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+   background-color: #2c2f33;
+   color: white;
+   font-family: 'Poppins', sans-serif;  
 }
 
 .left{
     margin-top: 60px;
-    margin-left: -1100px;
-    margin-right: 500px;
+    margin-left: -650px;
+    margin-right: -10px;
     /* background-color: peru; */
     padding-left:25px;
 
@@ -297,6 +315,7 @@ form{
 
 .name{
     margin-right: -50px;
+    margin-left: -200px;
     margin-bottom: 660px;
     /*background-color:#e05757;*/
 }
@@ -389,16 +408,16 @@ input[type=password] {
     margin-left: -100px;
     /*margin-bottom: 180px;*/
     background-color:#2c2f33;
-    transform: translate(-160%, 70%);
+    transform: translate(-30%, 70%);
 }
 
 .entries{
     /* background-color:orange; */
     margin-top: 0px;
-    margin-right: -10px;
-    margin-left: 70px;
+    margin-right: -120px;
+    margin-left: -60px;
     margin-bottom: 60px;
-    transform:translate(4%);
+    /* transform:translate(4%); */
 }
 
 .displayList{
@@ -539,19 +558,19 @@ input[type= number]{
 }
 
 #registrationNumber{
-    width: 180%;
+    width: 190%;
 }
 
 #email{
-    width: 180%;
+    width: 190%;
 }
 
 #password{
-    width: 180%;
+    width: 190%;
 }
 
 #contactNumber{
-    width: 180%
+    width: 190%
 }
 
 .labels{
