@@ -40,7 +40,7 @@
 
 
 <script>
-import axios from 'axios'
+//import axios from 'axios'
 export default {
     data(){
         return{
@@ -59,7 +59,7 @@ export default {
     },
     methods:{
         fetchData(){
-            this.$http.get('https://trudeau-accounts.firebaseio.com/staff.json')
+            this.$http.get('https://trudeau-cda16.firebaseio.com/staff.json')
             .then(response => {
                 return response.json();
             })
@@ -78,12 +78,16 @@ export default {
             
             
        // },
-       deleteAccount(deleteThis){
-            axios.delete('https://trudeau-cda16.firebaseio.com/staff/' + deleteThis + '.json')
-            .then(res => console.log(res))
-            .catch(error => console.log(error))
-        }
-        }
+    //    deleteAccount(deleteThis){
+    //         axios.delete('https://trudeau-cda16.firebaseio.com/staff/' + deleteThis + '.json')
+    //         .then(res => console.log(res))
+    //         .catch(error => console.log(error))
+    //     }
+        
+        },
+         beforeMount(){
+        this.fetchData()
+    },
     }
 </script>
 

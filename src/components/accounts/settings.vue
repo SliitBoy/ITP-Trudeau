@@ -29,7 +29,7 @@
                     <input 
                         type="password" 
                         id="currentPassword"
-                        @blur ="$v.currenPassword.$touch()"
+                        @blur ="$v.currentPassword.$touch()"
                         v-model = "currentPassword"
                     >
                 </div>
@@ -64,12 +64,12 @@
 
                 <div class = "innerBottomLeft">
                     <label for="username" class = "labels">First Name</label> 
-                    <input type="text" id="displayfname" placeholder="Justin">
+                    <input type="text" id="displayfname" placeholder="Justin" v-model = "firstname">
                 </div>
 
                 <div class = "innerBottomLeft">
                     <label for="email" class = "labels">E-mail</label> <br>
-                    <input type="email" id="email" placeholder="justin@trippinonquack.com">
+                    <input type="email" id="email" placeholder="justin@trippinonquack.com" v-model="email">
                 </div>
 
                 <br>
@@ -92,16 +92,16 @@
                 </div>
                 <div class = "innerBottomRight">
                     <label for="username" class = "labels">Last Name</label> 
-                    <input type="text" id="displaylname" placeholder="Trudeau">
+                    <input type="text" id="displaylname" placeholder="Trudeau" v-model="lastname">
                 </div>
                 <div class = "innerBottomRight">
                     <label for="username" class = "labels">Contact Number</label> 
-                    <input type="tel" id="contactno" placeholder="012 345 6789">
+                    <input type="tel" id="contactno" placeholder="012 345 6789" v-model="contactnumber">
                 </div>
 
                 <div class = "innerBottomRight">
                     <router-link to = "/profile">
-                        <button class = "profileBtns" id = "saveChangesBtn">Save Changes</button>
+                        <button class = "profileBtns" id = "saveChangesBtn" @click = "saveAccountChanges()">Save Changes</button>
                     </router-link>
                 </div>
 
@@ -112,6 +112,7 @@
 </template>
 
 <script>
+// import axios from 'axios'
 import {required, minLength} from 'vuelidate/lib/validators'
 export default {
     data(){
@@ -135,6 +136,44 @@ export default {
             required,
             minLength: minLength(1)
         }
+    },
+    methods:{
+        // saveAccountChanges(){
+        //     const updateAccount = {
+        //         firstname: this.firstname,
+        //         lastname: this.lastname,
+        //         email: this.email,
+        //         contactnumber: this.contactnumber
+        //     };
+        //     if (
+        //         updateAccount.firstname != ""
+        //     ){
+        //         axios.patch('https://trudeau-accounts.firebaseio.com/students/MJGXjIMBBqmrILsXFUt.json', {
+        //             firstname: updateAccount.firstname
+        //         })
+        //     }
+        //     if(
+        //         updateAccount.lastname != ""
+        //     ){
+        //         axios.patch('https://trudeau-accounts.firebaseio.com/students/MJGXjIMBBqmrILsXFUt.json', {
+        //             lastname: updateAccount.lastname
+        //         })
+        //     }
+        //     if(
+        //         updateAccount.email != ""
+        //     ){
+        //         axios.patch('https://trudeau-accounts.firebaseio.com/students/MJGXjIMBBqmrILsXFUt.json', {
+        //             email: updateAccount.email
+        //         })
+        //     }
+        //     if(
+        //         updateAccount.contactnumber != ""
+        //     ){
+        //         axios.patch('https://trudeau-accounts.firebaseio.com/students/MJGXjIMBBqmrILsXFUt.json', {
+        //             contactnumber: updateAccount.contactnumber
+        //         })
+        //     }
+        //}
     }
 }
 </script>

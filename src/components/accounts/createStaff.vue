@@ -206,20 +206,43 @@ export default {
                 email: this.email,
                 contactNumber: this.contactNumber,
                 password: this.password //default password is nic number
-             }
+             };
+             if (
+                 formData.nic == "" ||
+                 formData.username == "" ||
+                 formData.lastName == "" ||
+                 formData.otherNames == "" ||
+                 formData.registrationNumber == "" ||
+                 formData.email == "" ||
+                 formData.contactNumber == "" ||
+                 formData.password == ""
+             ){
+                 alert("Empty fields identified.");
+                 return false;
+             }else{
              console.log(formData)
-              axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBppMONz0sx74W3SV8IQqD6eCEjfdbZLE4', {
+              axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBmm_e4cuGA4FOzbfCid-J8z79othtVq20', {
                   email: formData.username,
                   password: formData.password,
                   returnSecureToken: true
               })
-              axios.post('https://trudeau-accounts.firebaseio.com/staff.json', formData)
+              axios.post('https://trudeau-cda16.firebaseio.com/staff.json', formData,
+              this.nic = "",
+              this.username = "",
+              this.lastName = "",
+              this.otherNames = "",
+              this.registrationNumber = "",
+              this.email = "",
+              this.password = "",
+              this.contactNumber = "",
+              )
              .then(res => console.log(res))
              .catch(error => console.log(error))
+             }
         },
 
         fetchData(){
-            this.$http.get('https://trudeau-accounts.firebaseio.com/staff.json')
+            this.$http.get('https://trudeau-cda16.firebaseio.com/staff.json')
             .then(response => {
                 return response.json();
             })
@@ -232,6 +255,9 @@ export default {
             })
             .catch(error => console.log(error))
         },
+         beforeMount(){
+        this.fetchData()
+    },
         /*createAccount({commit, dispatch}, authData){
             axios.post('https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyBppMONz0sx74W3SV8IQqD6eCEjfdbZLE4',{
                 username: authData.username,

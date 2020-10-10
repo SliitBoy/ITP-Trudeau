@@ -88,7 +88,8 @@ export default {
                     password: this.password,
                }
                console.log(formData)
-               axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBppMONz0sx74W3SV8IQqD6eCEjfdbZLE4', {
+               // this.$store.dispatch('login', {email: formData.username, password: formData.password})
+               axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBmm_e4cuGA4FOzbfCid-J8z79othtVq20', {
                     email: formData.email,
                     password: formData.password,
                     returnSecureToken: true
