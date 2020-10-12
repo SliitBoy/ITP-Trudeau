@@ -5,6 +5,11 @@ import Video from "../views/Video.vue";
 import VideoPlayer from "../components/video/videoPlayer";
 import ViewPlaylist from "../components/video/viewPlaylist.vue";
 import EditPlaylist from "../components/video/editPlaylist.vue";
+
+import VideoPlayerYT from "../components/video/videoPlayerYT.vue";
+import VideoPlaylistYT from "../components/video/videoPlaylistYT.vue";
+import ViewPlaylistYT from "../components/video/viewPlaylistYT.vue";
+
 import Notes from "../views/Notes.vue";
 import Course from "../views/Course.vue";
 import FileManager from "../views/FileManager.vue";
@@ -34,10 +39,16 @@ import UpdateReport from "../components/reports/UpdateReport.vue";
 import ExamAnalysis from "../components/Analysis/ExamAnalysis.vue";
 import SemesterReportAdmin from "../components/reports/SemesterReportAdmin.vue";
 import SemesterReport from "../components/reports/SemesterReport.vue";
+import Calendar from "../components/Calendar.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
+  {
+    path: "/calendar",
+    name: "Calendar",
+    component: Calendar
+  },
   {
     path: "/video",
     name: "Video",
@@ -59,6 +70,23 @@ const routes = [
     name: "EditPlaylist",
     component: EditPlaylist
   },
+  /****************** */
+  {
+    path: "/videoplayeryt/:id",
+    name: "VideoPlayerYT",
+    component: VideoPlayerYT
+  },
+  {
+    path: "/viewPlaylistYT/:id",
+    name: "ViewPlaylistYT",
+    component: ViewPlaylistYT
+  },
+  {
+    path: "/videoPlaylistYT",
+    name: "VideoPlaylistYT",
+    component: VideoPlaylistYT
+  },
+  /****************** */
   {
     path: "/notes",
     name: "Notes",

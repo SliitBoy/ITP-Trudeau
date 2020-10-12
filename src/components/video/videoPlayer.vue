@@ -11,48 +11,25 @@
 </template>
 
 <script>
-import { videojs, videoPlayer } from "vue-video-player";
-import "videojs-playlist";
 import playlistMaker from "videojs-playlist/src/playlist-maker";
 import playlistUI from "videojs-playlist-ui/dist/videojs-playlist-ui";
+import { videojs, videoPlayer } from "vue-video-player";
+
 const plugin = function(list, item) {
   playlistMaker(this, list, item);
 };
 
 const plugin2 = playlistUI;
+//const plugin3 = vjsYoutube;
+
+//function examplePlugin() {
+//  console.log("test yt plugin");
+//}
 
 videojs.registerPlugin("playlist", plugin);
 videojs.registerPlugin("playlistUI", plugin2);
+//videojs.registerPlugin("vjsYoutube", examplePlugin);
 
-// var samplePlaylist3 = [
-//   {~
-//     sources: [
-//       {
-//         src: "http://media.w3.org/2010/05/sintel/trailer.mp4",
-//         type: "video/mp4"
-//       }
-//     ],
-//     poster: "http://media.w3.org/2010/05/sintel/poster.png"
-//   },
-//   {
-//     sources: [
-//       {
-//         src: "http://media.w3.org/2010/05/bunny/trailer.mp4",
-//         type: "video/mp4"
-//       }
-//     ],
-//     poster: "http://media.w3.org/2010/05/bunny/poster.png"
-//   },
-//   {
-//     sources: [
-//       {
-//         src: "http://vjs.zencdn.net/v/oceans.mp4",
-//         type: "video/mp4"
-//       }
-//     ],
-//     poster: "http://www.videojs.com/img/poster.jpg"
-//   }
-// ];
 var samplePlaylist2 = [
   {
     name: "Disney's Oceans",
@@ -112,6 +89,15 @@ var samplePlaylist2 = [
       }
     ],
     poster: "http://media.w3.org/2010/05/bunny/poster.png"
+  },
+  {
+    name: "youtube trailer",
+    sources: [
+      {
+        src: "https://www.youtube.com/watch?v=xjS6SftYQaQ",
+        type: "video/youtube"
+      }
+    ]
   }
 ];
 
@@ -129,17 +115,7 @@ export default {
       playerOptions: {
         controls: true,
         playbackRates: [0.7, 1.0, 1.5, 2.0],
-        //poster: this.playerdata.poster,
         aspectRatio: "16:9"
-        // sources: [
-        //   {
-        //     src: this.playerdata.sources,
-        //     type: "video/mp4"
-        //     // type: "video/mp4",
-        //     // src:
-        //     //   "https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm"
-        //   }
-        // ]
       }
     };
   },

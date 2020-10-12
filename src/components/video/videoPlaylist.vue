@@ -19,7 +19,7 @@
             style="max-width: 250px;"
           >
             <b-card-text> </b-card-text>
-            <!-- Send Course code to player componenet  -->
+            <!-- **************Send Course code to player componenet**************  -->
             <router-link
               :to="{
                 name: 'ViewPlaylist',
@@ -29,6 +29,15 @@
                 >View playlist</b-button
               ></router-link
             >
+            <router-link
+              :to="{
+                name: 'ViewPlaylistYT',
+                params: { id: playlist.playlistCode, playlistObj: playlist }
+              }"
+              ><b-button variant="primary" size="sm"
+                >View This playlist YT</b-button
+              ></router-link
+            >
             <template v-slot:footer>
               <b-dropdown
                 size="sm"
@@ -36,18 +45,21 @@
                 variant="link"
                 no-caret
               >
-                <template v-slot:button-content >
+                <template v-slot:button-content>
                   <b-icon icon="three-dots"></b-icon>
                 </template>
                 <b-dropdown-item
                   v-b-modal.edit-playlist
                   @click="modalData(playlist)"
-                  ><b-icon icon="pencil" aria-hidden="true"></b-icon>Edit</b-dropdown-item
+                  ><b-icon icon="pencil" aria-hidden="true"></b-icon
+                  >Edit</b-dropdown-item
                 >
                 <b-dropdown-divider></b-dropdown-divider>
-                <b-dropdown-item variant="danger" @click="deletePlaylist(playlist.id)"
+                <b-dropdown-item
+                  variant="danger"
+                  @click="deletePlaylist(playlist.id)"
                   ><b-icon icon="trash-fill" aria-hidden="true"></b-icon>
-        Delete</b-dropdown-item
+                  Delete</b-dropdown-item
                 >
               </b-dropdown>
             </template>
@@ -56,9 +68,18 @@
       </div>
       <div class="col-2" style="margin-top: 20px;">
         <b-button v-b-modal.new-playlist variant="warning"
-        ><b-icon icon="plus-circle-fill" aria-hidden="true"></b-icon>
+          ><b-icon icon="plus-circle-fill" aria-hidden="true"></b-icon>
           New Playlist
         </b-button>
+        <!-- Button to view the YT version -->
+        <router-link
+          :to="{
+            name: 'VideoPlaylistYT'
+          }"
+          ><b-button variant="primary" size="sm"
+            >View YT playlists</b-button
+          ></router-link
+        >
 
         <b-modal
           id="new-playlist"
