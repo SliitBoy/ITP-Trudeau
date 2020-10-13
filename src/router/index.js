@@ -21,6 +21,11 @@ import createStaff from "../components/accounts/createStaff.vue";
 import listStudents from "../components/accounts/listStudents.vue";
 import forgotPassword from "../components/accounts/forgotPassword.vue";
 
+import NewCourse from "../components/course/NewCourse.vue";
+import EditCourse from "../components/course/EditCourse.vue";
+import CourseList from "../components/course/CourseList.vue";
+import StudentList from "../components/course/StudentList.vue";
+
 
 Vue.use(VueRouter);
 
@@ -124,6 +129,31 @@ const routes = [
     path: "/listStudents",
     name: "listStudents",
     component: listStudents
+  },
+  
+  {
+    path: "/NewCourse",
+    name: "NewCourse",
+    component: NewCourse
+  },
+
+  {
+    path: "/EditCourse",
+    name: "EditCourse",
+    component: EditCourse
+  },
+
+
+  {
+    path: "/CourseList",
+    name: "CourseList",
+    component: CourseList
+  },
+
+  {
+    path: "/StudentList",
+    name: "StudentList",
+    component: StudentList
   },
   {
     path: "/forgotPassword",
