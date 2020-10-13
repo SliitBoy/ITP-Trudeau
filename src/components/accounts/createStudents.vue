@@ -3,7 +3,7 @@
     <div class="containerCreate">
       <div class="name">
         <!--positions page title-->
-        <h1>Create Staff Accounts</h1>
+        <h1>Create Student Accounts</h1>
       </div>
 
       <form @submit.prevent>
@@ -69,18 +69,20 @@
 
         <div class="right">
           <!--split view right container-->
-          <!--employeeID-->
-          <label for="employeeID" class="labels">Employee ID</label>
+          <!--registration number-->
+          <label for="registrationNumber" class="labels"
+            >Registration Number</label
+          >
           <div
             class="validateFields"
-            :class="{ validate: $v.employeeID.$error }"
+            :class="{ validate: $v.registrationNumber.$error }"
           >
             <input
               class="field"
               type="text"
-              id="employeeID"
-              @blur="$v.employeeID.$touch()"
-              v-model="employeeID"
+              id="registrationNumber"
+              @blur="$v.registrationNumber.$touch()"
+              v-model="registrationNumber"
               required
             />
           </div>
@@ -124,7 +126,7 @@
         <!--end of right container-->
 
         <!--submit data-->
-        <div class="createStaff">
+        <div class="createStudent">
           <button
             class="createBtn"
             type="submit"
@@ -140,7 +142,7 @@
 
     <div class="entries">
       <hr />
-      <!--button to display created staff accounts-->
+      <!--button to display created student accounts-->
       <div class="displayList">
         <button class="updateList" type="submit" @click="fetchData()">
           Update List
@@ -153,18 +155,20 @@
           <th id="usernameCell">Username</th>
           <th id="lastNameCell">Last Name</th>
           <th id="otherNamesCell">Other Names</th>
-          <th id="employeeIDCell">Employee ID</th>
+          <th id="registrationNumberCell">Registration No.</th>
           <th id="emailCell">Email</th>
           <th id="contactNumberCell">Contact No.</th>
           <th id="passwordCell">Password</th>
         </tr>
 
-        <tr v-for="s in staff" v-bind:key="s" class="table">
+        <tr v-for="s in students" v-bind:key="s" class="table">
           <td class="tableCell" id="nicCell">{{ s.nic }}</td>
           <td class="tableCell" id="usernameCell">{{ s.username }}</td>
           <td class="tableCell" id="lastNameCell">{{ s.lastName }}</td>
           <td class="tableCell" id="otherNamesCell">{{ s.otherNames }}</td>
-          <td class="tableCell" id="employeeIDCell">{{ s.employeeID }}</td>
+          <td class="tableCell" id="registrationNumberCell">
+            {{ s.registrationNumber }}
+          </td>
           <td class="tableCell" id="emailCell">{{ s.email }}</td>
           <td class="tableCell" id="contactNumberCell">
             {{ s.contactNumber }}
@@ -186,11 +190,11 @@ export default {
       username: "",
       lastName: "",
       otherNames: "",
-      employeeID: "",
+      registrationNumber: "",
       email: "",
       contactNumber: null,
       password: "",
-      staff: []
+      students: []
     };
   },
   validations: {
@@ -198,7 +202,7 @@ export default {
       required
       //unique: value =>{
       //if (value === '') return true
-      //return axios.get('https://trudeau-accounts.firebaseio.com/staff.json?orderBy="nic"&equalTo="' + value +'"')
+      //return axios.get('https://trudeau-cda16.firebaseio.com/student.json?orderBy="nic"&equalTo="' + value +'"')
       //.then(res => {
       //return Object.keys(res.data).length ===0
       //})
@@ -214,7 +218,7 @@ export default {
     otherNames: {
       required
     },
-    employeeID: {
+    registrationNumber: {
       required
     },
     email: {
@@ -232,10 +236,10 @@ export default {
         username: this.username,
         lastName: this.lastName,
         otherNames: this.otherNames,
-        employeeID: this.employeeID,
+        registrationNumber: this.registrationNumber,
         email: this.email,
         contactNumber: this.contactNumber,
-        password: this.password //default password is nic number
+        password: this.password
       };
       if (
         formData.nic == "" ||
@@ -251,6 +255,7 @@ export default {
         return false;
       } else {
         console.log(formData);
+        //   this.$store.dispatch('createdAccount', {email: formData.username, password: formData.password})
         axios.post(
           "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBmm_e4cuGA4FOzbfCid-J8z79othtVq20",
           {
@@ -259,38 +264,38 @@ export default {
             returnSecureToken: true
           }
         );
-        axios
-          .post(
-            "https://trudeau-cda16.firebaseio.com/staff.json",
-            formData,
-            (this.nic = ""),
-            (this.username = ""),
-            (this.lastName = ""),
-            (this.otherNames = ""),
-            (this.registrationNumber = ""),
-            (this.email = ""),
-            (this.password = ""),
-            (this.contactNumber = "")
-          )
-          .then(res => console.log(res))
-          .catch(error => console.log(error));
+        axios.post(
+          "https://trudeau-cda16.firebaseio.com/students.json",
+          formData
+        );
+        (this.nic = ""),
+          (this.username = ""),
+          (this.lastName = ""),
+          (this.otherNames = ""),
+          (this.registrationNumber = ""),
+          (this.email = ""),
+          (this.contactNumber = ""),
+          (this.password = ""
+
+            .then(res => console.log(res))
+            .catch(error => console.log(error)));
       }
     },
 
     fetchData() {
       this.$http
-        .get("https://trudeau-cda16.firebaseio.com/staff.json")
+        .get("https://trudeau-cda16.firebaseio.com/students.json")
         .then(response => {
           return response.json();
         })
-        .then(staff => {
+        .then(students => {
           const resultArray = [];
-          for (let key in staff) {
-            resultArray.push(staff[key]);
+          for (let key in students) {
+            resultArray.push(students[key]);
           }
-          this.staff = resultArray.reverse();
-        })
-        .catch(error => console.log(error));
+          this.students = resultArray.reverse();
+        });
+      //.catch(error => console.log(error))
     },
     beforeMount() {
       this.fetchData();
@@ -319,7 +324,7 @@ export default {
     //  if (!state.idToken){
     //      return
     //  }
-    //  axios.post('https://trudeau-accounts.firebaseio.com/staff.json' + '?auth=' + state,idToken, userData)
+    //  axios.post('https://trudeau-accounts.firebaseio.com/students.json' + '?auth=' + state,idToken, userData)
     //  .then(res => console.log(res))
     //  .catch(error => console.log(error))
     //}
@@ -332,14 +337,12 @@ export default {
   background-color: #2c2f33;
   padding-bottom: 50px;
 }
-
 .containerCreate {
   padding-left: 100px;
   padding-top: 25px;
   margin-right: 0px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  /* grid-template-areas: 'left right' ; */
   background-color: #2c2f33;
   color: white;
   font-family: "Poppins", sans-serif;
@@ -357,6 +360,11 @@ export default {
   margin-top: -522px;
   /* background-color:blueviolet; */
   margin-right: 420px;
+  /* margin-left: -20px; */
+}
+
+form {
+  width: 0%;
 }
 
 .name {
@@ -448,7 +456,7 @@ input[type="password"] {
   outline: none;
   box-shadow: none;
 }
-.createStaff {
+.createStudent {
   /*margin-top:10px;*/
   margin-right: -280px;
   margin-left: -100px;
@@ -458,11 +466,12 @@ input[type="password"] {
 }
 
 .entries {
-  /*background-color:#e05757;*/
+  /* background-color:orange; */
   margin-top: 0px;
   margin-right: -120px;
   margin-left: -60px;
   margin-bottom: 60px;
+  /* transform:translate(4%); */
 }
 
 .displayList {
@@ -470,8 +479,8 @@ input[type="password"] {
   margin-right: 300px;
   margin-left: 230px;
   margin-bottom: 180px;
-  transform: translate(4%);
   /*background-color:aqua;*/
+  transform: translate(4%);
 }
 
 .list-group {
@@ -536,8 +545,8 @@ input[type="number"] {
   /*background-color: purple;*/
 }
 
-#employeeIDCell {
-  width: 12%;
+#registrationNumberCell {
+  width: 15%;
   color: #525252;
   /*background-color: turquoise;*/
 }
@@ -601,15 +610,7 @@ input[type="number"] {
   box-shadow: none;
 }
 
-form {
-  width: 0%;
-}
-
-.labels {
-  color: white;
-}
-
-#employeeID {
+#registrationNumber {
   width: 190%;
 }
 
@@ -623,5 +624,9 @@ form {
 
 #contactNumber {
   width: 190%;
+}
+
+.labels {
+  color: white;
 }
 </style>

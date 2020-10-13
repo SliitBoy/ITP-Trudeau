@@ -1,5 +1,4 @@
 <template>
-
 <div class="bg">
     <div>
     <h3>Edit Course</h3>
@@ -7,7 +6,11 @@
     <table class="tab">
         <tr>
             <td colspan="2">
-                 <b-form-group id="input-group-2" label="Course Name" label-for="input-2">
+              <b-form-group
+                id="input-group-2"
+                label="Course Name"
+                label-for="input-2"
+              >
                 <b-form-input
                      id="input-2"
                      v-model="CourseName"
@@ -16,10 +19,14 @@
                  ></b-form-input>
                 </b-form-group>
             </td>
-        </tr>
-         <tr>
+          </tr>
+          <tr>
             <td>
-                 <b-form-group id="input-group-2" label="Course Code" label-for="input-2">
+              <b-form-group
+                id="input-group-2"
+                label="Course Code"
+                label-for="input-2"
+              >
                 <b-form-input
                      id="input-2"
                      v-model="CourseCode"
@@ -28,10 +35,15 @@
                  ></b-form-input>
                 </b-form-group>
             </td>
-         </tr>
-               <tr>
+          </tr>
+          <tr>
             <td>
-          <b-form-group id="input-group-2" label="Year" label-for="input-2" color="aliceblue">
+              <b-form-group
+                id="input-group-2"
+                label="Year"
+                label-for="input-2"
+                color="aliceblue"
+              >
                 <b-form-input
                      id="input-2"
                      v-model="Year"
@@ -62,10 +74,15 @@
                  ></b-form-input>
                 </b-form-group>
             </td>
-        </tr>
-        <tr>
+          </tr>
+          <tr>
             <td colspan="2">
-                <b-form-group id="input-group-2" class="right" label="Lecturer" label-for="input-2">
+              <b-form-group
+                id="input-group-2"
+                class="right"
+                label="Lecturer"
+                label-for="input-2"
+              >
                 <b-form-input
                      id="input-2"
                      v-model="Lecturer"
@@ -74,10 +91,15 @@
                  ></b-form-input>
                 </b-form-group> 
             </td>
-        </tr>
-         <tr>
-         <td>
-            <b-form-group id="input-group-2" class="right" label="Enrollement Key" label-for="input-2">
+          </tr>
+          <tr>
+            <td>
+              <b-form-group
+                id="input-group-2"
+                class="right"
+                label="Enrollement Key"
+                label-for="input-2"
+              >
                 <b-form-input
                      id="input-2"
                      v-model="Key"
@@ -93,11 +115,13 @@
              <td>
                 <br>
             </td>
-              <td>
-                <br>
+          </tr>
+          <tr>
+            <td>
+              <br />
             </td>
-              <td>
-                <br>
+            <td>
+              <br />
             </td>
               <td>
                   <router-link to="/CourseList" tag="ui-button" activeClass="active">
@@ -193,37 +217,30 @@ export default {
 </script>
 
 <style>
-
-.right{
-
-    align-items: right;
-
+.right {
+  align-items: right;
 }
 
-.tab{
-   margin-left: auto;
-   margin-right: auto;
-   color:aliceblue; 
+.tab {
+  margin-left: auto;
+  margin-right: auto;
+  color: aliceblue;
 }
 
-h3{
-    padding-left: 1em;
-    padding-top: 1em;
-    color:aliceblue; 
+h3 {
+  padding-left: 1em;
+  padding-top: 1em;
+  color: aliceblue;
 }
 
-.bg{
-    background-color: #2C2F33;
-    margin-top: 0px;
-    margin-left: 0px;
+.bg {
+  background-color: #2c2f33;
+  margin-top: 0px;
+  margin-left: 0px;
   left: 0px;
   top: 0px;
-  
 }
-
 .tabBtn{
     width: 100%;
 }
-
-
 </style>

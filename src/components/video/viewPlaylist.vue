@@ -1,7 +1,9 @@
 <template>
   <div style="background-color: #2C2F33;">
     <b-container fluid class="min-vh-100" style="background-color: #2C2F33;">
-      <H1 style="color:#ffff;">{{ playlistObj.playlistCode }} - {{ playlistObj.playlistName }} </H1>
+      <H1 style="color:#ffff;"
+        >{{ playlistObj.playlistCode }} - {{ playlistObj.playlistName }}
+      </H1>
       <b-row>
         <b-col cols="8">
           <videoplayer :playerdata="playerdata"></videoplayer>
