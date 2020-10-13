@@ -9,6 +9,7 @@ import EditPlaylist from "../components/video/editPlaylist.vue";
 import VideoPlayerYT from "../components/video/videoPlayerYT.vue";
 import VideoPlaylistYT from "../components/video/videoPlaylistYT.vue";
 import ViewPlaylistYT from "../components/video/viewPlaylistYT.vue";
+import SearchVideos from "../components/video/searchVideos.vue";
 
 import Notes from "../views/Notes.vue";
 import Course from "../views/Course.vue";
@@ -85,6 +86,11 @@ const routes = [
     path: "/videoPlaylistYT",
     name: "VideoPlaylistYT",
     component: VideoPlaylistYT
+  },
+  {
+    path: "/searchVideos",
+    name: "SearchVideos",
+    component: SearchVideos
   },
   /****************** */
   {

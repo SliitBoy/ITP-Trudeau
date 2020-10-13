@@ -6,33 +6,55 @@
         <input
           type="text"
           class="form-control"
-          v-model="playlistSearch"
+          v-model="videoSearch"
           placeholder="Search"
         />
-        <button @click="handleClickSignIn">Sign in</button>
-        <router-link
-          :to="{
-            name: 'VideoPlayerYT',
-            params: { id: playlistId, playlistSnippet: playlistSnippet }
-          }"
-          ><b-button>Edit Playlist</b-button></router-link
+        <button @click="getYTVideo">Load videos</button>
+        <v-card
+          v-for="(video, index) in videoFilter"
+          :key="video.etag"
+          class="mx-auto"
+          max-width="344"
+          dark
         >
-        <router-link
-          :to="{
-            name: 'SearchVideos',
-            params: { id: playlistId, playlistSnippet: playlistSnippet }
-          }"
-          ><b-button>All Videos</b-button></router-link
-        >
+          <v-img :src="video.snippet.thumbnails.high.url" height="200px"></v-img>
+
+          <v-card-title>
+            {{ video.snippet.title }}
+          </v-card-title>
+
+          <v-card-actions>
+            <v-btn color="orange lighten-2" text>
+              Explore
+            </v-btn>
+
+            <v-spacer></v-spacer>
+
+            <v-btn icon @click="currentIndex = index">
+              <v-icon>{{
+                 index === currentIndex ? "mdi-chevron-up" : "mdi-chevron-down"
+              }}</v-icon>
+            </v-btn>
+          </v-card-actions>
+
+          <v-expand-transition>
+            <div v-show="index === currentIndex">
+              <v-divider></v-divider>
+
+              <v-card-text>
+                {{ video.snippet.description }}
+              </v-card-text>
+            </div>
+          </v-expand-transition>
+        </v-card>
         <b-card-group deck style="margin-top: 10px;">
           <!-- Create cards for playlists in array-->
           <b-card
-            v-for="playlist in playlistFilter"
-            :key="playlist.id"
-            :title="playlist.snippet.title"
-            :sub-title="playlist.snippet.description"
+            v-for="video in videoFilter"
+            :key="video.etag"
+            :title="video.snippet.title"
             style="max-width: 15rem; max-height: 24rem;"
-            :img-src="playlist.snippet.thumbnails.high.url"
+            :img-src="video.snippet.thumbnails.high.url"
             img-alt="Card image"
             img-top
             bg-variant="dark"
@@ -45,7 +67,7 @@
               <router-link
                 :to="{
                   name: 'VideoPlayerYT',
-                  params: { id: playlist.id, playlistSnippet: playlist.snippet }
+                  params: { id: video.id, videoSnippet: video.snippet }
                 }"
                 ><b-button variant="primary" size="sm"
                   >View playlist</b-button
@@ -62,14 +84,14 @@
                 </template>
                 <b-dropdown-item
                   v-b-modal.edit-playlist
-                  @click="modalData(playlist.snippet, playlist.id)"
+                  @click="modalData(video.snippet, video.id)"
                   ><b-icon icon="pencil" aria-hidden="true"></b-icon
                   >Edit</b-dropdown-item
                 >
                 <b-dropdown-divider></b-dropdown-divider>
                 <b-dropdown-item
                   variant="danger"
-                  @click="deletePlaylist(playlist.id)"
+                  @click="deletePlaylist(video.id)"
                   ><b-icon icon="trash-fill" aria-hidden="true"></b-icon>
                   Delete</b-dropdown-item
                 >
@@ -128,7 +150,7 @@
             <b-form-input
               id="editName-input"
               type="text"
-              :placeholder="item.title"
+              placeholder="item.title change bind"
               v-model="getName"
               required
             ></b-form-input>
@@ -139,7 +161,7 @@
               id="editDescription-input"
               label="Description"
               type="text"
-              :placeholder="item.description"
+              placeholder="item.description change bind"
               v-model="getDescription"
               required
             ></b-form-input>
@@ -155,6 +177,7 @@ import axios from "axios";
 export default {
   data() {
     return {
+      currentIndex: null,
       isInit: false,
       isSignIn: false,
       playlistName: "",
@@ -171,8 +194,17 @@ export default {
         channelId: "UCXJJS2OukdIP52gH3lj6B7Q",
         key: "AIzaSyBmm_e4cuGA4FOzbfCid-J8z79othtVq20"
       },
+      apiVideo: {
+        baseUrl:
+          "https://cors-anywhere.herokuapp.com/https://www.googleapis.com/youtube/v3/search",
+        part: "snippet,id",
+        channelId: "UCXJJS2OukdIP52gH3lj6B7Q",
+        key: "AIzaSyBmm_e4cuGA4FOzbfCid-J8z79othtVq20",
+        order: "date"
+      },
+      videos: [],
       getItems: [],
-      playlistSearch: "",
+      videoSearch: "",
       getName: "",
       getDescription: "",
       item: null,
@@ -182,19 +214,19 @@ export default {
   },
 
   created() {
-    this.getYTPlaylists();
+    this.getYTVideo();
   },
 
   mounted() {},
 
   computed: {
     // filter items array
-    playlistFilter: function() {
-      return this.getItems.filter(playlist => {
+    videoFilter: function() {
+      return this.videos.filter(video => {
         //return matching entries
-        return playlist.snippet.title
+        return video.snippet.title
           .toLowerCase()
-          .match(this.playlistSearch.toLowerCase());
+          .match(this.videoSearch.toLowerCase());
       });
     }
   },
@@ -337,8 +369,8 @@ export default {
         });
       }
     },
-    modalData(playlist, id) {
-      this.item = playlist;
+    modalData(video, id) {
+      this.item = video;
       this.modalId = id;
     },
     resetModal() {
@@ -397,6 +429,30 @@ export default {
           console.log("Playlist Items title", this.title);
         })
         .catch(error => console.log(error));
+    },
+    getYTVideo() {
+      const { baseUrl, part, key, channelId } = this.apiVideo;
+      //get data from api
+      axios({
+        method: "GET",
+        url: baseUrl,
+        params: {
+          part: part,
+          key: key,
+          channelId: channelId,
+          type: "video"
+        },
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        }
+      })
+        .then(res => {
+          this.videos = res.data.items;
+          console.log("Search succesful", res);
+          console.log("videos", this.videos);
+        })
+        .catch(error => console.log("search failed", error));
     }
   }
 };

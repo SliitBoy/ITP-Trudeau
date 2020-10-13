@@ -1,5 +1,5 @@
 <template>
-  <div style="background-color: #2C2F33;">
+  <div style="background-color: #2C2F33;" class="overflow-auto">
     <app-header></app-header>
     <router-view></router-view>
     <app-sidebar></app-sidebar>
