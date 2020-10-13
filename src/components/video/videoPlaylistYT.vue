@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid min-vh-100" style="background-color: #2C2F33;">
+  <div class="container-fluid vh-100" style="background-color: #2C2F33;">
     <div class="row">
       <div class="col-10" style="margin-top: 20px;">
         <!-- Search Input field-->

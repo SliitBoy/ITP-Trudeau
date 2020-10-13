@@ -1,10 +1,10 @@
 <template>
   <div>
-    <b-sheet tile height="54" class="d-flex">
-      <b-button icon class="ma-2" @click="$refs.calendar.prev()">
-        <b-icon>mdi-chevron-left</b-icon>
-      </b-button>
-      <b-select
+    <v-sheet tile height="54" class="d-flex">
+      <v-btn icon class="ma-2" @click="$refs.calendar.prev()">
+        <v-icon>mdi-chevron-left</v-icon>
+      </v-btn>
+      <v-select
         v-model="type"
         :items="types"
         dense
@@ -12,8 +12,8 @@
         hide-details
         class="ma-2"
         label="type"
-      ></b-select>
-      <b-select
+      ></v-select>
+      <v-select
         v-model="mode"
         :items="modes"
         dense
@@ -21,8 +21,8 @@
         hide-details
         label="event-overlap-mode"
         class="ma-2"
-      ></b-select>
-      <b-select
+      ></v-select>
+      <v-select
         v-model="weekday"
         :items="weekdays"
         dense
@@ -30,14 +30,14 @@
         hide-details
         label="weekdays"
         class="ma-2"
-      ></b-select>
-      <b-spacer></b-spacer>
-      <b-button icon class="ma-2" @click="$refs.calendar.next()">
-        <b-icon>mdi-chevron-right</b-icon>
-      </b-button>
-    </b-sheet>
-    <b-sheet height="600">
-      <b-calendar
+      ></v-select>
+      <v-spacer></v-spacer>
+      <v-btn icon class="ma-2" @click="$refs.calendar.next()">
+        <v-icon>mdi-chevron-right</v-icon>
+      </v-btn>
+    </v-sheet>
+    <v-sheet height="600">
+      <v-calendar
         ref="calendar"
         v-model="value"
         :weekdays="weekday"
@@ -47,8 +47,8 @@
         :event-overlap-threshold="30"
         :event-color="getEventColor"
         @change="getEvents"
-      ></b-calendar>
-    </b-sheet>
+      ></v-calendar>
+    </v-sheet>
   </div>
 </template>
 <script>

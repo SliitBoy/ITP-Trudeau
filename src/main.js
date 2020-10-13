@@ -16,6 +16,7 @@ import "video.js/dist/video-js.css";
 import "videojs-playlist-ui/dist/videojs-playlist-ui.vertical.css";
 import "videojs-playlist-ui/dist/videojs-playlist-ui.css";
 import { BootstrapVueIcons } from "bootstrap-vue";
+import vuetify from "./plugins/vuetify";
 
 const gauthOption = {
   clientId:
@@ -35,5 +36,6 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
+  vuetify,
   render: h => h(App)
 }).$mount("#app");
