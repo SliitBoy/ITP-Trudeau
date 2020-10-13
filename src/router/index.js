@@ -21,6 +21,7 @@ import createStaff from "../components/accounts/createStaff.vue";
 import listStudents from "../components/accounts/listStudents.vue";
 import forgotPassword from "../components/accounts/forgotPassword.vue";
 
+import ForumDisplay from "../components/forum/ForumDisplay.vue";
 
 Vue.use(VueRouter);
 
@@ -60,6 +61,11 @@ const routes = [
     path: "/forum",
     name: "Forum",
     component: Forum
+  },
+  {
+    path: "/forumDisplay",
+    name: "ForumDisplay",
+    component: ForumDisplay
   },
   {
     path: "/analytics",
