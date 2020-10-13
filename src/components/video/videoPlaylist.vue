@@ -36,18 +36,21 @@
                 variant="link"
                 no-caret
               >
-                <template v-slot:button-content >
+                <template v-slot:button-content>
                   <b-icon icon="three-dots"></b-icon>
                 </template>
                 <b-dropdown-item
                   v-b-modal.edit-playlist
                   @click="modalData(playlist)"
-                  ><b-icon icon="pencil" aria-hidden="true"></b-icon>Edit</b-dropdown-item
+                  ><b-icon icon="pencil" aria-hidden="true"></b-icon
+                  >Edit</b-dropdown-item
                 >
                 <b-dropdown-divider></b-dropdown-divider>
-                <b-dropdown-item variant="danger" @click="deletePlaylist(playlist.id)"
+                <b-dropdown-item
+                  variant="danger"
+                  @click="deletePlaylist(playlist.id)"
                   ><b-icon icon="trash-fill" aria-hidden="true"></b-icon>
-        Delete</b-dropdown-item
+                  Delete</b-dropdown-item
                 >
               </b-dropdown>
             </template>
@@ -56,7 +59,7 @@
       </div>
       <div class="col-2" style="margin-top: 20px;">
         <b-button v-b-modal.new-playlist variant="warning"
-        ><b-icon icon="plus-circle-fill" aria-hidden="true"></b-icon>
+          ><b-icon icon="plus-circle-fill" aria-hidden="true"></b-icon>
           New Playlist
         </b-button>
 
