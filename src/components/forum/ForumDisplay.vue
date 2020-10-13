@@ -7,15 +7,15 @@
 </template>
 
 <script>
-
 import axios from "axios";
 
 export default {
-  created () {
-        axios.get('https://trudeau-cda16.firebaseio.com/forum.json')
-          .then( res => console.log(res))
-          .catch(error => console.log(error))
-      },
+  created() {
+    axios
+      .get("https://trudeau-cda16.firebaseio.com/forum.json")
+      .then(res => console.log(res))
+      .catch(error => console.log(error));
+  },
   //get the forum object as prop from parent
   props: ["forum"],
   data() {
