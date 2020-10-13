@@ -1,18 +1,17 @@
 <template>
   <div class="mainContainer">
-    <h2>[Administrator Name]</h2>
+    <!-- <h2>[Administrator Name]</h2> -->
     <div class="container">
-      <div class="settingsWrapper">
+      <div class="adminWrapper">
         <div class="topLeft">
           <router-link to="/createStudent">
             <button class="adminFieldBtn">
               <div class="adminField">
                 <img
-                  src="@/images/banner1.png"
-                  width="374.75px"
-                  height="143.75px"
+                  src="@/images/CreateStudents.png"
+                  width="451.8px"
+                  height="265.95px"
                 />
-                <h5>Create Student Account</h5>
               </div>
             </button>
           </router-link>
@@ -22,11 +21,10 @@
             <button class="adminFieldBtn">
               <div class="adminField">
                 <img
-                  src="@/images/banner3.png"
-                  width="374.75px"
-                  height="143.75px"
+                  src="@/images/createStaff.png"
+                  width="451.8px"
+                  height="265.95px"
                 />
-                <h5>Create Staff Account</h5>
               </div>
             </button>
           </router-link>
@@ -36,27 +34,27 @@
             <button href="#" class="adminFieldBtn">
               <div class="adminField">
                 <img
-                  src="@/images/banner2.png"
-                  width="374.75px"
-                  height="143.75px"
+                  src="@/images/maintainStudents.png"
+                  width="451.8px"
+                  height="265.95px"
                 />
-                <h5>Manage Existing Student Account</h5>
               </div>
             </button>
           </router-link>
         </div>
 
         <div class="bottomRight">
-          <button href="#" class="adminFieldBtn">
-            <div class="adminField">
-              <img
-                src="@/images/banner1.png"
-                width="374.75px"
-                height="143.75px"
-              />
-              <h5>Manage Existing Staff Account</h5>
-            </div>
-          </button>
+          <router-link to="/listStaff">
+            <button href="#" class="adminFieldBtn">
+              <div class="adminField">
+                <img
+                  src="@/images/maintainStaff.png"
+                  width="451.8px"
+                  height="265.95px"
+                />
+              </div>
+            </button>
+          </router-link>
         </div>
       </div>
     </div>
@@ -74,15 +72,17 @@
     padding-left: 120px;
     padding-top:30px;
 }
+
 .container{
     margin-left: -50px;
     padding-left: 50px;
-    padding-top: 70px;
+    padding-top: 50px;
     padding-bottom: 138px;
     background-color:#2c2f33;
 }
 
-.settingsWrapper {
+.adminWrapper {
+  margin-left: -50px;
   min-height: 50vh;
   display: grid;
   grid-template-areas:
@@ -116,10 +116,10 @@
 
 /*ADJUST TO FILL ENTIRE COLORED AREA*/
 .adminField {
-  padding-top: 25px;
-  padding-left: 3px;
-  padding-right: 3px;
-  padding-bottom: 0px;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 10px;
   text-align: center;
 }
 
@@ -131,6 +131,7 @@
   font-family: "Poppins", sans-serif;
   font-size: 16px;
   color: white;
+  margin-top: -5px;
 }
 
 .adminFieldBtn:hover {

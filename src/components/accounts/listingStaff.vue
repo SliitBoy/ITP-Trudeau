@@ -1,13 +1,13 @@
 <template>
     <div class = "container">
         <div class = "name"> <!--positions page title-->
-            <h1>Maintain Student Accounts</h1>
+            <h1>Maintain Staff Accounts</h1>
         </div>
 
         <div class = "containerCreate">
 
         <div class ="entries">
-             <!--button to display created student accounts-->
+             <!--button to display created staff accounts-->
              <div class = "displayList">
                     <button class = "updateList" type = "submit" @click="fetchData()">Update List</button>
              </div>
@@ -18,17 +18,17 @@
                    <th id = "usernameCell">Username</th>
                    <th id = "lastNameCell">Last Name</th>
                    <th id = "otherNamesCell">Other Names</th>
-                   <th id = "registrationNumberCell">Registration No.</th>
+                   <th id = "employeeIDCell">Employee ID</th>
                    <th id = "emailCell">Email</th>
                    <th id = "contactNumberCell">Contact No.</th>
                </tr> 
 
-                <tr v-for= "s in students" v-bind:key="s" class = "table">
+                <tr v-for= "s in staff" v-bind:key="s" class = "table">
                     <td class = "tableCell" id = "nicCell">{{s.nic}}</td>
                     <td class = "tableCell" id = "usernameCell">{{s.username}}</td>
                     <td class = "tableCell" id = "lastNameCell">{{s.lastName}}</td>
                     <td class = "tableCell" id = "otherNamesCell">{{s.otherNames}}</td>
-                    <td class = "tableCell" id = "registrationNumberCell">{{s.registrationNumber}}</td>
+                    <td class = "tableCell" id = "employeeIDCell">{{s.employeeID}}</td>
                     <td class = "tableCell" id = "emailCell">{{s.email}}</td>
                     <td class = "tableCell" id = "contactNumberCell">{{s.contactNumber}}</td>
                 </tr>
@@ -40,7 +40,7 @@
 
 
 <script>
-// import axios from 'axios'
+//import axios from 'axios'
 export default {
     data(){
         return{
@@ -48,10 +48,10 @@ export default {
             username: '',
             lastName: '',
             otherNames: '',
-            registrationNumber: '',
+            employeeID: '',
             email: '',
             contactNumber: null,
-            students: []
+            staff: []
         };
     },
     mutations:{
@@ -59,24 +59,36 @@ export default {
     },
     methods:{
         fetchData(){
-            this.$http.get('https://trudeau-cda16.firebaseio.com/students.json')
+            this.$http.get('https://trudeau-cda16.firebaseio.com/staff.json')
             .then(response => {
                 return response.json();
             })
-            .then(students => {
+            .then(staff => {
                 const resultArray =[];
-                for(let key in students){
-                    resultArray.push(students[key]);
+                for(let key in staff){
+                    resultArray.push(staff[key]);
                 }
-                this.students = resultArray.reverse();
+                this.staff = resultArray.reverse();
             })
             .catch(error => console.log(error))
         },
-    },
-    beforeMount(){
+
+        //remove(){
+       //     axios.get('https://trudeau-cda16.firebaseio.com/staff')
+            
+            
+       // },
+    //    deleteAccount(deleteThis){
+    //         axios.delete('https://trudeau-cda16.firebaseio.com/staff/' + deleteThis + '.json')
+    //         .then(res => console.log(res))
+    //         .catch(error => console.log(error))
+    //     }
+        
+        },
+         beforeMount(){
         this.fetchData()
     },
-}
+    }
 </script>
 
 
@@ -227,7 +239,7 @@ export default {
 }
 
 
-.createStudent{
+.createStaff{
     /*margin-top:10px;*/
     margin-right:-280px;
     margin-left: -100px;
@@ -294,7 +306,7 @@ export default {
 }
 
 #lastNameCell{
-    width: 12%;
+    width: 11%;
     color: #525252;
     /*background-color: olive;*/
 }
@@ -305,8 +317,8 @@ export default {
     /*background-color: purple;*/
 }
 
-#registrationNumberCell{
-    width:13%;
+#employeeIDCell{
+    width:11%;
     color: #525252;
     /*background-color: turquoise;*/
 }
@@ -322,6 +334,7 @@ export default {
     color: #525252;
     /*background-color: green*/
 }
+
 
 .headerRow{
     width: 100%;
@@ -364,7 +377,7 @@ export default {
      box-shadow: none;
 }
 
-#registrationNumber{
+#employeeIDNumber{
     width: 180%;
 }
 

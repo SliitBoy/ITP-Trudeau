@@ -1,9 +1,9 @@
 <template>
      <div class = "settingsWrapper">
             <div class = "topLeft">
-                <h2>Profile Settings</h2>
+                <h2 class ="labels">Profile Settings</h2>
                 <div class = "username">
-                    <h3>[Username]</h3>
+                    <h3 class = "labels">[Username]</h3>
                     <br>
                     <br>
                 </div>
@@ -25,17 +25,17 @@
             </div>
             <div class = "topRight">
                 <div class = "innerTopRight" :class="{invalid:$v.currentPassword.$error}">
-                    <label for="password">Current Password</label>
+                    <label for="password" class ="labels">Current Password</label>
                     <input 
                         type="password" 
                         id="currentPassword"
-                        @blur ="$v.currenPassword.$touch()"
+                        @blur ="$v.currentPassword.$touch()"
                         v-model = "currentPassword"
                     >
                 </div>
 
                 <div class = "innerTopRight" :class="{invalild:$v.newPassword.$error}">
-                    <label for="password">New Password</label>
+                    <label for="password" class ="labels">New Password</label>
                     <input 
                         type="password" 
                         id="newPassword"
@@ -44,7 +44,7 @@
                 </div>
  
                 <div class = "innerTopRight" :class="{invalid:$v.confirmPassword.$error}">
-                    <label for="password">Confirm New Password</label>
+                    <label for="password" class = "labels">Confirm New Password</label>
                     <input 
                         type="password" 
                         id="confirmPassword"
@@ -58,48 +58,50 @@
 
             </div>
             <div class = "bottomLeft">
-                <h3>Display Name</h3>
-
-                <div class = "innerBottomLeft">
-                    <label for="username">First Name</label> 
-                    <input type="text" id="displayfname" placeholder="Justin">
+                <div class = "displayName">
+                    <h3 class = "labels">Display Name</h3>
                 </div>
 
                 <div class = "innerBottomLeft">
-                    <label for="email">E-mail</label> <br>
-                    <input type="email" id="email" placeholder="justin@trippinonquack.com">
+                    <label for="username" class = "labels">First Name</label> 
+                    <input type="text" id="displayfname" placeholder="Justin" v-model = "firstname">
+                </div>
+
+                <div class = "innerBottomLeft">
+                    <label for="email" class = "labels">E-mail</label> <br>
+                    <input type="email" id="email" placeholder="justin@trippinonquack.com" v-model="email">
                 </div>
 
                 <br>
 
                 <div class = "innerBottomLeft">
-                    <input type = "checkbox" id = "showName" value = "True">
-                    <label for = "showName">Show my name to others</label>
+                    <input type = "checkbox" id = "showName" value = "false">
+                    <label for = "showName" class = "labels" id = "options">Show my name to others</label>
                 </div>
 
                 <div class = "innerBottomLeft">
-                    <input type = "checkbox" id = "showContact" value = "True">
+                    <input type = "checkbox" id = "showContact" value = "false">
                     <span class = "check"></span>
-                    <label for = "showContact">Show my contact information to others</label>
+                    <label for = "showContact" class = "labels" id = "options">Show my contact information to others</label>
                 </div>
 
             </div>
             <div class = "bottomRight">
                 <div class = "align">
-                    <h3>blendthistext</h3> <!--for alignment-->
+                    <h3 class ="blend">blendthistext</h3> <!--for alignment-->
                 </div>
                 <div class = "innerBottomRight">
-                    <label for="username">Last Name</label> 
-                    <input type="text" id="displaylname" placeholder="Trudeau">
+                    <label for="username" class = "labels">Last Name</label> 
+                    <input type="text" id="displaylname" placeholder="Trudeau" v-model="lastname">
                 </div>
                 <div class = "innerBottomRight">
-                    <label for="username">Contact Number</label> 
-                    <input type="tel" id="contactno" placeholder="012 345 6789">
+                    <label for="username" class = "labels">Contact Number</label> 
+                    <input type="tel" id="contactno" placeholder="012 345 6789" v-model="contactnumber">
                 </div>
 
                 <div class = "innerBottomRight">
                     <router-link to = "/profile">
-                        <button class = "profileBtns" id = "saveChangesBtn">Save Changes</button>
+                        <button class = "profileBtns" id = "saveChangesBtn" @click = "saveAccountChanges()">Save Changes</button>
                     </router-link>
                 </div>
 
@@ -110,6 +112,7 @@
 </template>
 
 <script>
+// import axios from 'axios'
 import {required, minLength} from 'vuelidate/lib/validators'
 export default {
     data(){
@@ -133,6 +136,44 @@ export default {
             required,
             minLength: minLength(1)
         }
+    },
+    methods:{
+        // saveAccountChanges(){
+        //     const updateAccount = {
+        //         firstname: this.firstname,
+        //         lastname: this.lastname,
+        //         email: this.email,
+        //         contactnumber: this.contactnumber
+        //     };
+        //     if (
+        //         updateAccount.firstname != ""
+        //     ){
+        //         axios.patch('https://trudeau-accounts.firebaseio.com/students/MJGXjIMBBqmrILsXFUt.json', {
+        //             firstname: updateAccount.firstname
+        //         })
+        //     }
+        //     if(
+        //         updateAccount.lastname != ""
+        //     ){
+        //         axios.patch('https://trudeau-accounts.firebaseio.com/students/MJGXjIMBBqmrILsXFUt.json', {
+        //             lastname: updateAccount.lastname
+        //         })
+        //     }
+        //     if(
+        //         updateAccount.email != ""
+        //     ){
+        //         axios.patch('https://trudeau-accounts.firebaseio.com/students/MJGXjIMBBqmrILsXFUt.json', {
+        //             email: updateAccount.email
+        //         })
+        //     }
+        //     if(
+        //         updateAccount.contactnumber != ""
+        //     ){
+        //         axios.patch('https://trudeau-accounts.firebaseio.com/students/MJGXjIMBBqmrILsXFUt.json', {
+        //             contactnumber: updateAccount.contactnumber
+        //         })
+        //     }
+        //}
     }
 }
 </script>
@@ -243,6 +284,7 @@ input[type=text] {
 .innerBottomLeft{
     padding-left:100px;
     padding-right:30px;
+    margin-left: -60px;
 }
 
 .innerBottomRight{
@@ -293,7 +335,13 @@ input[type=tel] {
 }
 
 .username{
+    margin-top:-15px;
     margin-bottom: -30px;
+    margin-left: -390px;
+}
+
+.displayName{
+    margin-left: -450px;
 }
 
 #currentPassword:focus{
@@ -365,5 +413,18 @@ input[type=tel] {
 .innerTopRight.invalid input{
     border-bottom-color: #de4242;
 }
+.blend{
+    color:#2c2f33;
+}
+
+.labels{
+    color: white;
+}
+
+#options{
+    margin-left: 10px;
+}
+
+
 
 </style>

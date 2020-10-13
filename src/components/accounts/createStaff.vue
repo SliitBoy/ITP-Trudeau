@@ -1,131 +1,133 @@
 <template>
     <div class = "container">
-        <div class = "name"> <!--positions page title-->
-            <h1>Create Staff Accounts</h1>
-        </div>
+        <div class = "containerCreate">
+            <div class = "name"> <!--positions page title-->
+                <h1>Create Staff Accounts</h1>
+            </div>
 
-        <form @submit.prevent>
-            <div class = "left"> <!-- allows split positioning-->
-                <!--NIC number input field-->
-                <label for = "nic">NIC</label><br>
-                <div class = "validateFields" :class ="{validate:$v.nic.$error}">
-                    <!--<h6 v-if = "!$v.nic.unique">An account already exists</h6>-->
-                    <input 
-                        class = "field"
-                        type ="text"
-                        id ="nic"
-                        @blur ="$v.nic.$touch()"
-                        v-model ="nic"
-                        required>
-                </div>
-
-                <!--username-->
-                <label for = "username">Username</label>
-                <div class = "validateFields" :class="{validate:$v.username.$error}">
-                    <input
-                        class ="field"
-                        type ="email"
-                        id = "username"
-                        @blur ="$v.username.$touch()"
-                        v-model ="username"
-                        required>
-                </div>
-
-                <!--last name-->
-                <label for ="lastName">Last Name</label>
-                <div class = "validateFields" :class ="{validate: $v.lastName.$error}">
-                    <input 
-                        class = "field"
-                        type = "text"
-                        id = "lastName"
-                        @blur ="$v.lastName.$touch()"
-                        v-model = "lastName"
-                        required>
-                </div>
-
-                <!--other names-->
-                <label for = "otherNames">Other Names</label>
-                <div class = "validateFields" :class ="{validate:$v.otherNames.$error}">
-                    <input
-                        class ="field"
-                        type = "text"
-                        id = "otherNames"
-                        @blur ="$v.otherNames.$touch()"
-                        v-model = "otherNames"
-                        required>
-                </div>
-            </div> <!-- left container ended-->    
-                    
-                <div class = "right"><!--split view right container-->
-                    <!--employeeID-->
-                    <label for = "employeeID">Employee ID</label>
-                    <div class ="validateFields" :class ="{validate:$v.employeeID.$error}">
-                        <input
-                            class ="field"
-                            type="text"
-                            id= "employeeID"
-                            @blur ="$v.employeeID.$touch()"
-                            v-model= "employeeID"
+            <form @submit.prevent>
+                <div class = "left"> <!-- allows split positioning-->
+                    <!--NIC number input field-->
+                    <label for = "nic" class = "labels">NIC</label><br>
+                    <div class = "validateFields" :class ="{validate:$v.nic.$error}">
+                        <!--<h6 v-if = "!$v.nic.unique">An account already exists</h6>-->
+                        <input 
+                            class = "field"
+                            type ="text"
+                            id ="nic"
+                            @blur ="$v.nic.$touch()"
+                            v-model ="nic"
                             required>
                     </div>
 
-                    <!--email-->
-                    <label for ="email">E-mail</label><br>
-                    <div class ="validateFields" :class="{validate:$v.email.$error}">
+                    <!--username-->
+                    <label for = "username" class ="labels">Username</label>
+                    <div class = "validateFields" :class="{validate:$v.username.$error}">
                         <input
-                            class = "field"
+                            class ="field"
                             type ="email"
-                            id = "email"
-                            @blur ="$v.email.$touch()"
-                            v-model ="email"><!--non compulsory field, validation not required-->
+                            id = "username"
+                            @blur ="$v.username.$touch()"
+                            v-model ="username"
+                            required>
                     </div>
 
-                    <!--contact number-->
-                    <label for = "contactNumber">Contact Number</label>
-                    <input
-                        class = "field"
-                        type = "number"
-                        id = "contactNumber"
-                        pattern= "[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                        v-model = "contactNumber"> <!--validation not required, non compulsory field-->
-            
-                    <!--password-->
-                    <label for ="password">Password</label>
-                    <div class = "validateFields" :class ="{validate:$v.password.$error}">
+                    <!--last name-->
+                    <label for ="lastName" class = "labels">Last Name</label>
+                    <div class = "validateFields" :class ="{validate: $v.lastName.$error}">
+                        <input 
+                            class = "field"
+                            type = "text"
+                            id = "lastName"
+                            @blur ="$v.lastName.$touch()"
+                            v-model = "lastName"
+                            required>
+                    </div>
+
+                    <!--other names-->
+                    <label for = "otherNames" class = "labels">Other Names</label>
+                    <div class = "validateFields" :class ="{validate:$v.otherNames.$error}">
                         <input
                             class ="field"
                             type = "text"
-                            id = "password"
-                            @blur ="$v.password.$touch()"
-                            v-model = "password"
+                            id = "otherNames"
+                            @blur ="$v.otherNames.$touch()"
+                            v-model = "otherNames"
                             required>
                     </div>
-                </div><!--end of right container-->
+                </div> <!-- left container ended-->    
+                        
+                    <div class = "right"><!--split view right container-->
+                        <!--employeeID-->
+                        <label for = "employeeID" class = "labels">Employee ID</label>
+                        <div class ="validateFields" :class ="{validate:$v.employeeID.$error}">
+                            <input
+                                class ="field"
+                                type="text"
+                                id= "employeeID"
+                                @blur ="$v.employeeID.$touch()"
+                                v-model= "employeeID"
+                                required>
+                        </div>
 
-            <!--submit data-->
-            <div class = "createStaff">
-                <button class = "createBtn" type ="submit" :disabled ="$v.$invalid" @click ="onCreate()">Create</button>
-            </div>
-        </form> <!--end of form-->
+                        <!--email-->
+                        <label for ="email" class ="labels">E-mail</label><br>
+                        <div class ="validateFields" :class="{validate:$v.email.$error}">
+                            <input
+                                class = "field"
+                                type ="email"
+                                id = "email"
+                                @blur ="$v.email.$touch()"
+                                v-model ="email"><!--non compulsory field, validation not required-->
+                        </div>
 
+                        <!--contact number-->
+                        <label for = "contactNumber" class = "labels">Contact Number</label>
+                        <input
+                            class = "field"
+                            type = "number"
+                            id = "contactNumber"
+                            pattern= "[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                            v-model = "contactNumber"> <!--validation not required, non compulsory field-->
+                
+                        <!--password-->
+                        <label for ="password" class = "labels">Password</label>
+                        <div class = "validateFields" :class ="{validate:$v.password.$error}">
+                            <input
+                                class ="field"
+                                type = "text"
+                                id = "password"
+                                @blur ="$v.password.$touch()"
+                                v-model = "password"
+                                required>
+                        </div>
+                    </div><!--end of right container-->
+
+                <!--submit data-->
+                <div class = "createStaff">
+                    <button class = "createBtn" type ="submit" :disabled ="$v.$invalid" @click ="onCreate()">Create</button>
+                </div>
+            </form> <!--end of form-->
+        </div>
+        
         <div class ="entries">
-             <hr>
-             <!--button to display created staff accounts-->
-             <div class = "displayList">
+            <hr>
+            <!--button to display created staff accounts-->
+            <div class = "displayList">
                     <button class = "updateList" type = "submit" @click="fetchData()">Update List</button>
-             </div>
+            </div>
 
-           <div class = "table">
-               <tr class = "headerRow">
-                   <th id = "nicCell">NIC</th>
-                   <th id = "usernameCell">Username</th>
-                   <th id = "lastNameCell">Last Name</th>
-                   <th id = "otherNamesCell">Other Names</th>
-                   <th id = "employeeIDCell">Employee ID</th>
-                   <th id = "emailCell">Email</th>
-                   <th id = "contactNumberCell">Contact No.</th>
-                   <th id = "passwordCell">Password</th>
-               </tr> 
+            <div class = "table">
+                <tr class = "headerRow">
+                    <th id = "nicCell">NIC</th>
+                    <th id = "usernameCell">Username</th>
+                    <th id = "lastNameCell">Last Name</th>
+                    <th id = "otherNamesCell">Other Names</th>
+                    <th id = "employeeIDCell">Employee ID</th>
+                    <th id = "emailCell">Email</th>
+                    <th id = "contactNumberCell">Contact No.</th>
+                    <th id = "passwordCell">Password</th>
+                </tr> 
 
                 <tr v-for= "s in staff" v-bind:key="s" class = "table">
                     <td class = "tableCell" id = "nicCell">{{s.nic}}</td>
@@ -135,10 +137,9 @@
                     <td class = "tableCell" id = "employeeIDCell">{{s.employeeID}}</td>
                     <td class = "tableCell" id = "emailCell">{{s.email}}</td>
                     <td class = "tableCell" id = "contactNumberCell">{{s.contactNumber}}</td>
-                    <td class = "tableCell" id = "passwordCell">{{s.password}}</td>
-                </tr>
+                    <td class = "tableCell" id = "passwordCell">{{s.password}}</td>                    </tr>
             </div>
-         </div>
+        </div>
     </div>
 </template>
 
@@ -205,15 +206,43 @@ export default {
                 email: this.email,
                 contactNumber: this.contactNumber,
                 password: this.password //default password is nic number
-             }
+             };
+             if (
+                 formData.nic == "" ||
+                 formData.username == "" ||
+                 formData.lastName == "" ||
+                 formData.otherNames == "" ||
+                 formData.registrationNumber == "" ||
+                 formData.email == "" ||
+                 formData.contactNumber == "" ||
+                 formData.password == ""
+             ){
+                 alert("Empty fields identified.");
+                 return false;
+             }else{
              console.log(formData)
-             axios.post('https://trudeau-accounts.firebaseio.com/staff.json', formData)
+              axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBmm_e4cuGA4FOzbfCid-J8z79othtVq20', {
+                  email: formData.username,
+                  password: formData.password,
+                  returnSecureToken: true
+              })
+              axios.post('https://trudeau-cda16.firebaseio.com/staff.json', formData,
+              this.nic = "",
+              this.username = "",
+              this.lastName = "",
+              this.otherNames = "",
+              this.registrationNumber = "",
+              this.email = "",
+              this.password = "",
+              this.contactNumber = "",
+              )
              .then(res => console.log(res))
              .catch(error => console.log(error))
+             }
         },
 
         fetchData(){
-            this.$http.get('https://trudeau-accounts.firebaseio.com/staff.json')
+            this.$http.get('https://trudeau-cda16.firebaseio.com/staff.json')
             .then(response => {
                 return response.json();
             })
@@ -223,10 +252,13 @@ export default {
                     resultArray.push(staff[key]);
                 }
                 this.staff = resultArray.reverse();
-            });
-            //.catch(error => console.log(error))
+            })
+            .catch(error => console.log(error))
         },
-        createAccount({commit, dispatch}, authData){
+         beforeMount(){
+        this.fetchData()
+    },
+        /*createAccount({commit, dispatch}, authData){
             axios.post('https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyBppMONz0sx74W3SV8IQqD6eCEjfdbZLE4',{
                 username: authData.username,
                 password: authData.password,
@@ -244,7 +276,7 @@ export default {
                 dispatch('storeUser', authData)
             })
             .catch(error => console.log(error))
-        },
+        },*/
         //adds a query to the database using a token
         //storeUser({state}, userData){
           //  if (!state.idToken){
@@ -261,39 +293,39 @@ export default {
 
 <style scoped>
 .container{
-    min-width: 1539.5px;
-    margin-left: -20px;
+    background-color: #2c2f33;
+    padding-bottom: 50px;
+}
+
+.containerCreate{
     padding-left: 100px;
     padding-top: 25px;
     margin-right: 0px;
-    display:grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    background-color:#2c2f33;
+    display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    /* grid-template-areas: 'left right' ; */
+    background-color: #2c2f33;
     color: white;
-    font-family: 'Poppins', sans-serif;   
+    font-family: 'Poppins',sans-serif;
 }
 
 .left{
     margin-top: 60px;
-    margin-left: -430px;
-    margin-right:300px;
-    /*background-color: peru;*/
-    margin-bottom: 400px;
+    margin-left: -650px;
+    margin-right: -10px;
+    /* background-color: peru; */
     padding-left:25px;
-
 }
 
 .right{
-    margin-top:-808px;
-    /*background-color:blueviolet;*/
-    margin-bottom: 400px;
-    margin-right: -400px;
-    margin-left: 200px;
-    padding-left: 25px;
+    margin-top:-522px;
+    /* background-color:blueviolet; */
+    margin-right: 420px;
 }
 
 .name{
-    margin-right: -500px;
+    margin-right: -50px;
+    margin-left: -200px;
     margin-bottom: 660px;
     /*background-color:#e05757;*/
 }
@@ -386,14 +418,15 @@ input[type=password] {
     margin-left: -100px;
     /*margin-bottom: 180px;*/
     background-color:#2c2f33;
-    transform: translate(-17%, -675%);
+    transform: translate(-30%, 70%);
 }
 
 .entries{
     /*background-color:#e05757;*/
-    margin-top: 560px;
-    margin-right: 40px;
-    margin-left:-950px;
+    margin-top: 0px;
+    margin-right: -120px;
+    margin-left: -60px;
+    margin-bottom: 60px;
 }
 
 .displayList{
@@ -401,6 +434,7 @@ input[type=password] {
     margin-right: 300px;
     margin-left: 230px;
     margin-bottom: 180px;
+    transform: translate(4%);
     /*background-color:aqua;*/
 }
 
@@ -468,7 +502,7 @@ input[type= number]{
 }
 
 #employeeIDCell{
-    width:10%;
+    width:12%;
     color: #525252;
     /*background-color: turquoise;*/
 }
@@ -480,7 +514,7 @@ input[type= number]{
 }
 
 #contactNumberCell{
-    width:11%;
+    width:12%;
     color: #525252;
     /*background-color: green*/
 }
@@ -531,4 +565,29 @@ input[type= number]{
      outline:none;
      box-shadow: none;
 }
+
+form{
+    width: 0%;
+}
+
+.labels{
+    color: white;
+}
+
+#employeeID{
+    width: 190%;
+}
+
+#email{
+    width: 190%;
+}
+
+#password{
+    width: 190%;
+}
+
+#contactNumber{
+    width: 190%
+}
+
 </style>  
