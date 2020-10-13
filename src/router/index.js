@@ -16,16 +16,23 @@ import login from "../components/accounts/login.vue";
 import profile from "../components/accounts/studentProfile.vue";
 import staffProfile from "../components/accounts/staffProfile.vue";
 import adminProfile from "../components/accounts/administratorProfile.vue";
-import createStudent from "../components/accounts/createStudent.vue";
+import createStudent from "../components/accounts/createStudents.vue";
 import createStaff from "../components/accounts/createStaff.vue";
-import listStudents from "../components/accounts/listStudents.vue";
+import listStudents from "../components/accounts/listingStudents.vue";
+import listStaff from "../components/accounts/listingStaff.vue";
 import forgotPassword from "../components/accounts/forgotPassword.vue";
+import emailSubmitted from "../components/accounts/emailSubmitted.vue";
 
 import NewCourse from "../components/course/NewCourse.vue";
 import EditCourse from "../components/course/EditCourse.vue";
 import CourseList from "../components/course/CourseList.vue";
 import StudentList from "../components/course/StudentList.vue";
 
+import CreateReport from "../components/reports/CreateReport.vue";
+import UpdateReport from "../components/reports/UpdateReport.vue";
+import ExamAnalysis from "../components/Analysis/ExamAnalysis.vue";
+import SemesterReportAdmin from "../components/reports/SemesterReportAdmin.vue";
+import SemesterReport from "../components/reports/SemesterReport.vue";
 
 Vue.use(VueRouter);
 
@@ -130,7 +137,47 @@ const routes = [
     name: "listStudents",
     component: listStudents
   },
-  
+  {
+    path: "/listStaff",
+    name: "listStaff",
+    component: listStaff
+  },
+  {
+    path: "/forgotPassword",
+    name: "forgotPassword",
+    component: forgotPassword
+  },
+  {
+    path: "/emailSubmitted",
+    name: "emailSubmitted",
+    component: emailSubmitted
+  },
+  {
+    path: "/createReport",
+    name: "CreateReport",
+    component: CreateReport
+  },
+
+  {
+    path: "/UpdateReport",
+    name: "UpdateReport",
+    component: UpdateReport
+  },
+  {
+    path: "/ExamAnalysis",
+    name: "ExamAnalysis",
+    component: ExamAnalysis
+  },
+  {
+    path: "/SemesterReportAdmin",
+    name: "SemesterReportAdmin",
+    component: SemesterReportAdmin
+  },
+  {
+    path: "/SemesterReport",
+    name: "SemesterReport",
+    component: SemesterReport
+  },
   {
     path: "/NewCourse",
     name: "NewCourse",
@@ -142,23 +189,15 @@ const routes = [
     name: "EditCourse",
     component: EditCourse
   },
-
-
   {
     path: "/CourseList",
     name: "CourseList",
     component: CourseList
   },
-
   {
     path: "/StudentList",
     name: "StudentList",
     component: StudentList
-  },
-  {
-    path: "/forgotPassword",
-    name: "forgotPassword",
-    component: forgotPassword
   }
 ];
 
