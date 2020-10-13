@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="background-color: #2C2F33;" class="vh-100">
     <app-header></app-header>
     <router-view></router-view>
     <app-sidebar></app-sidebar>
@@ -25,5 +25,4 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-
 </style>
