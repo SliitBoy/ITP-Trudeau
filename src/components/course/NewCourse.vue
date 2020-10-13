@@ -1,9 +1,10 @@
 <template>
-<div class="bg">
+<div >
     <br>
-<div class="div">
+<div>
     <h3>Create New Course</h3>
     <br>
+    <form @submit.prevent>
     <table class="tab">
         <tr>
             <td colspan="2">
@@ -98,29 +99,79 @@
                 <br>
             </td>
               <td>
-                 <b-button variant="outline-info" size="sm">Create Course</b-button>
+                 <b-button variant="outline-info" size="sm" type="submit" @click="onSubmit">Create Course</b-button>
+
             </td>
             
         </tr>
         <br>  
         
     </table>
+
+    </form>
 </div>
 </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
+
+    data(){
+        return {
+            CourseName : '',
+            CourseCode : '',
+            Year : '',
+            Sem : '',
+            LecInCharge : '',
+            Lecturer : '',
+            Key : ''
+        };
+    },
+
+    methods : {
+
+        onSubmit(){
+
+            const formData = {
+                CourseName:this.CourseName,
+                CourseCode:this.CourseCode,
+                Year:this.Year,
+                Sem:this.Sem,
+                LecInCharge:this.LecInCharge,
+                Lecturer:this.Lecturer,
+                Key:this.Key
+            };
+            if(
+                formData.CourseName == " " ||
+                formData.CourseCode == " " ||
+                formData.Year == " " ||
+                formData.Sem == " " ||
+                formData.LecInCharge == " " ||
+                formData.Lecturer == " " ||
+                formData.Key == " " 
+                
+                ){
+                alert("Empty Fields");
+                return false;
+            }else {
+                console.log(formData)
+                axios.post('https://trudeau-9198e.firebaseio.com/courses.json',formData)
+                .then(res=>console.log(res))
+                .catch(error=>console.log(error));
+
+
+            }
+
+        },
+    }
 
     
 }
 </script>
 
 <style>
-
-.div{
-   border: 3px solid black;
-}
 
 .right{
 
@@ -138,8 +189,5 @@ h3{
     padding-top: 1em;
 }
 
-.bg{
-    background-color: #2C2F33;
-}
 
 </style>
