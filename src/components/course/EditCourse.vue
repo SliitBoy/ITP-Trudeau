@@ -1,8 +1,6 @@
 <template>
-<div>
-    <br>
-<div class="bg">
 
+<div class="bg">
     <div>
     <h3>Edit Course</h3>
     <br>
@@ -14,7 +12,7 @@
                      id="input-2"
                      v-model="CourseName"
                     required
-                    placeholder="Enter Course Name"
+                    :placeholder="this.$route.params.name"
                  ></b-form-input>
                 </b-form-group>
             </td>
@@ -26,7 +24,7 @@
                      id="input-2"
                      v-model="CourseCode"
                     required
-                    placeholder="Enter Code"
+                    :placeholder="this.$route.params.code"
                  ></b-form-input>
                 </b-form-group>
             </td>
@@ -38,7 +36,7 @@
                      id="input-2"
                      v-model="Year"
                     required
-                    placeholder="Enter Year"
+                    :placeholder="this.$route.params.year"
                  ></b-form-input>
                 </b-form-group>
         </td>
@@ -48,7 +46,7 @@
                      id="input-2"
                      v-model="Sem"
                     required
-                    placeholder="Enter Semester"
+                    :placeholder="this.$route.params.sem"
                  ></b-form-input>
                 </b-form-group>
         </td>
@@ -60,7 +58,7 @@
                      id="input-2"
                      v-model="LecInCharge"
                     required
-                    placeholder="Enter Lecturer in charge "
+                    :placeholder="this.$route.params.lecInChr"
                  ></b-form-input>
                 </b-form-group>
             </td>
@@ -72,7 +70,7 @@
                      id="input-2"
                      v-model="Lecturer"
                     required
-                    placeholder="Enter Lecturer"
+                    :placeholder="this.$route.params.lec"
                  ></b-form-input>
                 </b-form-group> 
             </td>
@@ -84,13 +82,15 @@
                      id="input-2"
                      v-model="Key"
                     required
-                    placeholder="Enter Enrollement Key"
+                    :placeholder="this.$route.params.key"
                  ></b-form-input>
                 </b-form-group>
         </td>
         </tr>  
+    </table>
+    <table  class="tabBtn">
         <tr>
-              <td>
+             <td>
                 <br>
             </td>
               <td>
@@ -100,10 +100,14 @@
                 <br>
             </td>
               <td>
-                <b-button variant="outline-success" size="sm">Save Changes</b-button>
+                  <router-link to="/CourseList" tag="ui-button" activeClass="active">
+                <b-button variant="outline-success" size="sm" type="submit" @click="updateCourse">Save Changes</b-button>
+                  </router-link>
             </td>
             <td>
-                <b-button variant="outline-danger" size="sm">Delete</b-button>
+                <router-link to="/CourseList" tag="ui-button" activeClass="active">
+                <b-button variant="outline-danger" size="sm" type="submit" @click="deleteCourse">Delete</b-button>
+                </router-link>
             </td>
 
             
@@ -113,11 +117,76 @@
     </table>
 </div>
 </div>
-</div>
+
 </template>
 
 <script>
+import axios from 'axios'
 export default {
+
+    data(){
+        return {
+            id: this.$route.params.id,
+            name: this.$route.params.name,
+            code: this.$route.params.code,
+            year: this.$route.params.year,
+            sem: this.$route.params.sem,
+            lecInChr: this.$route.params.lecInChr,
+            lec: this.$route.params.lec,
+            key: this.$route.params.key
+            
+        };
+    },
+
+    methods : {
+
+        updateCourse(){
+
+            const formData = {
+                CourseName:this.CourseName,
+                CourseCode:this.CourseCode,
+                Year:this.Year,
+                Sem:this.Sem,
+                LecInCharge:this.LecInCharge,
+                Lecturer:this.Lecturer,
+                Key:this.Key
+            };
+            if(
+                formData.CourseName == " " ||
+                formData.CourseCode == " " ||
+                formData.Year == " " ||
+                formData.Sem == " " ||
+                formData.LecInCharge == " " ||
+                formData.Lecturer == " " ||
+                formData.Key == " " 
+                
+                ){
+                alert("Empty Fields");
+                return false;
+
+            }else {
+                console.log(formData)
+                axios.patch('https://trudeau-9198e.firebaseio.com/courses/'+this.$route.params.id+'.json',formData)
+
+                .then(res=>console.log(res))
+
+                .catch(error=>console.log(error));
+
+
+            }
+
+        },
+
+        deleteCourse(){
+
+            axios
+            .delete('https://trudeau-9198e.firebaseio.com/courses/'+this.$route.params.id+'.json')
+
+            .then(res=>console.log(res))
+
+        }
+
+    }
 
     
 }
@@ -150,6 +219,10 @@ h3{
   left: 0px;
   top: 0px;
   
+}
+
+.tabBtn{
+    width: 100%;
 }
 
 
