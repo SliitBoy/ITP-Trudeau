@@ -1,5 +1,5 @@
 <template>
-  <div style="background-color: #2C2F33;">
+  <div style="background-color: #2C2F33;" class="vh-100">
     <app-header></app-header>
     <router-view></router-view>
     <app-sidebar></app-sidebar>
