@@ -44,27 +44,11 @@
       </ul>
       <ul class="navbar-nav nav-right m-1">
         <b-dropdown right variant="dark" text="Account" style="outline:0">
-          <b-dropdown-item
-            ><router-link to="/profile"
-              >Student Profile</router-link
-            ></b-dropdown-item
-          >
-          <b-dropdown-item
-            ><router-link to="/staffProfile"
-              >Staff Profile</router-link
-            ></b-dropdown-item
-          >
-          <b-dropdown-item
-            ><router-link to="/adminProfile"
-              >Administrator</router-link
-            ></b-dropdown-item
-          >
-          <b-dropdown-item
-            ><router-link to="/settings">Settings</router-link></b-dropdown-item
-          >
-          <b-dropdown-item
-            ><router-link to="/login">Logout</router-link></b-dropdown-item
-          >
+          <b-dropdown-item><router-link to = "/profile">Student Profile</router-link></b-dropdown-item>
+          <b-dropdown-item><router-link to = "/staffProfile">Staff Profile</router-link></b-dropdown-item>
+          <b-dropdown-item><router-link to = "/adminProfile">Administrator</router-link></b-dropdown-item>
+          <b-dropdown-item><router-link to = "/settings">Settings</router-link></b-dropdown-item>
+          <b-dropdown-item><router-link to = "/login">Logout</router-link></b-dropdown-item>
         </b-dropdown>
         <!-- <li class="nav-item dropdown">
           <a
@@ -89,3 +73,4 @@
     </div>
   </nav>
 </template>
+

@@ -8,7 +8,12 @@ export default new Vuex.Store({
     idToke: null,
     userId: null
   },
-  mutations: {},
-  actions: {},
-  modules: {}
-});
+  mutations: {
+
+  },
+  actions: {
+  },
+  modules: {
+
+  }
+})
