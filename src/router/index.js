@@ -23,11 +23,10 @@ import listStaff from "../components/accounts/listingStaff.vue";
 import forgotPassword from "../components/accounts/forgotPassword.vue";
 import emailSubmitted from "../components/accounts/emailSubmitted.vue";
 
-import CourseViewLecturer from "../components/course/CourseViewLecturer.vue";
 import NewCourse from "../components/course/NewCourse.vue";
 import EditCourse from "../components/course/EditCourse.vue";
-import CourseViewStudent from "../components/course/CourseViewStudent.vue";
-import StuListLecturer from "../components/course/StuListLecturer.vue";
+import CourseList from "../components/course/CourseList.vue";
+import StudentList from "../components/course/StudentList.vue";
 
 import CreateReport from "../components/reports/CreateReport.vue";
 import UpdateReport from "../components/reports/UpdateReport.vue";
@@ -154,11 +153,31 @@ const routes = [
     component: emailSubmitted
   },
   {
-    path: "/CourseViewLecturer",
-    name: "CourseViewLecturer",
-    component: CourseViewLecturer
+    path: "/createReport",
+    name: "CreateReport",
+    component: CreateReport
   },
 
+  {
+    path: "/UpdateReport",
+    name: "UpdateReport",
+    component: UpdateReport
+  },
+  {
+    path: "/ExamAnalysis",
+    name: "ExamAnalysis",
+    component: ExamAnalysis
+  },
+  {
+    path: "/SemesterReportAdmin",
+    name: "SemesterReportAdmin",
+    component: SemesterReportAdmin
+  },
+  {
+    path: "/SemesterReport",
+    name: "SemesterReport",
+    component: SemesterReport
+  },
   {
     path: "/NewCourse",
     name: "NewCourse",
@@ -170,46 +189,15 @@ const routes = [
     name: "EditCourse",
     component: EditCourse
   },
-
   {
-    path: "/CourseViewStudent",
-    name: "CourseViewStudent",
-    component: CourseViewStudent
-  },
-
-  {
-    path: "/StuListLecturer",
-    name: "StuListLecturer",
-    component: StuListLecturer
+    path: "/CourseList",
+    name: "CourseList",
+    component: CourseList
   },
   {
-    path: "/createReport",
-    name: "CreateReport",
-    component: CreateReport
-  },
-
-  {
-    path: "/UpdateReport",
-    name: "UpdateReport",
-    component: UpdateReport
-  },
-
-  {
-    path: "/ExamAnalysis",
-    name: "ExamAnalysis",
-    component: ExamAnalysis
-  },
-
-  {
-    path: "/SemesterReportAdmin",
-    name: "SemesterReportAdmin",
-    component: SemesterReportAdmin
-  },
-
-  {
-    path: "/SemesterReport",
-    name: "SemesterReport",
-    component: SemesterReport
+    path: "/StudentList",
+    name: "StudentList",
+    component: StudentList
   }
 ];
 
