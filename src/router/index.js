@@ -21,6 +21,7 @@ import createStaff from "../components/accounts/createStaff.vue";
 import listStudents from "../components/accounts/listStudents.vue";
 import forgotPassword from "../components/accounts/forgotPassword.vue";
 
+import ToDoList from "../components/notes/ToDoList";
 
 Vue.use(VueRouter);
 
@@ -129,7 +130,13 @@ const routes = [
     path: "/forgotPassword",
     name: "forgotPassword",
     component: forgotPassword
+  },
+  {
+    path: "/ToDoList",
+    name: "ToDoList",
+    component: ToDoList
   }
+
 ];
 
 const router = new VueRouter({
