@@ -26,7 +26,7 @@ export default {
   },
 
   created(){
-    this.$http.get('https://anjie-vue-dd90a.firebaseio.com/Posts').then(function(data){
+    this.$http.get('https://trudeau-sidebar.firebaseio.com/Posts').then(function(data){
      this.notifications = data.body.slice(0,10);
     })
 
