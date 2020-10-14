@@ -23,6 +23,8 @@ import listStaff from "../components/accounts/listingStaff.vue";
 import forgotPassword from "../components/accounts/forgotPassword.vue";
 import emailSubmitted from "../components/accounts/emailSubmitted.vue";
 
+import ForumDisplay from "../components/forum/ForumDisplay.vue";
+
 import NewCourse from "../components/course/NewCourse.vue";
 import EditCourse from "../components/course/EditCourse.vue";
 import CourseList from "../components/course/CourseList.vue";
@@ -72,6 +74,11 @@ const routes = [
     path: "/forum",
     name: "Forum",
     component: Forum
+  },
+  {
+    path: "/forumDisplay",
+    name: "ForumDisplay",
+    component: ForumDisplay
   },
   {
     path: "/analytics",

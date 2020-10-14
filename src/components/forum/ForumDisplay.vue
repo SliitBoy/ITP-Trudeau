@@ -1,8 +1,30 @@
-<template>
-  <div>
-    <!-- access forum object stuff here -->
-    <h1>{{ forum.title }}</h1>
-    <p>{{ forum.message }}</p>
+<template
+  ><div>
+    <div>
+      <!-- access forum object stuff here -->
+      <h1 style="color: #fff; margin-top: 10px; margin-left: 20px;">
+        {{ forum.title }}
+      </h1>
+      <p style="color: #fff; margin-top: 10px; margin-left: 30px;">
+        {{ forum.courseCode }}
+      </p>
+      <p
+        style="color: #fff; margin-top: 10px; margin-left: 30px; margin-right: 40px;"
+      >
+        {{ forum.message }}
+      </p>
+    </div>
+    <router-link
+      :to="{
+        name: 'Forum'
+      }"
+      ><b-button
+        style="margin-top: 10px; margin-left: 20px;"
+        variant="primary"
+        size="sm"
+        >Go back</b-button
+      >
+    </router-link>
   </div>
 </template>
 
@@ -17,10 +39,10 @@ export default {
       .catch(error => console.log(error));
   },
   //get the forum object as prop from parent
-  props: ["forum"],
   data() {
     return {
-      data: {}
+      data: {},
+      forum: this.$route.params.forum
     };
   }
 };
