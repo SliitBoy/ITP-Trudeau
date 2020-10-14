@@ -23,9 +23,8 @@ import listStaff from "../components/accounts/listingStaff.vue";
 import forgotPassword from "../components/accounts/forgotPassword.vue";
 import emailSubmitted from "../components/accounts/emailSubmitted.vue";
 
-<<<<<<< HEAD
 import ForumDisplay from "../components/forum/ForumDisplay.vue";
-=======
+
 import CourseViewLecturer from "../components/course/CourseViewLecturer.vue";
 import NewCourse from "../components/course/NewCourse.vue";
 import EditCourse from "../components/course/EditCourse.vue";
@@ -37,7 +36,6 @@ import UpdateReport from "../components/reports/UpdateReport.vue";
 import ExamAnalysis from "../components/Analysis/ExamAnalysis.vue";
 import SemesterReportAdmin from "../components/reports/SemesterReportAdmin.vue";
 import SemesterReport from "../components/reports/SemesterReport.vue";
->>>>>>> b463808e3e41c3d981813b2c5a78074979553cf1
 
 Vue.use(VueRouter);
 

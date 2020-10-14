@@ -95,8 +95,8 @@
               id="code-edit"
               label="Code"
               type="text"
-              v-model="forum.courseCode"
-              required
+              :value="forum.courseCode"
+              v-model="courseCode"
             ></b-form-input>
           </b-form-group>
           <b-form-group id="name-edit" label="Forum Name">
@@ -105,7 +105,6 @@
               type="text"
               :value="forum.title"
               v-model="title"
-              required
             ></b-form-input>
           </b-form-group>
 
@@ -147,9 +146,7 @@ export default {
       //forum Search
       forumSearch: "",
       //forum object
-      forum: {},
-      //validation
-      titleState: null
+      forum: {}
     };
   },
 
