@@ -26,14 +26,12 @@
           >
             <template v-slot:footer>
               <!-- Send Course code to player componenet  -->
-              <router-link
-                :to="{
-                  name: 'VideoPlayerYT',
-                  params: { id: video.id, videoSnippet: video.snippet }
-                }"
-                ><b-button variant="primary" size="sm"
-                  >View playlist</b-button
-                ></router-link
+              <b-button
+                v-b-modal.add-video
+                @click="insertData(video.snippet.title, video.id.videoId)"
+                variant="info"
+                size="sm"
+                >Add to playlist</b-button
               >
               <b-dropdown
                 size="sm"
@@ -52,6 +50,7 @@
                 >
                 <b-dropdown-item
                   v-b-modal.edit-playlist
+                  disabled
                   @click="modalData(video.snippet, video.id.videoId)"
                   ><b-icon icon="pencil" aria-hidden="true"></b-icon
                   >Edit</b-dropdown-item
@@ -59,6 +58,7 @@
                 <b-dropdown-divider></b-dropdown-divider>
                 <b-dropdown-item
                   variant="danger"
+                  disabled
                   @click="deletePlaylist(video.id)"
                   ><b-icon icon="trash-fill" aria-hidden="true"></b-icon>
                   Delete</b-dropdown-item
@@ -70,18 +70,19 @@
       </div>
       <div class="col-2" style="margin-top: 20px;">
         <b-button v-b-modal.new-video class="shadow" variant="warning"
-          ><b-icon icon="plus-circle-fill" aria-hidden="true"></b-icon>
-          New Playlist
+          ><b-icon icon="cloud-upload" aria-hidden="true"></b-icon>
+          Upload Video
         </b-button>
 
         <b-modal
           id="new-video"
+          ref="modal"
           centered
           title="New Playlist"
           header-bg-variant="info"
           header-text-variant="light"
           @show="resetModal"
-          @ok="insertVideo"
+          @ok="handleOk()"
           dark
         >
           <b-form-group id="formName" label="Playlist Name">
@@ -90,8 +91,12 @@
               type="text"
               placeholder="Enter name"
               v-model="videoTitle"
+              :state="Boolean(videoTitle)"
               required
             ></b-form-input>
+            <span v-if="!$v.videoTitle.required && $v.videoTitle.$dirty"
+              >Title is required.</span
+            >
           </b-form-group>
 
           <b-form-group id="formDescription" label="Playlist Description">
@@ -100,6 +105,7 @@
               type="text"
               placeholder="Enter description"
               v-model="videoDescription"
+              :state="Boolean(videoDescription)"
               required
             ></b-form-input>
           </b-form-group>
@@ -136,37 +142,6 @@
         </b-modal>
 
         <b-modal
-          id="edit-playlist"
-          centered
-          title="Edit Playlist"
-          header-bg-variant="warning"
-          header-text-variant="light"
-          @show="resetModal"
-          @ok="patchPlaylist(modalId)"
-        >
-          <b-form-group id="formEditName" label="Playlist Name">
-            <b-form-input
-              id="editName-input"
-              type="text"
-              placeholder="item.title change bind"
-              v-model="getName"
-              required
-            ></b-form-input>
-          </b-form-group>
-
-          <b-form-group id="formEditDescription" label="Playlist Description">
-            <b-form-input
-              id="editDescription-input"
-              label="Description"
-              type="text"
-              placeholder="item.description change bind"
-              v-model="getDescription"
-              required
-            ></b-form-input>
-          </b-form-group>
-        </b-modal>
-
-        <b-modal
           id="add-video"
           centered
           title="Add to Playlist"
@@ -196,6 +171,12 @@
 
 <script>
 import axios from "axios";
+import {
+  required,
+  minLength,
+  maxLength,
+  alphaNum
+} from "vuelidate/lib/validators";
 export default {
   data() {
     return {
@@ -213,16 +194,16 @@ export default {
           "https://cors-anywhere.herokuapp.com/https://www.googleapis.com/youtube/v3/playlists",
         part: "snippet,status",
         channelId: "UCXJJS2OukdIP52gH3lj6B7Q",
-        //key: "AIzaSyBmm_e4cuGA4FOzbfCid-J8z79othtVq20"
-        key: "AIzaSyDxfGuzrKQD8ytk9Zk77Umg6h6d-mH7GI4"
+        key: "AIzaSyBmm_e4cuGA4FOzbfCid-J8z79othtVq20"
+        //key: "AIzaSyDxfGuzrKQD8ytk9Zk77Umg6h6d-mH7GI4"
       },
       apiVideoSearch: {
         baseUrl:
           "https://cors-anywhere.herokuapp.com/https://www.googleapis.com/youtube/v3/search",
         part: "snippet,id",
         channelId: "UCXJJS2OukdIP52gH3lj6B7Q",
-        //key: "AIzaSyBmm_e4cuGA4FOzbfCid-J8z79othtVq20",
-        key: "AIzaSyDxfGuzrKQD8ytk9Zk77Umg6h6d-mH7GI4",
+        key: "AIzaSyBmm_e4cuGA4FOzbfCid-J8z79othtVq20",
+        //key: "AIzaSyDxfGuzrKQD8ytk9Zk77Umg6h6d-mH7GI4",
         order: "date"
       },
       apiVideoInsert: {
@@ -231,8 +212,8 @@ export default {
         part: "snippet,status",
         channelId: "UCXJJS2OukdIP52gH3lj6B7Q",
         playlistId: "",
-        //key: "AIzaSyBmm_e4cuGA4FOzbfCid-J8z79othtVq20"
-        key: "AIzaSyDxfGuzrKQD8ytk9Zk77Umg6h6d-mH7GI4"
+        key: "AIzaSyBmm_e4cuGA4FOzbfCid-J8z79othtVq20"
+        //key: "AIzaSyDxfGuzrKQD8ytk9Zk77Umg6h6d-mH7GI4"
       },
       videos: [],
       getPlaylistItems: null,
@@ -242,6 +223,25 @@ export default {
       item: null,
       modalId: null,
       access_token: null
+    };
+  },
+  validations() {
+    return {
+      videoTitle: {
+        required,
+        alphaNum,
+        minLength: minLength(5),
+        maxLength: maxLength(20)
+      },
+      videoDescription: {
+        required,
+        alphaNum,
+        minLength: minLength(5),
+        maxLength: maxLength(20)
+      },
+      videoFile: {
+        required
+      }
     };
   },
 
@@ -265,6 +265,27 @@ export default {
     }
   },
   methods: {
+    handleOk(bvModalEvt) {
+      // Prevent modal from closing
+      bvModalEvt.preventDefault();
+      if (!this.$v.invalid) {
+        this.handleSubmit();
+      } else {
+        this.$v.touch();
+      }
+      // Trigger submit handler
+      this.handleSubmit();
+    },
+    handleSubmit() {
+      // Push the name to submitted names
+      console.log(
+        `name: ${this.videoTitle}, description: ${this.videoDescription}`
+      );
+      // Hide the modal manually
+      this.$nextTick(() => {
+        this.$bvModal.hide("add-video");
+      });
+    },
     async insertVideo() {
       if (this.access_token == null) {
         await this.handleClickSignIn();
@@ -307,109 +328,6 @@ export default {
         })
         .catch(error => console.log("error", error));
     },
-    createNewPlaylistFB() {
-      const playlistFormData = {
-        playlistTitle: this.videoTitle,
-        videoDescription: this.videoDescription
-      };
-      if (
-        playlistFormData.playlistTitle == "" ||
-        playlistFormData.videoDescription == ""
-      ) {
-        alert("Field must not be empty.");
-        return false;
-      } else {
-        axios
-          .put(
-            "https://trudeau-cda16.firebaseio.com/playlists/" +
-              this.videoTitle +
-              ".json",
-            playlistFormData
-          )
-          .then(resp => {
-            console.log(resp);
-          })
-          .catch(error => console.error(error));
-      }
-    },
-    async deletePlaylist(playlistId) {
-      if (this.access_token == null) {
-        await this.handleClickSignIn();
-      }
-      const { baseUrl, key } = this.api;
-      axios({
-        method: "DELETE",
-        url: baseUrl,
-        params: {
-          id: playlistId,
-          key: key
-        },
-        headers: {
-          Authorization: `Bearer ${this.access_token}`,
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        }
-      })
-        .then(resp => {
-          this.$bvToast.toast(`Deleted playlist`, {
-            title: "delete playlist",
-            autoHideDelay: 2000
-          });
-          console.log("Delete successful");
-          console.log(resp);
-        })
-        .catch(error => console.log("error", error));
-    },
-    deletePlaylistFB(title) {
-      axios
-        .delete(
-          "https://trudeau-cda16.firebaseio.com/playlists/" + title + ".json"
-        )
-        .then(resp => {
-          console.log(resp);
-        });
-    },
-    async patchPlaylist(id) {
-      //api insert request
-      const { baseUrl, part, key } = this.api;
-      const playlistId = id;
-      if (this.getName == "" || this.getDescription == "") {
-        alert("Input fields must not be empty.");
-        return false;
-      } else {
-        if (this.access_token == null) {
-          await this.handleClickSignIn();
-        }
-        axios({
-          method: "POST",
-          url: baseUrl,
-          params: {
-            part: part,
-            key: key
-          },
-          headers: {
-            Authorization: `Bearer ${this.access_token}`,
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          },
-          data: {
-            snippet: {
-              title: this.getName,
-              description: this.getDescription
-            },
-            status: { privacyStatus: "public" }
-          },
-          id: playlistId
-        }).then(resp => {
-          this.$bvToast.toast(`updated playlist`, {
-            title: "update playlist",
-            autoHideDelay: 2000
-          });
-          console.log("Update successful");
-          console.log(resp);
-        });
-      }
-    },
     modalData(video, id) {
       this.item = video;
       this.modalId = id;
@@ -443,7 +361,7 @@ export default {
         );
     },
     loadClient() {
-      this.$gAuth.client.setApiKey("AIzaSyDxfGuzrKQD8ytk9Zk77Umg6h6d-mH7GI4");
+      this.$gAuth.client.setApiKey("AIzaSyBmm_e4cuGA4FOzbfCid-J8z79othtVq20");
       return this.$gAuth.client
         .load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
         .then(

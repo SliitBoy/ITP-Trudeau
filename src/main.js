@@ -20,8 +20,8 @@ import vuetify from "./plugins/vuetify";
 
 const gauthOption = {
   clientId:
-    //"532743712672-h50pnv6ldhkcljb6hgirvn44drapcj1f.apps.googleusercontent.com",
-    "919384298243-vnge560vevq2nt6jbtcru8quovdp2gkr.apps.googleusercontent.com",
+    "532743712672-h50pnv6ldhkcljb6hgirvn44drapcj1f.apps.googleusercontent.com",
+    //"919384298243-vnge560vevq2nt6jbtcru8quovdp2gkr.apps.googleusercontent.com",
   prompt: "select_account"
 };
 

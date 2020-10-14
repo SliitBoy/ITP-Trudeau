@@ -1,81 +1,23 @@
 <template>
   <div class="container-fluid min-vh-100">
     <b-row>
-      <b-col>
-        <h1 style="color:#ffff;">{{ playlistSnippet.title }}</h1>
-        <youtube :video-id="videoId" ref="youtube" @playing="playing"></youtube>
+      <b-col cols="10">
+        <h1 style="color:#ffff;" class="font-weight-bold">
+          {{ playlistSnippet.title }}
+        </h1>
       </b-col>
-      <b-col>
-        <h1 style="color:#ffff;">Playlist</h1>
-        <b-button v-b-modal.new-playlist>Add Videos</b-button>
-        <b-modal
-          id="new-playlist"
-          centered
-          title="Add video to playlist"
-          header-bg-variant="warning"
-          header-text-variant="light"
-          @show="resetModal"
-          @ok="addToPlaylist()"
+      <b-col cols="2">
+        <router-link
+          :to="{
+            name: 'SearchVideos'
+          }"
+          ><b-button>All Videos</b-button></router-link
         >
-          <b-form-group id="formTitle" label="Video title">
-            <b-form-input
-              id="name-input"
-              type="text"
-              placeholder="Enter title"
-              v-model="getVideoTitle"
-              required
-            ></b-form-input>
-          </b-form-group>
-
-          <b-form-group id="formDescription" label="Video Description">
-            <b-form-input
-              id="description-input"
-              label="Description"
-              type="text"
-              placeholder="Enter description"
-              v-model="getVideoDescription"
-              required
-            ></b-form-input>
-          </b-form-group>
-
-          <b-form-group id="formVideo" label="Video">
-            <b-form-file
-              id="video-input"
-              state="Boolean(file)"
-              label="Video"
-              size="sm"
-              type="file"
-              placeholder="Choose a video or drop it here..."
-              drop-placeholder="Drop video here..."
-              v-model="getVideoFile"
-              required
-            ></b-form-file>
-            <div class="mt-3">
-              Selected file :{{ getVideoFile ? getVideoFile.name : "" }}
-            </div>
-          </b-form-group>
-        </b-modal>
-        <b-card style="width: 30rem;">
-          <div class="card-header">
-            Featured
-          </div>
-          <ul class="list-group list-group-flush">
-            <li
-              class="list-group-item d-flex justify-content align-items-center"
-            >
-              <div style="max-width: 40px;" class="mr-2">
-                <img
-                  src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/don_quixote.jpg"
-                  class="img-fluid"
-                  alt="quixote"
-                />
-              </div>
-              Cras justo odio
-            </li>
-            <li class="list-group-item">Dapibus ac facilisis in</li>
-            <li class="list-group-item">Vestibulum at eros</li>
-          </ul>
-        </b-card>
+      </b-col>
+    </b-row>
+    <b-row>
+      <b-col>
+        <youtube :video-id="videoId" ref="youtube" @playing="playing"></youtube>
       </b-col>
     </b-row>
   </div>
@@ -111,9 +53,6 @@ export default {
       //make api call
       //get playlistitems reponse
       //save video ids
-    },
-    playVideo() {
-      this.player.playVideo();
     },
     playing() {
       console.log("\\o/ we are watching!!!");

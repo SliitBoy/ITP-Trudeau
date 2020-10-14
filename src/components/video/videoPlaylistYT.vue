@@ -10,20 +10,6 @@
           placeholder="Search"
         />
         <button @click="handleClickSignIn">Sign in</button>
-        <router-link
-          :to="{
-            name: 'VideoPlayerYT',
-            params: { id: playlistId, playlistSnippet: playlistSnippet }
-          }"
-          ><b-button>Edit Playlist</b-button></router-link
-        >
-        <router-link
-          :to="{
-            name: 'SearchVideos',
-            params: { id: playlistId, playlistSnippet: playlistSnippet }
-          }"
-          ><b-button>All Videos</b-button></router-link
-        >
         <b-card-group deck style="margin-top: 10px;">
           <!-- Create cards for playlists in array-->
           <b-card
@@ -99,6 +85,7 @@
               type="text"
               placeholder="Enter name"
               v-model="playlistName"
+              :state="Boolean(playlistName)"
               required
             ></b-form-input>
           </b-form-group>
@@ -110,6 +97,7 @@
               type="text"
               placeholder="Enter description"
               v-model="playlistDescription"
+              :state="Boolean(playlistDescription)"
               required
             ></b-form-input>
           </b-form-group>
@@ -130,6 +118,7 @@
               type="text"
               :placeholder="item.title"
               v-model="getName"
+              :state="Boolean(getName)"
               required
             ></b-form-input>
           </b-form-group>
@@ -141,6 +130,7 @@
               type="text"
               :placeholder="item.description"
               v-model="getDescription"
+              :state="Boolean(getDescription)"
               required
             ></b-form-input>
           </b-form-group>
@@ -169,7 +159,7 @@ export default {
         part: "snippet,status",
         channelId: "UCXJJS2OukdIP52gH3lj6B7Q",
         //key: "AIzaSyBmm_e4cuGA4FOzbfCid-J8z79othtVq20"
-        key: "AIzaSyDxfGuzrKQD8ytk9Zk77Umg6h6d-mH7GI4"
+        key: "AIzaSyBmm_e4cuGA4FOzbfCid-J8z79othtVq20"
       },
       getItems: [],
       playlistSearch: "",
@@ -357,8 +347,7 @@ export default {
     handleClickSignIn() {
       return this.$gAuth
         .signIn({
-          //scope: "https://www.googleapis.com/auth/youtube.force-ssl"
-          scope: "https://www.googleapis.com/auth/youtube"
+          scope: "https://www.googleapis.com/auth/youtube.force-ssl"
         })
         .then(
           res => {
@@ -372,7 +361,7 @@ export default {
         );
     },
     loadClient() {
-      this.$gAuth.client.setApiKey("AIzaSyDxfGuzrKQD8ytk9Zk77Umg6h6d-mH7GI4");
+      this.$gAuth.client.setApiKey("AIzaSyBmm_e4cuGA4FOzbfCid-J8z79othtVq20");
       return this.$gAuth.client
         .load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
         .then(
