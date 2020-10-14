@@ -21,10 +21,56 @@ import createStaff from "../components/accounts/createStaff.vue";
 import listStudents from "../components/accounts/listStudents.vue";
 import forgotPassword from "../components/accounts/forgotPassword.vue";
 
+import CreateReport from "../components/reports/CreateReport.vue"; 
+import StudentReport from "../components/reports/StudentReport.vue"; 
+import UpdateReport from "../components/reports/UpdateReport.vue"; 
+import ExamAnalysis from "../components/Analysis/ExamAnalysis.vue"; 
+import ModuleList from "../components/Analysis/ModuleList.vue"; 
+import ReportList from "../components/reports/ReportList.vue"; 
+
 
 Vue.use(VueRouter);
 
 const routes = [
+  
+  {
+    path: "/ModuleList",
+    name: "ReporModuleListtList",
+    component: ModuleList
+  },
+  
+  {
+    path: "/ReportList",
+    name: "ReportList",
+    component: ReportList
+  },
+
+  {
+    path: "/CreateReport",
+    name: "CreateReport",
+    component: CreateReport
+  },
+
+  {
+    path: "/StudentReport",
+    name: "StudentReport",
+    component: StudentReport
+  },
+
+
+
+  {
+    path: "/UpdateReport",
+    name: "UpdateReport",
+    component: UpdateReport
+  },
+
+  {
+    path: "/ExamAnalysis",
+    name: "ExamAnalysis",
+    component: ExamAnalysis
+  },
+  
   {
     path: "/video",
     name: "Video",
