@@ -1,7 +1,7 @@
 <template>
-<div>
+<div style="background-color: #2C2F33;" class="height"> 
     <br>
-    <label class="text">Courses</label>
+    <h2 style="color: aliceblue;font-family: cursive">All Courses</h2>
     <div class="search">
         <b-container class="bv-example-row">
         <b-input-group size="sm" class="mb-2">
@@ -31,15 +31,10 @@
         </tr>
     </table>
     <br>
-    <br>
-    <br>
-    <br>
-
-    <div class="list">
-        <br><br>
-        <table class="tab">
-            <tr v-for="cor in filteredCourses" v-bind:key="cor.id">
-                <td>
+     <br><br>
+        <table class="tab" style="background-color: #2C2F33;" >
+            <tr v-for="cor in filteredCourses" v-bind:key="cor.id" style="border-spacing:0 10%">
+                <td class="data">
                 <b-card bg-variant="warning"
                         align="center"
                         class = "card"
@@ -73,8 +68,6 @@
         </table>
         <br>
     </div>
-
-</div>
     
 </template>
 
@@ -173,11 +166,13 @@
 }
 
 .tab{
-width: 75%;
+  width: 100%;
   border-radius: 8px;
   border-width: 2px;
   margin-left: auto;
-    margin-right: auto;
+  margin-right: auto;
+  border-collapse: separate;
+  border-spacing: 0 3em;
 
 }
 
@@ -209,9 +204,22 @@ h6{
 }
 
 .card{
-     height: 160px;
+     height: 150px;
      margin-top: 30px;
+     width: 50%;
+     margin-right: 12.5%;
+    padding-bottom: 2%;
+    margin: auto;
+
+     
 }
+
+.height{
+
+    height: 100vh;
+  
+}
+
 
 
 </style>
