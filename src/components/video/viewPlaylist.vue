@@ -1,14 +1,18 @@
 <template>
-  <div>
-    <H1>This is viewplaylist {{ id }} </H1>
-    <b-container fluid="sm">
-      <b-row class="justify-content-md-center">
-        <b-col></b-col>
-        <b-col><videoplayer></videoplayer></b-col>
-        <b-col><div class="vjs-playlist"></div></b-col>
+  <div style="background-color: #2C2F33;">
+    <b-container fluid class="min-vh-100" style="background-color: #2C2F33;">
+      <H1 style="color:#ffff;"
+        >{{ playlistObj.playlistCode }} - {{ playlistObj.playlistName }}
+      </H1>
+      <b-row>
+        <b-col cols="8">
+          <videoplayer :playerdata="playerdata"></videoplayer>
+        </b-col>
+        <b-col cols="3">
+          <div class="vjs-playlist vjs-playlist-vertical"></div>
+        </b-col>
       </b-row>
     </b-container>
-    <!-- <videoplayer :playerOptions="playerdata"></videoplayer> -->
   </div>
 </template>
 
@@ -22,6 +26,7 @@ export default {
   data() {
     return {
       id: this.$route.params.id,
+      playlistObj: this.$route.params.playlistObj,
       playerdata: [
         {
           sources: [

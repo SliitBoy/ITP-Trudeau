@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="container-fluid min-vh-100"
-    style="background-color: #2C2F33;"
-  >
+  <div class="container-fluid min-vh-100" style="background-color: #2C2F33;">
     <div class="row">
       <div class="col-10" style="margin-top: 20px;">
         <!-- Search Input field-->
@@ -12,31 +9,48 @@
           v-model="playlistSearch"
           placeholder="Search"
         />
-        <b-card-group columns style="margin-top: 10px;">
+        <b-card-group deck style="margin-top: 10px;">
           <!-- Create cards for playlists in array-->
           <b-card
             v-for="playlist in playlistFilter"
             :key="playlist.name"
             :title="playlist.playlistName"
             :sub-title="playlist.playlistCode"
-            aria-setsize="100"
+            style="max-width: 250px;"
           >
             <b-card-text> </b-card-text>
             <!-- Send Course code to player componenet  -->
             <router-link
               :to="{
                 name: 'ViewPlaylist',
-                params: { id: playlist.playlistCode }
+                params: { id: playlist.playlistCode, playlistObj: playlist }
               }"
               ><b-button variant="primary" size="sm"
                 >View playlist</b-button
               ></router-link
             >
             <template v-slot:footer>
-              <b-dropdown size="sm" style="float: right;">
-                <b-dropdown-item v-b-modal.edit-playlist @click="modalData(playlist)">edit</b-dropdown-item>
-                <b-dropdown-item @click="deletePlaylist(playlist.id)"
-                  >delete</b-dropdown-item
+              <b-dropdown
+                size="sm"
+                style="float: right;"
+                variant="link"
+                no-caret
+              >
+                <template v-slot:button-content>
+                  <b-icon icon="three-dots"></b-icon>
+                </template>
+                <b-dropdown-item
+                  v-b-modal.edit-playlist
+                  @click="modalData(playlist)"
+                  ><b-icon icon="pencil" aria-hidden="true"></b-icon
+                  >Edit</b-dropdown-item
+                >
+                <b-dropdown-divider></b-dropdown-divider>
+                <b-dropdown-item
+                  variant="danger"
+                  @click="deletePlaylist(playlist.id)"
+                  ><b-icon icon="trash-fill" aria-hidden="true"></b-icon>
+                  Delete</b-dropdown-item
                 >
               </b-dropdown>
             </template>
@@ -44,18 +58,18 @@
         </b-card-group>
       </div>
       <div class="col-2" style="margin-top: 20px;">
-        <button
-          v-b-modal.new-playlist
-          class="btn btn-primary"
-          style="float: right;"
-        >
+        <b-button v-b-modal.new-playlist variant="warning"
+          ><b-icon icon="plus-circle-fill" aria-hidden="true"></b-icon>
           New Playlist
-        </button>
+        </b-button>
 
         <b-modal
           id="new-playlist"
           centered
           title="New Playlist"
+          header-bg-variant="warning"
+          header-text-variant="light"
+          @show="resetModal"
           @ok="createNewPlaylist()"
         >
           <b-form-group id="formName" label="Playlist Name">
@@ -83,26 +97,29 @@
         <b-modal
           id="edit-playlist"
           centered
-          title="New Playlist"
+          title="Edit Playlist"
+          header-bg-variant="warning"
+          header-text-variant="light"
+          @show="resetModal"
           @ok="patchPlaylist(item.id)"
         >
-          <b-form-group id="formName" label="Playlist Name">
+          <b-form-group id="formEditName" label="Playlist Name">
             <b-form-input
-              id="name-input"
+              id="editName-input"
               type="text"
-              :placeholder= item.playlistName
-              v-model="playlistName"
+              :placeholder="item.playlistName"
+              v-model="getName"
               required
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group id="formCode" label="Playlist Code">
+          <b-form-group id="formEditCode" label="Playlist Code">
             <b-form-input
-              id="code-input"
+              id="editCode-input"
               label="Code"
               type="text"
-              :placeholder= item.playlistCode
-              v-model="playlistCode"
+              :placeholder="item.playlistCode"
+              v-model="getCode"
               required
             ></b-form-input>
           </b-form-group>
@@ -143,7 +160,6 @@
 
 <script>
 import axios from "axios";
-
 export default {
   data() {
     return {
@@ -169,14 +185,14 @@ export default {
       .then(res => {
         console.log(res);
         const data = res.data;
-        const array = [];
+        //const array = [];
         for (let key in data) {
           const item = data[key];
           item.id = key;
-          array.push(item);
+          //array.push(item);
           this.getItems.push(item);
         }
-        console.log(array);
+        //console.log(array);
         console.log(this.getItems);
         //this.getName = array[0].playlistName;
         //this.getCode = array[0].playlistCode;
@@ -203,19 +219,27 @@ export default {
         playlistCode: this.playlistCode
         //playlistDescription: this.playListDescription
       };
-      axios
-        .post(
-          "https://trudeau-cda16.firebaseio.com/playlists.json",
-          playlistFormData
-        )
-        .then(resp => {
-          this.$bvToast.toast(`Added playlist ${this.playlistName}`, {
-            title: "Added playlist",
-            autoHideDelay: 2000
-          });
-          console.log(resp);
-        })
-        .catch(error => console.error(error));
+      if (
+        playlistFormData.playlistName == "" ||
+        playlistFormData.playlistCode == ""
+      ) {
+        alert("Field must not be empty.");
+        return false;
+      } else {
+        axios
+          .post(
+            "https://trudeau-cda16.firebaseio.com/playlists.json",
+            playlistFormData
+          )
+          .then(resp => {
+            this.$bvToast.toast(`Added playlist ${this.playlistName}`, {
+              title: "Added playlist",
+              autoHideDelay: 2000
+            });
+            console.log(resp);
+          })
+          .catch(error => console.error(error));
+      }
     },
     deletePlaylist(id) {
       axios
@@ -232,8 +256,8 @@ export default {
     },
     patchPlaylist(id) {
       const playlistFormData2 = {
-        playlistName: this.playlistName,
-        playlistCode: this.playlistCode
+        playlistName: this.getName,
+        playlistCode: this.getCode
       };
       axios
         .patch(
@@ -250,6 +274,10 @@ export default {
     },
     modalData(playlist) {
       this.item = playlist;
+    },
+    resetModal() {
+      this.getName = "";
+      this.getCode = "";
     }
   }
 };

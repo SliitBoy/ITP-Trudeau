@@ -42,14 +42,29 @@
           ><a class="nav-link">Analytics</a></router-link
         >
       </ul>
-      <button class="btn btn-group-toggle bg-light" v-b-toggle.sidebar-right>SB</button>
-      <ul class="navbar-nav nav-right">
+      <ul class="navbar-nav nav-right m-1">
         <b-dropdown right variant="dark" text="Account" style="outline:0">
-          <b-dropdown-item><router-link to = "/profile">Student Profile</router-link></b-dropdown-item>
-          <b-dropdown-item><router-link to = "/staffProfile">Staff Profile</router-link></b-dropdown-item>
-          <b-dropdown-item><router-link to = "/adminProfile">Administrator</router-link></b-dropdown-item>
-          <b-dropdown-item><router-link to = "/settings">Settings</router-link></b-dropdown-item>
-          <b-dropdown-item><router-link to = "/login">Logout</router-link></b-dropdown-item>
+          <b-dropdown-item
+            ><router-link to="/profile"
+              >Student Profile</router-link
+            ></b-dropdown-item
+          >
+          <b-dropdown-item
+            ><router-link to="/staffProfile"
+              >Staff Profile</router-link
+            ></b-dropdown-item
+          >
+          <b-dropdown-item
+            ><router-link to="/adminProfile"
+              >Administrator</router-link
+            ></b-dropdown-item
+          >
+          <b-dropdown-item
+            ><router-link to="/settings">Settings</router-link></b-dropdown-item
+          >
+          <b-dropdown-item
+            ><router-link to="/login">Logout</router-link></b-dropdown-item
+          >
         </b-dropdown>
         <!-- <li class="nav-item dropdown">
           <a
@@ -68,6 +83,9 @@
           </div>
         </li> -->
       </ul>
+      <b-button size="sm" variant="primary" v-b-toggle.sidebar-right>
+        <b-icon icon="layout-sidebar-reverse" aria-label="Help"></b-icon>
+      </b-button>
     </div>
   </nav>
 </template>
