@@ -147,6 +147,18 @@
             <h6>Course 10</h6>
           </div>
         </button>
+        <button href="#" class="courseBtn">
+          <div class="course">
+            <img src="@/images/banner3.png" width="147.4px" height="59.8px" />
+            <h6>Course 11</h6>
+          </div>
+        </button>
+        <button href="#" class="courseBtn">
+          <div class="course">
+            <img src="@/images/banner1.png" width="147.2.9px" height="59.5px" />
+            <h6>Course 12</h6>
+          </div>
+        </button>
       </section>
     </div>
   </div>
@@ -157,17 +169,15 @@
   color: white;
   background-color: #2c2f33;
 }
-
 .innerContainer1 {
   margin-left: -205px;
   padding-left: 150px;
   background-color: #2c2f33;
-  margin-right: -5px;
+  margin-right: -204px;
   padding-right: 131px;
   margin-top: -80px;
   padding-top: 80px;
 }
-
 .wrapper {
   display: grid;
   grid-gap: 10px;
@@ -175,10 +185,9 @@
   color: white;
   margin-left: -210px;
   padding-left: 80px;
-  margin-right: -10px;
+  margin-right: -204px;
   padding-right: 100px;
 }
-
 .courseContainers {
   display: grid;
   grid-gap: 20px;
@@ -187,14 +196,12 @@
   color: white;
   padding-left: 20px;
 }
-
 .sectionTitle {
   text-align: center;
   background-color: #2c2f33;
   color: white;
   margin-top: 70px;
 }
-
 .course {
   padding-top: 25px;
   padding-left: 3px;
@@ -203,7 +210,6 @@
   color: white;
   text-align: center;
 }
-
 .wrapListing {
   margin-left: -100px;
   display: grid;
@@ -214,7 +220,6 @@
   background-color: #2c2f33;
   color: white;
 }
-
 .submissionMgmtBtn {
   background-color: #fca311;
   color: white;
@@ -227,11 +232,9 @@
   font-family: "Poppins", sans-serif;
   font-size: 15px;
 }
-
 .submissionMgmtBtn:hover {
   background-color: #fb4f;
 }
-
 .courseBtn {
   background-color: #2c2f33;
   padding: 15px;
@@ -242,11 +245,9 @@
   line-height: 1.4;
   color: white;
 }
-
 .courseBtn:hover {
   background-color: #525252;
 }
-
 hr {
   background-color: white;
 }
