@@ -32,7 +32,7 @@
 
             <template v-slot:footer>
               <b-dropdown size="sm" style="float: right;">
-                <b-dropdown-item v-b-modal.edit-forum @click="modalData(forum)"
+                <b-dropdown-item v-b-modal.edit-forum @click="modalForum(forum)"
                   >edit</b-dropdown-item
                 >
                 <b-dropdown-item @click="deleteForum(forum.id)"
@@ -51,7 +51,7 @@
         >
           New Forum
         </button>
-
+        <!--Form for new forum-->
         <b-modal id="new-forum" centered title="New Forum" @ok="addForum()">
           <b-form-group id="code-input" label="Forum code">
             <b-form-input
@@ -83,39 +83,38 @@
             ></b-form-input>
           </b-form-group>
         </b-modal>
-
+        <!--Form for editing forum-->
         <b-modal
           id="edit-forum"
           centered
           title="Edit Forum"
           @ok="editForum(forum.id)"
         >
-          <b-form-group id="formName" label="Forum Name">
+          <b-form-group id="code-edit" label="Course Code">
             <b-form-input
-              id="name-input"
+              id="code-edit"
+              label="Code"
               type="text"
-              :placeholder="forum.title"
+              v-model="forum.courseCode"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group id="name-edit" label="Forum Name">
+            <b-form-input
+              id="name-edit"
+              type="text"
+              :value="forum.title"
               v-model="title"
               required
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group id="formCode" label="Course Code">
+          <b-form-group id="message-edit" label="Forum message">
             <b-form-input
-              id="code-input"
-              label="Code"
-              type="text"
-              :placeholder="forum.courseCode"
-              v-model="courseCode"
-              required
-            ></b-form-input>
-          </b-form-group>
-          <b-form-group id="forumMessage" label="Forum message">
-            <b-form-input
-              id="forumMessage"
+              id="message-edit"
               label="Message"
               type="text"
-              :placeholder="forum.message"
+              :value="forum.message"
               v-model="message"
             ></b-form-input>
           </b-form-group>
@@ -145,12 +144,12 @@ export default {
       message: "",
       //forum array
       getForums: [],
+      //forum Search
       forumSearch: "",
-      getTitle: "",
-      getCourseCode: "",
-      getMessage: "",
       //forum object
-      forum: {}
+      forum: {},
+      //validation
+      titleState: null
     };
   },
 
@@ -174,10 +173,10 @@ export default {
   },
 
   computed: {
-    // filter items array
+    // filter forums array
     forumFilter: function() {
       return this.getForums.filter(forum => {
-        //return matching entries
+        //return titles that match search value
         return forum.title.toLowerCase().match(this.forumSearch.toLowerCase());
       });
     }
@@ -190,7 +189,6 @@ export default {
         courseCode: this.courseCode,
         message: this.message
       };
-
       axios
         .post("https://trudeau-cda16.firebaseio.com/forum.json", newForum)
         .then(resp => {
@@ -216,9 +214,9 @@ export default {
     editForum(id) {
       console.log("Forum ID", id);
       const forumFormData2 = {
-        forumName: this.getTitle,
-        forumCode: this.getCourseCode,
-        forumMessage: this.message
+        title: this.title,
+        courseCode: this.courseCode,
+        message: this.message
       };
       axios
         .patch(
@@ -227,14 +225,14 @@ export default {
         )
         .then(resp => {
           this.$bvToast.toast(`Updated Forum`, {
-            title: "update forum",
+            title: "Forum Updated",
             autoHideDelay: 2000
           });
           console.log(resp);
         });
     },
 
-    modalData(forum) {
+    modalForum(forum) {
       this.forum = forum;
     }
   }
