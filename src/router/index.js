@@ -34,6 +34,10 @@ import ExamAnalysis from "../components/Analysis/ExamAnalysis.vue";
 import SemesterReportAdmin from "../components/reports/SemesterReportAdmin.vue";
 import SemesterReport from "../components/reports/SemesterReport.vue";
 
+import VideosYT from "../components/videoYT/videosYT.vue";
+import PlaylistsYT from "../components/videoYT/playlistsYT.vue";
+import PlayerYT from "../components/videoYT/playerYT.vue";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -52,6 +56,21 @@ const routes = [
     path: "/viewPlaylist/:id",
     name: "ViewPlaylist",
     component: ViewPlaylist
+  },
+  {
+    path: "/video/yt",
+    name: "VideosYT",
+    component: VideosYT
+  },
+  {
+    path: "/playlistsYT",
+    name: "PlaylistsYT",
+    component: PlaylistsYT
+  },
+  {
+    path: "/PlayerYT/:id",
+    name: "PlayerYT",
+    component: PlayerYT
   },
   {
     path: "/notes",
@@ -157,7 +176,6 @@ const routes = [
     name: "CreateReport",
     component: CreateReport
   },
-
   {
     path: "/UpdateReport",
     name: "UpdateReport",
@@ -183,7 +201,6 @@ const routes = [
     name: "NewCourse",
     component: NewCourse
   },
-
   {
     path: "/EditCourse",
     name: "EditCourse",
