@@ -155,7 +155,6 @@ import axios from "axios";
 export default {
   data() {
     return {
-      isInit: false,
       isSignIn: false,
       playlistName: "",
       playlistCode: "",
@@ -169,7 +168,8 @@ export default {
           "https://cors-anywhere.herokuapp.com/https://www.googleapis.com/youtube/v3/playlists",
         part: "snippet,status",
         channelId: "UCXJJS2OukdIP52gH3lj6B7Q",
-        key: "AIzaSyBmm_e4cuGA4FOzbfCid-J8z79othtVq20"
+        //key: "AIzaSyBmm_e4cuGA4FOzbfCid-J8z79othtVq20"
+        key: "AIzaSyDxfGuzrKQD8ytk9Zk77Umg6h6d-mH7GI4"
       },
       getItems: [],
       playlistSearch: "",
@@ -181,11 +181,12 @@ export default {
     };
   },
 
-  created() {
+  created() {},
+
+  mounted() {
+    //call manually
     this.getYTPlaylists();
   },
-
-  mounted() {},
 
   computed: {
     // filter items array
@@ -200,7 +201,9 @@ export default {
   },
   methods: {
     async createNewPlaylist() {
-      await this.handleClickSignIn();
+      if (this.access_token == null) {
+        await this.handleClickSignIn();
+      }
       //api insert request
       const { baseUrl, part, key } = this.api;
       console.log("access_token", this.access_token);
@@ -264,7 +267,9 @@ export default {
       }
     },
     async deletePlaylist(playlistId) {
-      await this.handleClickSignIn();
+      if (this.access_token == null) {
+        await this.handleClickSignIn();
+      }
       const { baseUrl, key } = this.api;
       axios({
         method: "DELETE",
@@ -306,7 +311,9 @@ export default {
         alert("Input fields must not be empty.");
         return false;
       } else {
-        await this.handleClickSignIn();
+        if (this.access_token == null) {
+          await this.handleClickSignIn();
+        }
         axios({
           method: "POST",
           url: baseUrl,
@@ -327,14 +334,16 @@ export default {
             status: { privacyStatus: "public" }
           },
           id: playlistId
-        }).then(resp => {
-          this.$bvToast.toast(`updated playlist`, {
-            title: "update playlist",
-            autoHideDelay: 2000
-          });
-          console.log("Update successful");
-          console.log(resp);
-        });
+        })
+          .then(resp => {
+            this.$bvToast.toast(`updated playlist`, {
+              title: "update playlist",
+              autoHideDelay: 2000
+            });
+            console.log("Update successful");
+            console.log(resp);
+          })
+          .catch(error => console.log(error));
       }
     },
     modalData(playlist, id) {
@@ -348,12 +357,14 @@ export default {
     handleClickSignIn() {
       return this.$gAuth
         .signIn({
-          scope: "https://www.googleapis.com/auth/youtube.force-ssl"
+          //scope: "https://www.googleapis.com/auth/youtube.force-ssl"
+          scope: "https://www.googleapis.com/auth/youtube"
         })
         .then(
           res => {
             this.access_token = res.wc.access_token;
             console.log("Sign-in successful", res, this.access_token);
+            this.isSignIn = this.$gAuth.isAuthorized;
           },
           function(err) {
             console.error("Error signing in", err);
@@ -361,7 +372,7 @@ export default {
         );
     },
     loadClient() {
-      this.$gAuth.client.setApiKey("AIzaSyBmm_e4cuGA4FOzbfCid-J8z79othtVq20");
+      this.$gAuth.client.setApiKey("AIzaSyDxfGuzrKQD8ytk9Zk77Umg6h6d-mH7GI4");
       return this.$gAuth.client
         .load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
         .then(

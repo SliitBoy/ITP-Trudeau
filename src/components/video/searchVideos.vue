@@ -9,44 +9,6 @@
           v-model="videoSearch"
           placeholder="Search"
         />
-        <button @click="getYTVideo">Load videos</button>
-        <v-card
-          v-for="(video, index) in videoFilter"
-          :key="video.etag"
-          class="mx-auto"
-          max-width="344"
-          dark
-        >
-          <v-img :src="video.snippet.thumbnails.high.url" height="200px"></v-img>
-
-          <v-card-title>
-            {{ video.snippet.title }}
-          </v-card-title>
-
-          <v-card-actions>
-            <v-btn color="orange lighten-2" text>
-              Explore
-            </v-btn>
-
-            <v-spacer></v-spacer>
-
-            <v-btn icon @click="currentIndex = index">
-              <v-icon>{{
-                 index === currentIndex ? "mdi-chevron-up" : "mdi-chevron-down"
-              }}</v-icon>
-            </v-btn>
-          </v-card-actions>
-
-          <v-expand-transition>
-            <div v-show="index === currentIndex">
-              <v-divider></v-divider>
-
-              <v-card-text>
-                {{ video.snippet.description }}
-              </v-card-text>
-            </div>
-          </v-expand-transition>
-        </v-card>
         <b-card-group deck style="margin-top: 10px;">
           <!-- Create cards for playlists in array-->
           <b-card
@@ -83,8 +45,14 @@
                   <b-icon icon="three-dots"></b-icon>
                 </template>
                 <b-dropdown-item
+                  v-b-modal.add-video
+                  @click="insertData(video.snippet.title, video.id.videoId)"
+                  ><b-icon icon="pencil" aria-hidden="true"></b-icon> Add to
+                  playlist</b-dropdown-item
+                >
+                <b-dropdown-item
                   v-b-modal.edit-playlist
-                  @click="modalData(video.snippet, video.id)"
+                  @click="modalData(video.snippet, video.id.videoId)"
                   ><b-icon icon="pencil" aria-hidden="true"></b-icon
                   >Edit</b-dropdown-item
                 >
@@ -101,26 +69,27 @@
         </b-card-group>
       </div>
       <div class="col-2" style="margin-top: 20px;">
-        <b-button v-b-modal.new-playlist class="shadow" variant="warning"
+        <b-button v-b-modal.new-video class="shadow" variant="warning"
           ><b-icon icon="plus-circle-fill" aria-hidden="true"></b-icon>
           New Playlist
         </b-button>
 
         <b-modal
-          id="new-playlist"
+          id="new-video"
           centered
           title="New Playlist"
-          header-bg-variant="warning"
+          header-bg-variant="info"
           header-text-variant="light"
           @show="resetModal"
-          @ok="createNewPlaylist()"
+          @ok="insertVideo"
+          dark
         >
           <b-form-group id="formName" label="Playlist Name">
             <b-form-input
               id="name-input"
               type="text"
               placeholder="Enter name"
-              v-model="playlistName"
+              v-model="videoTitle"
               required
             ></b-form-input>
           </b-form-group>
@@ -128,12 +97,41 @@
           <b-form-group id="formDescription" label="Playlist Description">
             <b-form-input
               id="description-input"
-              label="Description"
               type="text"
               placeholder="Enter description"
-              v-model="playlistDescription"
+              v-model="videoDescription"
               required
             ></b-form-input>
+          </b-form-group>
+
+          <b-form-group id="formFile" label="Video file">
+            <v-file-input
+              v-model="videoFile"
+              truncate-length="15"
+              label="Choose a file or drop it here"
+              accept="video/*"
+              prepend-icon="mdi-file-video"
+              dense
+            ></v-file-input>
+            <b-form-file
+              ref="video-input"
+              v-model="videoFile"
+              :state="Boolean(videoFile)"
+              size="sm"
+              placeholder="Choose a file or drop it here..."
+              drop-placeholder="Drop file here..."
+              accept="video/*"
+            ></b-form-file>
+            <div class="mt-3">
+              <b-button
+                variant="danger"
+                size="sm"
+                @click="clearFiles"
+                class="mr-2"
+                >Remove video</b-button
+              >
+              Selected file: {{ videoFile ? videoFile.name : "" }}
+            </div>
           </b-form-group>
         </b-modal>
 
@@ -167,6 +165,30 @@
             ></b-form-input>
           </b-form-group>
         </b-modal>
+
+        <b-modal
+          id="add-video"
+          centered
+          title="Add to Playlist"
+          header-bg-variant="info"
+          header-text-variant="light"
+          scrollable
+          @show="resetModal"
+          @ok="insertVideo()"
+        >
+          <v-radio-group dense v-model="selectedPlaylistId">
+            <v-radio
+              v-for="playlist in getPlaylistItems"
+              :key="playlist.id"
+              :value="playlist.id"
+              :label="playlist.snippet.title"
+            ></v-radio>
+          </v-radio-group>
+
+          <div class="mt-3">
+            Selected: <strong>{{ selectedPlaylistId }}</strong>
+          </div>
+        </b-modal>
       </div>
     </div>
   </div>
@@ -177,33 +199,43 @@ import axios from "axios";
 export default {
   data() {
     return {
-      currentIndex: null,
       isInit: false,
       isSignIn: false,
-      playlistName: "",
-      playlistCode: "",
-      playlistDescription: "",
-      //title: "",
-      //description: "",
-      ytItems: null,
+      videoTitle: "",
+      videoDescription: "",
+      selectedPlaylistId: "",
+      selectedVideoId: null,
+      selectedVideoTitle: null,
+      videoFile: "",
       //yt api object
       api: {
         baseUrl:
           "https://cors-anywhere.herokuapp.com/https://www.googleapis.com/youtube/v3/playlists",
         part: "snippet,status",
         channelId: "UCXJJS2OukdIP52gH3lj6B7Q",
-        key: "AIzaSyBmm_e4cuGA4FOzbfCid-J8z79othtVq20"
+        //key: "AIzaSyBmm_e4cuGA4FOzbfCid-J8z79othtVq20"
+        key: "AIzaSyDxfGuzrKQD8ytk9Zk77Umg6h6d-mH7GI4"
       },
-      apiVideo: {
+      apiVideoSearch: {
         baseUrl:
           "https://cors-anywhere.herokuapp.com/https://www.googleapis.com/youtube/v3/search",
         part: "snippet,id",
         channelId: "UCXJJS2OukdIP52gH3lj6B7Q",
-        key: "AIzaSyBmm_e4cuGA4FOzbfCid-J8z79othtVq20",
+        //key: "AIzaSyBmm_e4cuGA4FOzbfCid-J8z79othtVq20",
+        key: "AIzaSyDxfGuzrKQD8ytk9Zk77Umg6h6d-mH7GI4",
         order: "date"
       },
+      apiVideoInsert: {
+        baseUrl:
+          "https://cors-anywhere.herokuapp.com/https://www.googleapis.com/youtube/v3/playlistItems",
+        part: "snippet,status",
+        channelId: "UCXJJS2OukdIP52gH3lj6B7Q",
+        playlistId: "",
+        //key: "AIzaSyBmm_e4cuGA4FOzbfCid-J8z79othtVq20"
+        key: "AIzaSyDxfGuzrKQD8ytk9Zk77Umg6h6d-mH7GI4"
+      },
       videos: [],
-      getItems: [],
+      getPlaylistItems: null,
       videoSearch: "",
       getName: "",
       getDescription: "",
@@ -213,11 +245,13 @@ export default {
     };
   },
 
-  created() {
-    this.getYTVideo();
-  },
+  created() {},
 
-  mounted() {},
+  mounted() {
+    //call manually
+    this.getYTVideo();
+    this.getYTPlaylists();
+  },
 
   computed: {
     // filter items array
@@ -231,53 +265,56 @@ export default {
     }
   },
   methods: {
-    async createNewPlaylist() {
-      await this.handleClickSignIn();
-      //api insert request
-      const { baseUrl, part, key } = this.api;
-      console.log("access_token", this.access_token);
-      console.log(this.playlistName);
-      console.log(this.playlistDescription);
-      if (this.playlistName == "" || this.playListDescription == "") {
-        alert("Field must not be empty.");
-        return false;
-      } else {
-        axios({
-          method: "POST",
-          url: baseUrl,
-          params: {
-            part: part,
-            key: key
-          },
-          headers: {
-            Authorization: `Bearer ${this.access_token}`,
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          },
-          data: {
-            snippet: {
-              title: this.playlistName,
-              description: this.playListDescription
-            },
-            status: { privacyStatus: "public" }
-          }
-        })
-          .then(res => {
-            this.createNewPlaylistFB();
-            console.log("Insert successful");
-            console.log("Response", res);
-          })
-          .catch(error => console.log("error", error));
+    async insertVideo() {
+      if (this.access_token == null) {
+        await this.handleClickSignIn();
       }
+      //api insert request
+      const { baseUrl, part, key } = this.apiVideoInsert;
+      console.log("access_token", this.access_token);
+      axios({
+        method: "POST",
+        url: baseUrl,
+        params: {
+          part: part,
+          key: key
+        },
+        headers: {
+          Authorization: `Bearer ${this.access_token}`,
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        data: {
+          snippet: {
+            playlistId: this.selectedPlaylistId,
+            position: 0,
+            resourceId: {
+              kind: "youtube#video",
+              videoId: this.selectedVideoId
+            }
+          },
+          status: { privacyStatus: "public" }
+        }
+      })
+        .then(res => {
+          this.$bvToast.toast(`Added to playlist ${this.selectedPlaylistId}`, {
+            title: `Added to playlist`,
+            variant: "info",
+            autoHideDelay: 2000
+          });
+          console.log("Insert successful");
+          console.log("Response", res);
+        })
+        .catch(error => console.log("error", error));
     },
     createNewPlaylistFB() {
       const playlistFormData = {
-        playlistTitle: this.playlistName,
-        playlistDescription: this.playListDescription
+        playlistTitle: this.videoTitle,
+        videoDescription: this.videoDescription
       };
       if (
         playlistFormData.playlistTitle == "" ||
-        playlistFormData.playlistDescription == ""
+        playlistFormData.videoDescription == ""
       ) {
         alert("Field must not be empty.");
         return false;
@@ -285,7 +322,7 @@ export default {
         axios
           .put(
             "https://trudeau-cda16.firebaseio.com/playlists/" +
-              this.playlistName +
+              this.videoTitle +
               ".json",
             playlistFormData
           )
@@ -296,7 +333,9 @@ export default {
       }
     },
     async deletePlaylist(playlistId) {
-      await this.handleClickSignIn();
+      if (this.access_token == null) {
+        await this.handleClickSignIn();
+      }
       const { baseUrl, key } = this.api;
       axios({
         method: "DELETE",
@@ -338,7 +377,9 @@ export default {
         alert("Input fields must not be empty.");
         return false;
       } else {
-        await this.handleClickSignIn();
+        if (this.access_token == null) {
+          await this.handleClickSignIn();
+        }
         axios({
           method: "POST",
           url: baseUrl,
@@ -372,6 +413,15 @@ export default {
     modalData(video, id) {
       this.item = video;
       this.modalId = id;
+      this.selectedVideoId = id;
+    },
+    insertData(title, id) {
+      this.selectedVideoTitle = title;
+      this.selectedVideoId = id;
+    },
+    //clear file input
+    clearFiles() {
+      this.$refs["video-input"].reset();
     },
     resetModal() {
       this.getName = "";
@@ -393,7 +443,7 @@ export default {
         );
     },
     loadClient() {
-      this.$gAuth.client.setApiKey("AIzaSyBmm_e4cuGA4FOzbfCid-J8z79othtVq20");
+      this.$gAuth.client.setApiKey("AIzaSyDxfGuzrKQD8ytk9Zk77Umg6h6d-mH7GI4");
       return this.$gAuth.client
         .load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
         .then(
@@ -421,17 +471,17 @@ export default {
         }
       })
         .then(res => {
-          this.getItems = res.data.items;
+          this.getPlaylistItems = res.data.items;
           this.item = res.data.items;
           this.title = res.data.items[0].snippet.title;
           console.log(res);
-          console.log("Playlist Items", this.getItems);
+          console.log("Playlist Items", this.getPlaylistItems);
           console.log("Playlist Items title", this.title);
         })
         .catch(error => console.log(error));
     },
     getYTVideo() {
-      const { baseUrl, part, key, channelId } = this.apiVideo;
+      const { baseUrl, part, key, channelId } = this.apiVideoSearch;
       //get data from api
       axios({
         method: "GET",
