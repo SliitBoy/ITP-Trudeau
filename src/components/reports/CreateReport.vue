@@ -1,30 +1,87 @@
 <template>
-<div style="background-color: #2C2F33;">
+<div style="background-color: #2C2F33;" class="height">
     <h3>Create Report</h3>
     <br>
     <label> ID Number : </label> 
-    <input type='text' placeholder="Enter your ID Number">
+    <input type='text' placeholder="Enter ID Number" v-model="stID">
     <br>
     <br>
     <label> Student Name  :  </label>
-    <input type ='text' placeholder="Enter Student's Name">
+    <input type ='text' placeholder="Enter Student's Name" v-model="stName">
     <br>
     <br><div class="centre">
-    <div><span style="padding-right: 18em">Course</span>Result</div>
+    <div><span style="padding-right: 18em">Course - Result</span></div>
     <br> <div class="but">
-    <input type="text" text style="margin-right:50px;" placeholder ="Course Name"><input type="text"  placeholder ="Result"><br><br>
-    <input type="text" text style="margin-right:50px;" placeholder ="Course Name"><input type="text"  placeholder ="Result"><br><br>
-    <input type="text" text style="margin-right:50px;" placeholder ="Course Name"><input type="text"  placeholder ="Result"><br><br>
-    <input type="text" text style="margin-right:50px;" placeholder ="Course Name"><input type="text"  placeholder ="Result"><br><br>
-    <input type="text" text style="margin-right:50px;" placeholder ="Course Name"><input type="text"  placeholder ="Result"><br><br>
+
+        <button @click="onAddCourse" type="button">Add Course</button>
+          <div class="course-list">
+            <div
+                    class="input"
+                    v-for="(courseInput, index) in courseInputs"
+                    v-bind:key="courseInput.id">
+              <label :for="courseInput.id">Course {{ index +1 }}</label>
+              <input
+                      type="text"
+                      :id="courseInput.id"
+                      v-model="courseInput.value">
+            </div>
+          </div>
   </div></div>
   <br><div class="bottom">
-    <b-button class="right" variant="primary">Create Report</b-button>
+    <b-button class="right" variant="primary" type="submit" @click="onSubmit">Create Report</b-button>
   </div>
 </div>
 </template>
 
 <script>
+
+import axios from 'axios';
+
+export default {
+
+    data(){
+        return {
+            stID:'',
+            stName:'',
+            courseInputs:[]
+        }
+    },
+
+    methods: {
+
+        onAddCourse(){
+             const newCourse = {
+                 id : Math.random() * Math.random() * 1000,
+                 value:''
+             }
+
+             this.courseInputs.push(newCourse)
+        },
+
+        onSubmit(){
+
+            const formData = {
+
+                stID:this.stID,
+                stName:this.stName,
+                courses:this.courseInputs.map(course=>course.value)
+            }
+            if(
+                formData.stID == " " ||
+                formData.stName == " "
+            ){
+                alert("All Fields must be filled");
+                return false;
+            }else{
+                console.log(formData)
+                axios.post('https://fir-2tharu.firebaseio.com/report.json',formData)
+                .then(res=>console.log(res))
+                .catch(error=>console.log(error));
+            }
+        }
+
+    }
+}
 
 </script>
 
@@ -87,4 +144,10 @@ template{
     width:100%;
     position:relative;   
 }
+
+.height{
+
+    height: 100vh;
+}
+
 </style>
