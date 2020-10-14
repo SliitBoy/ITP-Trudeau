@@ -12,15 +12,24 @@
       color="#b5b1b1"
     >
       <div class="px-3 py-2">
-        <div style="height: 200px">
-          Notifications Here
+        <div style="height: 330px">
+          Notifications 
+          <div id="calendar" min-width="350px" >
+          <router-link to="/Notifications" >
+            <button block href="#" class="v-btn v-btn--contained theme--light v-size--default" >
+              <div class="adminField">
+                 <h5 width="350px">-Check Notifications Here-</h5>
+              </div>
+            </button>
+          </router-link>
+        </div>
         </div>
         
         <div id="calendar" min-width="350px" >
           <router-link to="/Calendar" >
             <button block href="#" class="v-btn v-btn--contained theme--light v-size--default" >
               <div class="adminField">
-                 <h5 width="350px">- Click here to add events -</h5>
+                 <h5 width="350px">-Click here to add events -</h5>
               </div>
             </button>
           </router-link>

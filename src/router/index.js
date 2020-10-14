@@ -35,6 +35,7 @@ import ExamAnalysis from "../components/Analysis/ExamAnalysis.vue";
 import SemesterReportAdmin from "../components/reports/SemesterReportAdmin.vue";
 import SemesterReport from "../components/reports/SemesterReport.vue";
 import Calendar from "../components/Sidebar/Calendar.vue";
+import Notifications from "../components/Sidebar/Notifications.vue";
 
 Vue.use(VueRouter);
 
@@ -48,6 +49,11 @@ const routes = [
     path: "/Calendar",
     name: "Calendar",
     component: Calendar
+  },
+  {
+    path: "/Notifications",
+    name: "Notifications",
+    component: Notifications
   },
   //remove this link
   {
