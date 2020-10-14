@@ -186,6 +186,7 @@ export default {
         courseCode: this.courseCode,
         message: this.message
       };
+
       axios
         .post("https://trudeau-cda16.firebaseio.com/forum.json", newForum)
         .then(resp => {
