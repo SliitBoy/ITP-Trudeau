@@ -1,6 +1,6 @@
 <template>
-<div>
-  <h1>This is Courses</h1>
+<div style="background-color: #2C2F33" class="height">
+<h1 style="color: aliceblue;font-family: cursive">This is Courses</h1>
 
   <br>
   <br>
@@ -19,5 +19,10 @@ h1{
     padding-top: 1em;
     color:black; 
 }
-</style>
 
+.height{
+
+    height: 100vh;
+    
+}
+</style>
