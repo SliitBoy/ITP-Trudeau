@@ -252,6 +252,7 @@ export default {
           .then(resp => {
             this.$bvToast.toast(`Added playlist ${this.playlistName}`, {
               title: "Added playlist",
+              variant: "success",
               autoHideDelay: 2000
             });
             console.log(resp);
@@ -267,6 +268,7 @@ export default {
         .then(resp => {
           this.$bvToast.toast(`Deleted playlist`, {
             title: "delete playlist",
+            variant: "danger",
             autoHideDelay: 2000
           });
           console.log(resp);
@@ -285,6 +287,7 @@ export default {
         .then(resp => {
           this.$bvToast.toast(`updated playlist`, {
             title: "update playlist",
+            variant: "info",
             autoHideDelay: 2000
           });
           console.log(resp);

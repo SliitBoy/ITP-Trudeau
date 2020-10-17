@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import VideoPlaylists from "../components/video/videoPlaylist";
+import VideoPlaylists from "../components/video/videoPlaylistYT";
 export default {
   components: {
     appVideoPlaylists: VideoPlaylists

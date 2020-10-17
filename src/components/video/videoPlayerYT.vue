@@ -115,7 +115,7 @@ export default {
         .cuePlaylist({
           listType: "playlist",
           list: this.$route.params.id,
-          index: 1
+          index: 0
         })
         .playVideo();
     }

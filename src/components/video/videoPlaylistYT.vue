@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid vh-100" style="background-color: #2C2F33;">
+  <div class="container-fluid " style="background-color: #2C2F33;">
     <div class="row">
       <div class="col-10" style="margin-top: 20px;">
         <!-- Search Input field-->
@@ -10,7 +10,7 @@
           placeholder="Search"
         />
         <button @click="handleClickSignIn">Sign in</button>
-        <b-card-group deck style="margin-top: 10px;">
+        <b-card-group columns style="margin-top: 10px; column-count: 5;">
           <!-- Create cards for playlists in array-->
           <b-card
             v-for="playlist in playlistFilter"
@@ -23,6 +23,7 @@
             img-top
             bg-variant="dark"
             text-variant="white"
+            title-tag="h4"
             sub-title-text-variant="white"
             class="shadow"
           >
@@ -65,11 +66,23 @@
         </b-card-group>
       </div>
       <div class="col-2" style="margin-top: 20px;">
-        <b-button v-b-modal.new-playlist class="shadow" variant="warning"
+        <b-button v-b-modal.new-playlist class="shadow mb-2" variant="warning"
           ><b-icon icon="plus-circle-fill" aria-hidden="true"></b-icon>
           New Playlist
         </b-button>
-
+        <router-link
+          :to="{
+            name: 'VideoReport'
+          }"
+          ><b-button class="shadow" variant="info"
+            ><b-icon
+              icon="file-earmark-spreadsheet"
+              aria-hidden="true"
+              class="mr-1"
+            ></b-icon
+            >View report</b-button
+          ></router-link
+        >
         <b-modal
           id="new-playlist"
           centered
@@ -96,8 +109,8 @@
               label="Description"
               type="text"
               placeholder="Enter description"
-              v-model="playlistDescription"
-              :state="Boolean(playlistDescription)"
+              v-model="getDescription"
+              :state="Boolean(getDescription)"
               required
             ></b-form-input>
           </b-form-group>
@@ -142,6 +155,7 @@
 
 <script>
 import axios from "axios";
+//import "./plugins/vuetify";
 export default {
   data() {
     return {
@@ -198,8 +212,8 @@ export default {
       const { baseUrl, part, key } = this.api;
       console.log("access_token", this.access_token);
       console.log(this.playlistName);
-      console.log(this.playlistDescription);
-      if (this.playlistName == "" || this.playListDescription == "") {
+      console.log(this.getDescription);
+      if (this.playlistName == "" || this.getDescription == "") {
         alert("Field must not be empty.");
         return false;
       } else {
@@ -218,23 +232,30 @@ export default {
           data: {
             snippet: {
               title: this.playlistName,
-              description: this.playListDescription
+              description: this.getDescription
             },
             status: { privacyStatus: "public" }
           }
         })
           .then(res => {
-            this.createNewPlaylistFB();
+            this.createNewPlaylistFB(res);
+            this.$bvToast.toast(`Added playlist`, {
+              title: "Added playlist",
+              variant: "success",
+              autoHideDelay: 2000
+            });
             console.log("Insert successful");
             console.log("Response", res);
           })
           .catch(error => console.log("error", error));
       }
     },
-    createNewPlaylistFB() {
+    createNewPlaylistFB(res) {
       const playlistFormData = {
-        playlistTitle: this.playlistName,
-        playlistDescription: this.playListDescription
+        playlistTitle: res.data.snippet.title,
+        playlistDescription: res.data.snippet.description,
+        channelId: res.data.snippet.channelTitle,
+        kind: res.data.kind
       };
       if (
         playlistFormData.playlistTitle == "" ||
@@ -246,7 +267,7 @@ export default {
         axios
           .put(
             "https://trudeau-cda16.firebaseio.com/playlists/" +
-              this.playlistName +
+              res.data.snippet.title +
               ".json",
             playlistFormData
           )
@@ -277,6 +298,7 @@ export default {
         .then(resp => {
           this.$bvToast.toast(`Deleted playlist`, {
             title: "delete playlist",
+            variant: "danger",
             autoHideDelay: 2000
           });
           console.log("Delete successful");
@@ -304,8 +326,9 @@ export default {
         if (this.access_token == null) {
           await this.handleClickSignIn();
         }
+        console.log("Attempting to update", playlistId);
         axios({
-          method: "POST",
+          method: "PUT",
           url: baseUrl,
           params: {
             part: part,
@@ -317,17 +340,18 @@ export default {
             "Content-Type": "application/json"
           },
           data: {
+            id: playlistId,
             snippet: {
               title: this.getName,
               description: this.getDescription
             },
             status: { privacyStatus: "public" }
-          },
-          id: playlistId
+          }
         })
           .then(resp => {
             this.$bvToast.toast(`updated playlist`, {
               title: "update playlist",
+              variant: "info",
               autoHideDelay: 2000
             });
             console.log("Update successful");
@@ -385,7 +409,8 @@ export default {
         params: {
           part: part,
           channelId: channelId,
-          key: key
+          key: key,
+          maxResults: 25
         }
       })
         .then(res => {

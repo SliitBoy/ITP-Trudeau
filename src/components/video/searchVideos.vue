@@ -171,6 +171,7 @@
 
 <script>
 import axios from "axios";
+import "./plugins/vuetify";
 import {
   required,
   minLength,
