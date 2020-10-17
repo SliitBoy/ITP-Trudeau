@@ -4,6 +4,8 @@ import Home from "../views/Home.vue";
 import Video from "../views/Video.vue";
 import VideoPlayer from "../components/video/videoPlayer";
 import ViewPlaylist from "../components/video/viewPlaylist.vue";
+import SearchVideos from "../components/video/searchVideos.vue";
+import VideoReport from "../components/video/videoReport.vue";
 import Notes from "../views/Notes.vue";
 import Course from "../views/Course.vue";
 import FileManager from "../views/FileManager.vue";
@@ -49,6 +51,16 @@ const routes = [
     path: "/videoplayer/:id",
     name: "VideoPlayer",
     component: VideoPlayer
+  },
+  {
+    path: "/SearchVideos",
+    name: "SearchVideos",
+    component: SearchVideos
+  },
+  {
+    path: "/videoReport",
+    name: "VideoReport",
+    component: VideoReport
   },
   {
     path: "/viewPlaylist/:id",

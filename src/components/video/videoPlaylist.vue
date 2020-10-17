@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid min-vh-100" style="background-color: #2C2F33;">
+  <div class="container-fluid " style="background-color: #2C2F33;">
     <div class="row">
       <div class="col-10" style="margin-top: 20px;">
         <!-- Search Input field-->
@@ -9,27 +9,35 @@
           v-model="playlistSearch"
           placeholder="Search"
         />
-        <b-card-group deck style="margin-top: 10px;">
+        <button @click="handleClickSignIn">Sign in</button>
+        <b-card-group columns style="margin-top: 10px; column-count: 5;">
           <!-- Create cards for playlists in array-->
           <b-card
             v-for="playlist in playlistFilter"
-            :key="playlist.name"
-            :title="playlist.playlistName"
-            :sub-title="playlist.playlistCode"
-            style="max-width: 250px;"
+            :key="playlist.id"
+            :title="playlist.snippet.title"
+            :sub-title="playlist.snippet.description"
+            style="max-width: 15rem; max-height: 24rem;"
+            :img-src="playlist.snippet.thumbnails.high.url"
+            img-alt="Card image"
+            img-top
+            bg-variant="dark"
+            text-variant="white"
+            title-tag="h4"
+            sub-title-text-variant="white"
+            class="shadow"
           >
-            <b-card-text> </b-card-text>
-            <!-- Send Course code to player componenet  -->
-            <router-link
-              :to="{
-                name: 'ViewPlaylist',
-                params: { id: playlist.playlistCode, playlistObj: playlist }
-              }"
-              ><b-button variant="primary" size="sm"
-                >View playlist</b-button
-              ></router-link
-            >
             <template v-slot:footer>
+              <!-- Send Course code to player componenet  -->
+              <router-link
+                :to="{
+                  name: 'VideoPlayer',
+                  params: { id: playlist.id, playlistSnippet: playlist.snippet }
+                }"
+                ><b-button variant="primary" size="sm"
+                  >View playlist</b-button
+                ></router-link
+              >
               <b-dropdown
                 size="sm"
                 style="float: right;"
@@ -41,7 +49,7 @@
                 </template>
                 <b-dropdown-item
                   v-b-modal.edit-playlist
-                  @click="modalData(playlist)"
+                  @click="modalData(playlist.snippet, playlist.id)"
                   ><b-icon icon="pencil" aria-hidden="true"></b-icon
                   >Edit</b-dropdown-item
                 >
@@ -58,11 +66,23 @@
         </b-card-group>
       </div>
       <div class="col-2" style="margin-top: 20px;">
-        <b-button v-b-modal.new-playlist variant="warning"
+        <b-button v-b-modal.new-playlist class="shadow mb-2" variant="warning"
           ><b-icon icon="plus-circle-fill" aria-hidden="true"></b-icon>
           New Playlist
         </b-button>
-
+        <router-link
+          :to="{
+            name: 'VideoReport'
+          }"
+          ><b-button class="shadow" variant="info"
+            ><b-icon
+              icon="file-earmark-spreadsheet"
+              aria-hidden="true"
+              class="mr-1"
+            ></b-icon
+            >View report</b-button
+          ></router-link
+        >
         <b-modal
           id="new-playlist"
           centered
@@ -78,17 +98,19 @@
               type="text"
               placeholder="Enter name"
               v-model="playlistName"
+              :state="Boolean(playlistName)"
               required
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group id="formCode" label="Playlist Code">
+          <b-form-group id="formDescription" label="Playlist Description">
             <b-form-input
-              id="code-input"
-              label="Code"
+              id="description-input"
+              label="Description"
               type="text"
-              placeholder="Enter code"
-              v-model="playlistCode"
+              placeholder="Enter description"
+              v-model="getDescription"
+              :state="Boolean(getDescription)"
               required
             ></b-form-input>
           </b-form-group>
@@ -101,58 +123,31 @@
           header-bg-variant="warning"
           header-text-variant="light"
           @show="resetModal"
-          @ok="patchPlaylist(item.id)"
+          @ok="patchPlaylist(modalId)"
         >
           <b-form-group id="formEditName" label="Playlist Name">
             <b-form-input
               id="editName-input"
               type="text"
-              :placeholder="item.playlistName"
+              :placeholder="item.title"
               v-model="getName"
+              :state="Boolean(getName)"
               required
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group id="formEditCode" label="Playlist Code">
+          <b-form-group id="formEditDescription" label="Playlist Description">
             <b-form-input
-              id="editCode-input"
-              label="Code"
+              id="editDescription-input"
+              label="Description"
               type="text"
-              :placeholder="item.playlistCode"
-              v-model="getCode"
+              :placeholder="item.description"
+              v-model="getDescription"
+              :state="Boolean(getDescription)"
               required
             ></b-form-input>
           </b-form-group>
         </b-modal>
-        <!-- <b-dropdown
-          id="dropdown-form"
-          text="New Playlist"
-          ref="dropdown"
-          class="m-2"
-          variant="dark"
-        >
-          <b-dropdown-form>
-            <b-form-group label="Name" label-for="form-new-playlist-name">
-              <b-form-input
-                id="form-new-playlist-name"
-                size="sm"
-                v-model="playlistName"
-              ></b-form-input>
-            </b-form-group>
-
-            <b-form-group label="Code" label-for="form-new-playlist-desc">
-              <b-form-input
-                id="form-new-playlist-desc"
-                type="text"
-                size="sm"
-                v-model="playlistCode"
-              ></b-form-input>
-            </b-form-group>
-            <b-button variant="primary" size="sm" @click="createNewPlaylist"
-              >Add</b-button
-            >
-          </b-dropdown-form>
-        </b-dropdown> -->
       </div>
     </div>
   </div>
@@ -163,41 +158,37 @@ import axios from "axios";
 export default {
   data() {
     return {
+      isSignIn: false,
       playlistName: "",
       playlistCode: "",
-      // playlistDescription: "",
-      //  items: [
-      //    { name: "Probability & Statistics", code: "IT2050" },
-      //    { name: "Proffesional skills", code: "IT2060" },
-      //    { name: "ITP", code: "IT2070" }
-      // ],
+      playlistDescription: "",
+      //title: "",
+      //description: "",
+      ytItems: null,
+      //yt api object
+      api: {
+        baseUrl:
+          "https://cors-anywhere.herokuapp.com/https://www.googleapis.com/youtube/v3/playlists",
+        part: "snippet,status",
+        channelId: "UCXJJS2OukdIP52gH3lj6B7Q",
+        //key: "AIzaSyBmm_e4cuGA4FOzbfCid-J8z79othtVq20"
+        key: "AIzaSyBmm_e4cuGA4FOzbfCid-J8z79othtVq20"
+      },
       getItems: [],
       playlistSearch: "",
       getName: "",
-      getCode: "",
-      item: {}
+      getDescription: "",
+      item: null,
+      modalId: null,
+      access_token: null
     };
   },
 
-  created() {
-    axios
-      .get("https://trudeau-cda16.firebaseio.com/playlists.json")
-      .then(res => {
-        console.log(res);
-        const data = res.data;
-        //const array = [];
-        for (let key in data) {
-          const item = data[key];
-          item.id = key;
-          //array.push(item);
-          this.getItems.push(item);
-        }
-        //console.log(array);
-        console.log(this.getItems);
-        //this.getName = array[0].playlistName;
-        //this.getCode = array[0].playlistCode;
-      })
-      .catch(error => console.log(error));
+  created() {},
+
+  mounted() {
+    //call manually
+    this.getYTPlaylists();
   },
 
   computed: {
@@ -205,79 +196,231 @@ export default {
     playlistFilter: function() {
       return this.getItems.filter(playlist => {
         //return matching entries
-        return playlist.playlistName
+        return playlist.snippet.title
           .toLowerCase()
           .match(this.playlistSearch.toLowerCase());
       });
     }
   },
-
   methods: {
-    createNewPlaylist() {
+    async createNewPlaylist() {
+      if (this.access_token == null) {
+        await this.handleClickSignIn();
+      }
+      //api insert request
+      const { baseUrl, part, key } = this.api;
+      console.log("access_token", this.access_token);
+      console.log(this.playlistName);
+      console.log(this.getDescription);
+      if (this.playlistName == "" || this.getDescription == "") {
+        alert("Field must not be empty.");
+        return false;
+      } else {
+        axios({
+          method: "POST",
+          url: baseUrl,
+          params: {
+            part: part,
+            key: key
+          },
+          headers: {
+            Authorization: `Bearer ${this.access_token}`,
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          data: {
+            snippet: {
+              title: this.playlistName,
+              description: this.getDescription
+            },
+            status: { privacyStatus: "public" }
+          }
+        })
+          .then(res => {
+            this.createNewPlaylistFB(res);
+            this.$bvToast.toast(`Added playlist`, {
+              title: "Added playlist",
+              variant: "success",
+              autoHideDelay: 2000
+            });
+            console.log("Insert successful");
+            console.log("Response", res);
+          })
+          .catch(error => console.log("error", error));
+      }
+    },
+    createNewPlaylistFB(res) {
       const playlistFormData = {
-        playlistName: this.playlistName,
-        playlistCode: this.playlistCode
-        //playlistDescription: this.playListDescription
+        playlistTitle: res.data.snippet.title,
+        playlistDescription: res.data.snippet.description,
+        channelId: res.data.snippet.channelTitle,
+        kind: res.data.kind
       };
       if (
-        playlistFormData.playlistName == "" ||
-        playlistFormData.playlistCode == ""
+        playlistFormData.playlistTitle == "" ||
+        playlistFormData.playlistDescription == ""
       ) {
         alert("Field must not be empty.");
         return false;
       } else {
         axios
-          .post(
-            "https://trudeau-cda16.firebaseio.com/playlists.json",
+          .put(
+            "https://trudeau-cda16.firebaseio.com/playlists/" +
+              res.data.snippet.title +
+              ".json",
             playlistFormData
           )
           .then(resp => {
-            this.$bvToast.toast(`Added playlist ${this.playlistName}`, {
-              title: "Added playlist",
-              autoHideDelay: 2000
-            });
             console.log(resp);
           })
           .catch(error => console.error(error));
       }
     },
-    deletePlaylist(id) {
-      axios
-        .delete(
-          "https://trudeau-cda16.firebaseio.com/playlists/" + id + ".json"
-        )
+    async deletePlaylist(playlistId) {
+      if (this.access_token == null) {
+        await this.handleClickSignIn();
+      }
+      const { baseUrl, key } = this.api;
+      axios({
+        method: "DELETE",
+        url: baseUrl,
+        params: {
+          id: playlistId,
+          key: key
+        },
+        headers: {
+          Authorization: `Bearer ${this.access_token}`,
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        }
+      })
         .then(resp => {
           this.$bvToast.toast(`Deleted playlist`, {
             title: "delete playlist",
+            variant: "danger",
             autoHideDelay: 2000
           });
+          console.log("Delete successful");
           console.log(resp);
-        });
+        })
+        .catch(error => console.log("error", error));
     },
-    patchPlaylist(id) {
-      const playlistFormData2 = {
-        playlistName: this.getName,
-        playlistCode: this.getCode
-      };
+    deletePlaylistFB(title) {
       axios
-        .patch(
-          "https://trudeau-cda16.firebaseio.com/playlists/" + id + ".json",
-          playlistFormData2
+        .delete(
+          "https://trudeau-cda16.firebaseio.com/playlists/" + title + ".json"
         )
         .then(resp => {
-          this.$bvToast.toast(`updated playlist`, {
-            title: "update playlist",
-            autoHideDelay: 2000
-          });
           console.log(resp);
         });
     },
-    modalData(playlist) {
+    async patchPlaylist(id) {
+      //api insert request
+      const { baseUrl, part, key } = this.api;
+      const playlistId = id;
+      if (this.getName == "" || this.getDescription == "") {
+        alert("Input fields must not be empty.");
+        return false;
+      } else {
+        if (this.access_token == null) {
+          await this.handleClickSignIn();
+        }
+        console.log("Attempting to update", playlistId);
+        axios({
+          method: "PUT",
+          url: baseUrl,
+          params: {
+            part: part,
+            key: key
+          },
+          headers: {
+            Authorization: `Bearer ${this.access_token}`,
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          data: {
+            id: playlistId,
+            snippet: {
+              title: this.getName,
+              description: this.getDescription
+            },
+            status: { privacyStatus: "public" }
+          }
+        })
+          .then(resp => {
+            this.$bvToast.toast(`updated playlist`, {
+              title: "update playlist",
+              variant: "info",
+              autoHideDelay: 2000
+            });
+            console.log("Update successful");
+            console.log(resp);
+          })
+          .catch(error => console.log(error));
+      }
+    },
+    modalData(playlist, id) {
       this.item = playlist;
+      this.modalId = id;
     },
     resetModal() {
       this.getName = "";
-      this.getCode = "";
+      this.getDescription = "";
+    },
+    handleClickSignIn() {
+      return this.$gAuth
+        .signIn({
+          scope: "https://www.googleapis.com/auth/youtube.force-ssl"
+        })
+        .then(
+          res => {
+            this.access_token = res.wc.access_token;
+            console.log("Sign-in successful", res, this.access_token);
+            this.isSignIn = this.$gAuth.isAuthorized;
+          },
+          function(err) {
+            console.error("Error signing in", err);
+          }
+        );
+    },
+    loadClient() {
+      this.$gAuth.client.setApiKey("AIzaSyBmm_e4cuGA4FOzbfCid-J8z79othtVq20");
+      return this.$gAuth.client
+        .load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
+        .then(
+          function() {
+            console.log("GAPI client loaded for API");
+          },
+          function(err) {
+            console.error("Error loading GAPI client for API", err);
+          }
+        );
+    },
+    //method to make api call and retrieve playlists from YT
+    getYTPlaylists() {
+      const { /**baseUrl,*/ part, channelId, key } = this.api;
+      //const apiUrl = `${baseUrl}part=${part}&channelId=${channelId}&key=${key}`;
+      //get data from api
+      axios({
+        method: "GET",
+        url:
+          "https://cors-anywhere.herokuapp.com/https://www.googleapis.com/youtube/v3/playlists",
+        params: {
+          part: part,
+          channelId: channelId,
+          key: key,
+          maxResults: 25
+        }
+      })
+        .then(res => {
+          this.getItems = res.data.items;
+          this.item = res.data.items;
+          this.title = res.data.items[0].snippet.title;
+          console.log(res);
+          console.log("Playlist Items", this.getItems);
+          console.log("Playlist Items title", this.title);
+        })
+        .catch(error => console.log(error));
     }
   }
 };
