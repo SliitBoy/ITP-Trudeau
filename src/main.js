@@ -30,12 +30,12 @@ Vue.config.productionTip = false;
 
 firebase.initializeApp({
   apiKey: "AIzaSyBtLwpWICP97nrfMAdKPxZ2aP7xLd-yd4I",
-  authDomain: "trudeau-sidebar.firebaseapp.com",
-  databaseURL: "https://trudeau-sidebar.firebaseio.com",
-  projectId: "trudeau-sidebar",
-  storageBucket: "trudeau-sidebar.appspot.com",
-  messagingSenderId: "203941630351",
-  appId: "1:203941630351:web:d0eaf2485ad7360b2e3bfa"
+    authDomain: "trudeau-sidebar.firebaseapp.com",
+    databaseURL: "https://trudeau-sidebar.firebaseio.com",
+    projectId: "trudeau-sidebar",
+    storageBucket: "trudeau-sidebar.appspot.com",
+    messagingSenderId: "203941630351",
+    appId: "1:203941630351:web:d0eaf2485ad7360b2e3bfa"
 });
 
 export const db = firebase.firestore();

@@ -1,13 +1,19 @@
 <template>
-    
-<div id="Notifications">
+  <v-row class="fill-height">
+    <v-col>
+      <v-sheet height="64">  
+<div id="show-notifications">
   <h1>All Notifications</h1>
+  
   <div v-for="notification in notifications"  v-bind:key="notification " class= "single-notification">
     <h2>{{notification.title}}</h2>
+    <article>{{notification.body| snippet}}</article>
 
   </div>
 </div>
-
+      </v-sheet>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
@@ -23,11 +29,24 @@ export default {
     
   },
   methods: {
+
+
+
   },
 
+
   created(){
-    this.$http.get('https://trudeau-sidebar.firebaseio.com/Posts').then(function(data){
-     this.notifications = data.body.slice(0,10);
+    this.$http.get('https://trudeau-sidebar.firebaseio.com/Posts.json')
+    .then(function(data){
+      return data.json();
+    }).then(function(data){
+      var notificationsArray = [];
+      for (let key in data){
+        data[key].id = key
+        notificationsArray.push(data[key]);
+      }
+    
+     console.log(notificationsArray);
     })
 
   }
