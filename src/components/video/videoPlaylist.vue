@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid " style="background-color: #2C2F33;">
+  <div class="container-fluid " style="background-color: #2C2F33;" v-if="isLoaded">
     <div class="row">
       <div class="col-10" style="margin-top: 20px;">
         <!-- Search Input field-->
@@ -159,11 +159,10 @@ export default {
   data() {
     return {
       isSignIn: false,
+      isLoaded: false,
       playlistName: "",
       playlistCode: "",
       playlistDescription: "",
-      //title: "",
-      //description: "",
       ytItems: null,
       //yt api object
       api: {
@@ -171,7 +170,6 @@ export default {
           "https://cors-anywhere.herokuapp.com/https://www.googleapis.com/youtube/v3/playlists",
         part: "snippet,status",
         channelId: "UCXJJS2OukdIP52gH3lj6B7Q",
-        //key: "AIzaSyBmm_e4cuGA4FOzbfCid-J8z79othtVq20"
         key: "AIzaSyBmm_e4cuGA4FOzbfCid-J8z79othtVq20"
       },
       getItems: [],
@@ -184,12 +182,11 @@ export default {
     };
   },
 
-  created() {},
-
-  mounted() {
-    //call manually
-    this.getYTPlaylists();
+  created() {
+     this.getYTPlaylists();
   },
+
+  mounted() {},
 
   computed: {
     // filter items array
@@ -397,11 +394,10 @@ export default {
         );
     },
     //method to make api call and retrieve playlists from YT
-    getYTPlaylists() {
-      const { /**baseUrl,*/ part, channelId, key } = this.api;
-      //const apiUrl = `${baseUrl}part=${part}&channelId=${channelId}&key=${key}`;
+    async getYTPlaylists() {
+      const { part, channelId, key } = this.api;
       //get data from api
-      axios({
+      await axios({
         method: "GET",
         url:
           "https://cors-anywhere.herokuapp.com/https://www.googleapis.com/youtube/v3/playlists",
@@ -414,11 +410,10 @@ export default {
       })
         .then(res => {
           this.getItems = res.data.items;
+          this.isLoaded = true;
           this.item = res.data.items;
-          this.title = res.data.items[0].snippet.title;
           console.log(res);
           console.log("Playlist Items", this.getItems);
-          console.log("Playlist Items title", this.title);
         })
         .catch(error => console.log(error));
     }

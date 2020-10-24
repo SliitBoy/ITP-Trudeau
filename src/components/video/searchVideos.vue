@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid vh-100" style="background-color: #2C2F33;">
+  <div class="container-fluid vh-100" style="background-color: #2C2F33;" v-if="isLoaded">
     <div class="row">
       <div class="col-10" style="margin-top: 20px;">
         <!-- Search Input field-->
@@ -182,6 +182,7 @@ export default {
     return {
       isInit: false,
       isSignIn: false,
+      isLoaded: false,
       videoTitle: "",
       videoDescription: "",
       selectedPlaylistId: "",
@@ -245,13 +246,13 @@ export default {
     };
   },
 
-  created() {},
-
-  mounted() {
+  created() {
     //call manually
     this.getYTVideo();
     this.getYTPlaylists();
   },
+
+  mounted() {},
 
   computed: {
     // filter items array
@@ -374,11 +375,11 @@ export default {
         );
     },
     //method to make api call and retrieve playlists from YT
-    getYTPlaylists() {
+    async getYTPlaylists() {
       const { /**baseUrl,*/ part, channelId, key } = this.api;
       //const apiUrl = `${baseUrl}part=${part}&channelId=${channelId}&key=${key}`;
       //get data from api
-      axios({
+      await axios({
         method: "GET",
         url:
           "https://cors-anywhere.herokuapp.com/https://www.googleapis.com/youtube/v3/playlists",
@@ -398,10 +399,10 @@ export default {
         })
         .catch(error => console.log(error));
     },
-    getYTVideo() {
+    async getYTVideo() {
       const { baseUrl, part, key, channelId } = this.apiVideoSearch;
       //get data from api
-      axios({
+      await axios({
         method: "GET",
         url: baseUrl,
         params: {
