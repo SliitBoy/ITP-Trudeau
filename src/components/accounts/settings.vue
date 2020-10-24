@@ -3,7 +3,7 @@
     <div class="topLeft">
       <h2 class="labels">Profile Settings</h2>
       <div class="username">
-        <h3 class="labels">[Username]</h3>
+        <h3 class="labels">Frank Reynolds</h3>
         <br />
         <br />
       </div>
